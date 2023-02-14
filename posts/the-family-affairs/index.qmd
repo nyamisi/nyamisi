@@ -38,3 +38,9 @@ Otam que pratur res ea velis eicid militi quis ea autem rerro blacilit voluptat 
 Fugit maximint que nis et aligendis poressum quos ut id quos vellorum res enimpelia venientem quibusa
 
 ![The family is chilling at th east coast of Nevada](family.jpg)
+
+@eq-eqn1 is the mathematical equation respresenting....
+
+$$
+\sigma = \frac{\phi}{\alpha}
+$$ {#eq-eqn1}
