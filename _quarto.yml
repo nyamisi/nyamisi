@@ -36,7 +36,10 @@ website:
         - text: Archive
           href: archive.qmd
   google-analytics: "14521548"
-  cookie-consent: true
+  cookie-consent: 
+      type: express
+      style: headline
+      palette: dark
   twitter-card: 
     image: thumbnail_blog.png
     card-style: summary_large_image
