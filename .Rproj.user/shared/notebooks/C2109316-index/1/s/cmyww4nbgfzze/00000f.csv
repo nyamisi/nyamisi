@@ -1,0 +1,6 @@
+"0","wordcloud2(data = student.word.df, "
+"0","           size = 0.8, "
+"0","           color = ""random-dark"","
+"0","           minSize = 3,"
+"0","           ellipticity = 2,"
+"0","           gridSize = 11)"

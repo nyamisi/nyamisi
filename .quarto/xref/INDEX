@@ -22,5 +22,11 @@
   },
   "archive.qmd": {
     "archive.html": "8e7837c1"
+  },
+  "posts/worldcloud/index.qmd": {
+    "index.html": "4f013df0"
+  },
+  "posts/alluvial/index.qmd": {
+    "index.html": "dfa95359"
   }
 }

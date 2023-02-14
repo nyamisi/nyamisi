@@ -2,18 +2,18 @@
   {
     "listing": "/archive.html",
     "items": [
-      "/posts/post-with-code/index.html",
+      "/posts/alluvial/index.html",
+      "/posts/worldcloud/index.html",
       "/posts/the-family-affairs/index.html",
-      "/posts/welcome/index.html",
       "/posts/summertime/index.html"
     ]
   },
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/post-with-code/index.html",
+      "/posts/alluvial/index.html",
+      "/posts/worldcloud/index.html",
       "/posts/the-family-affairs/index.html",
-      "/posts/welcome/index.html",
       "/posts/summertime/index.html"
     ]
   }

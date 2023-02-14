@@ -1,0 +1,54 @@
+@Book{ggplot,
+    author = {Hadley Wickham},
+    title = {ggplot2: Elegant Graphics for Data Analysis},
+    publisher = {Springer-Verlag New York},
+    year = {2016},
+    isbn = {978-3-319-24277-4},
+    url = {https://ggplot2.tidyverse.org},
+  }
+  
+  @Manual{r,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2022},
+    url = {https://www.R-project.org/},
+  }
+  
+  @Manual{wordcloud,
+    title = {wordcloud: Word Clouds},
+    author = {Ian Fellows},
+    year = {2018},
+    note = {R package version 2.6},
+    url = {https://CRAN.R-project.org/package=wordcloud},
+  }
+  
+   @Manual{readxl,
+    title = {readxl: Read Excel Files},
+    author = {Hadley Wickham and Jennifer Bryan},
+    year = {2022},
+    note = {R package version 1.4.1},
+    url = {https://CRAN.R-project.org/package=readxl},
+  }
+  
+
+  @Manual{dplyr,
+    title = {dplyr: A Grammar of Data Manipulation},
+    author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
+    year = {2022},
+    note = {R package version 1.0.10},
+    url = {https://CRAN.R-project.org/package=dplyr},
+  }
+  
+  
+  @Article{ggalluvial,
+    title = {{ggalluvial}: Layered Grammar for Alluvial Plots},
+    author = {Jason Cory Brunson},
+    year = {2020},
+    journal = {Journal of Open Source Software},
+    volume = {5},
+    number = {49},
+    pages = {2017},
+    doi = {10.21105/joss.02017},
+  }

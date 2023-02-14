@@ -6,57 +6,322 @@
       version="2.0">
 <channel>
 <title>Nyamisi Peter</title>
-<link>https://nyamisi-peter.netlify.app/blog.html</link>
-<atom:link href="https://nyamisi-peter.netlify.app/blog.xml" rel="self" type="application/rss+xml"/>
+<link>https://nyamisi.github.io/nyamisi/blog.html</link>
+<atom:link href="https://nyamisi.github.io/nyamisi/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Coding for all for better today and tommorow</description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Mon, 13 Feb 2023 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 14 Feb 2023 21:00:00 GMT</lastBuildDate>
 <item>
-  <title>Post With Code</title>
-  <dc:creator>Harlow Malloc</dc:creator>
-  <link>https://nyamisi-peter.netlify.app/posts/post-with-code/index.html</link>
+  <title>Text analytics and alluvial plots in R</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/alluvial/index.html</link>
   <description><![CDATA[ 
 
 
 
-<p>This is a post with executable code.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In the previous post, we covered how to present textual information in wordcloud. In this post, we are going to extend what we have learned previous with a new visualiation technique in town—alluvial plots. An alluvial diagram or alluvial plot is a type of visualization that shows changes in flow over time. Alluvial plots are commonly used to show how information flows from one source and feed to another source or destination. Several packages are used to create alluvaial plots, but in this post we are going to learn how to use <strong>ggalluvial</strong> package <span class="citation" data-cites="ggalluvial">(Brunson 2020)</span> to make alluvial plots in R <span class="citation" data-cites="r">(R Core Team 2022)</span>. If the package ks installed in your computer, you can simply download and install it from CRAN as;</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"alluvial"</span>)</span></code></pre></div>
+</div>
+<p>Before we proceed, we need to load some packages, whose function we are going to use throughout this post. These packages are highlighted in the chunk below;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">require</span>(tidyverse)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;">require</span>(readxl)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;">require</span>(tm)           <span class="co" style="color: #5E5E5E;"># for text mining</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;">require</span>(SnowballC)    <span class="co" style="color: #5E5E5E;"># for text stemming</span></span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;">require</span>(wordcloud)    <span class="co" style="color: #5E5E5E;"># word-cloud generator</span></span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;">require</span>(RColorBrewer) <span class="co" style="color: #5E5E5E;"># color palettes</span></span>
+<span id="cb2-7"><span class="fu" style="color: #4758AB;">require</span>(wordcloud2)</span>
+<span id="cb2-8"><span class="fu" style="color: #4758AB;">require</span>(ggalluvial)</span></code></pre></div>
+</div>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<p>In this post we are going to assess third year project student titles. The data has been organized and compiled in Excel spreadsheet. We can load this dataset into R session using <code>read_excel()</code> function from <strong>readxl</strong> package <span class="citation" data-cites="readxl">(Wickham and Bryan 2022)</span> and assign the loaded file as <code>student</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">student <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">read_excel</span>(<span class="st" style="color: #20794D;">"student_2020-23.xlsx"</span>)</span></code></pre></div>
+</div>
+<p>Its a good practise to explore the internal structure of the loaded, though the str function is widely used for years, but <span class="citation" data-cites="dplyr">Wickham et al. (2022)</span> developed a <code>glimpse</code> function, which provide a nitty approach to look at the data and its associated variables;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">student <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;">glimpse</span>()</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>Rows: 163
+Columns: 5
+$ Name   &lt;chr&gt; "Rashid Rahma A", "Muller Fransisca L", "Bitoye Mancef C", "Mma…
+$ gender &lt;chr&gt; "F", "F", "F", "F", "F", "M", "M", "M", "F", "F", "F", "F", "F"…
+$ field  &lt;chr&gt; "microbiology", "aquaculture", "ecosystem", "aquaculture", "soc…
+$ Title  &lt;chr&gt; "Assessing the prevalence and intensity of parasitic infections…
+$ year   &lt;dbl&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 202…</code></pre>
 </div>
 </div>
+<p>The printed output of the interval structure indicates tha the file has five variables—name, gender, field, title and year. With exception of the year, which is numeric, the other variables are character.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">student <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"GIS"</span> <span class="sc" style="color: #5E5E5E;">|</span> field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"policy"</span>, <span class="st" style="color: #20794D;">"fishery"</span>),</span>
+<span id="cb6-3">         <span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"plankton"</span>, <span class="st" style="color: #20794D;">"ecosystem"</span>),</span>
+<span id="cb6-4">         <span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"physical"</span>, <span class="st" style="color: #20794D;">"pollution"</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb6-5">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">year =</span> <span class="fu" style="color: #4758AB;">as.factor</span>(year)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb6-6">  <span class="fu" style="color: #4758AB;">group_by</span>(gender, field, year) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb6-7">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb6-8">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">axis1 =</span> year, <span class="at" style="color: #657422;">axis3 =</span> gender, <span class="at" style="color: #657422;">axis2 =</span> field, <span class="at" style="color: #657422;">y =</span> n)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-9">  <span class="fu" style="color: #4758AB;">geom_alluvium</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> field), <span class="at" style="color: #657422;">curve_type =</span> <span class="st" style="color: #20794D;">"sigmoid"</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">3</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-10">  <span class="fu" style="color: #4758AB;">geom_stratum</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> field), <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">3</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-11">  <span class="fu" style="color: #4758AB;">geom_label</span>(<span class="at" style="color: #657422;">stat =</span> <span class="st" style="color: #20794D;">"stratum"</span>, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label =</span> <span class="fu" style="color: #4758AB;">after_stat</span>(stratum)), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-12">  <span class="fu" style="color: #4758AB;">theme_void</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-13">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"none"</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-14">  ggsci<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_fill_futurama</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-15">  <span class="fu" style="color: #4758AB;">scale_fill_brewer</span>(<span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">"Dark2"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` in the `default_aes` field and elsewhere instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/alluvial/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">  <span class="co" style="color: #5E5E5E;"># scale_x_discrete(expand = c(0.1,0.05))</span></span>
+<span id="cb9-2">  </span>
+<span id="cb9-3">  <span class="co" style="color: #5E5E5E;"># ggsave("aa.pdf")</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">student <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-2">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"GIS"</span> <span class="sc" style="color: #5E5E5E;">|</span> field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"policy"</span>, <span class="st" style="color: #20794D;">"fishery"</span>),</span>
+<span id="cb10-3">         <span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"plankton"</span>, <span class="st" style="color: #20794D;">"ecosystem"</span>),</span>
+<span id="cb10-4">         <span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"physical"</span>, <span class="st" style="color: #20794D;">"pollution"</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-5">  <span class="fu" style="color: #4758AB;">filter</span>(year <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2021</span>,<span class="dv" style="color: #AD0000;">2023</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-6">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">year =</span> <span class="fu" style="color: #4758AB;">as.factor</span>(year)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-7">  <span class="fu" style="color: #4758AB;">group_by</span>(gender, field, year) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-8">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-9">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">axis1 =</span> year, <span class="at" style="color: #657422;">axis3 =</span> gender, <span class="at" style="color: #657422;">axis2 =</span> field, <span class="at" style="color: #657422;">y =</span> n)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-10">  <span class="fu" style="color: #4758AB;">geom_alluvium</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> field), <span class="at" style="color: #657422;">curve_type =</span> <span class="st" style="color: #20794D;">"xspline"</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">3</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-11">  <span class="fu" style="color: #4758AB;">geom_stratum</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> field), <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">3</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-12">  <span class="fu" style="color: #4758AB;">geom_label</span>(<span class="at" style="color: #657422;">stat =</span> <span class="st" style="color: #20794D;">"stratum"</span>, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label =</span> <span class="fu" style="color: #4758AB;">after_stat</span>(stratum)), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-13">  <span class="fu" style="color: #4758AB;">theme_void</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-14">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"none"</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-15">  ggsci<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_fill_futurama</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-16">  <span class="fu" style="color: #4758AB;">scale_fill_brewer</span>(<span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">"Dark2"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/alluvial/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">  <span class="co" style="color: #5E5E5E;"># scale_x_discrete(expand = c(0.1,0.05))</span></span>
+<span id="cb12-2">  </span>
+<span id="cb12-3">  <span class="co" style="color: #5E5E5E;"># ggsave("aa.pdf")</span></span></code></pre></div>
+</div>
+<p>In summary, R language provide myriad package for visualizing not only numeric data but also for textual information and summarize them in plots that are easily to understand. In the next post, we are going to use the approach to visualize textual information using alluvial plots</p>
+<section id="consultated-references" class="level2">
 
 
 
- ]]></description>
-  <category>news</category>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ggalluvial" class="csl-entry">
+Brunson, Jason Cory. 2020. <span>“<span class="nocase">ggalluvial</span>: Layered Grammar for Alluvial Plots.”</span> <em>Journal of Open Source Software</em> 5 (49): 2017. <a href="https://doi.org/10.21105/joss.02017">https://doi.org/10.21105/joss.02017</a>.
+</div>
+<div id="ref-r" class="csl-entry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-readxl" class="csl-entry">
+Wickham, Hadley, and Jennifer Bryan. 2022. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-dplyr" class="csl-entry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>visualization</category>
   <category>code</category>
-  <category>analysis</category>
-  <guid>https://nyamisi-peter.netlify.app/posts/post-with-code/index.html</guid>
-  <pubDate>Mon, 13 Feb 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://nyamisi-peter.netlify.app/posts/post-with-code/image.jpg" medium="image" type="image/jpeg"/>
+  <guid>https://nyamisi.github.io/nyamisi/posts/alluvial/index.html</guid>
+  <pubDate>Tue, 14 Feb 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/alluvial/alluvial.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Text analytics and word cloud in R and ggplot2</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/worldcloud/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p><em>wordcloud</em> is an image composed of words used in a particular text or subject, in which the size of each word indicates its frequency or importance. In this post, we are going to learn how to create worldcloud in R language <span class="citation" data-cites="r">(R Core Team 2022)</span>. To generate wordcloud plot in R, we need either worcloud <span class="citation" data-cites="wordcloud">(Fellows 2018)</span> or wordcloud2 <span class="citation" data-cites="wordcloud2">(<strong>wordcloud2?</strong>)</span> packages. If these packages are not installed in your machine, you can simply download and install them from CRAN as;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"wordcloud"</span>)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">install.packages</span>(<span class="st" style="color: #20794D;">"wordcloud2"</span>)</span></code></pre></div>
+</div>
+<p>Before we proceed, we need to load some packages, whose function we are going to use throughout this post. These packages are highlighted in the chunk below;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">require</span>(tidyverse)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;">require</span>(readxl)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;">require</span>(tm)           <span class="co" style="color: #5E5E5E;"># for text mining</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;">require</span>(SnowballC)    <span class="co" style="color: #5E5E5E;"># for text stemming</span></span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;">require</span>(wordcloud)    <span class="co" style="color: #5E5E5E;"># word-cloud generator</span></span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;">require</span>(RColorBrewer) <span class="co" style="color: #5E5E5E;"># color palettes</span></span>
+<span id="cb2-7"><span class="fu" style="color: #4758AB;">require</span>(wordcloud2)</span>
+<span id="cb2-8"><span class="fu" style="color: #4758AB;">require</span>(ggalluvial)</span></code></pre></div>
+</div>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<p>In this post we are going to assess third year project student titles. The data has been organized and compiled in Excel spreadsheet. We can load this dataset into R session using <code>read_excel()</code> function from <strong>readxl</strong> package <span class="citation" data-cites="readxl">(Wickham and Bryan 2022)</span> and assign the loaded file as <code>student</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">student <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">read_excel</span>(<span class="st" style="color: #20794D;">"student_2020-23.xlsx"</span>)</span></code></pre></div>
+</div>
+<p>Its a good practise to explore the internal structure of the loaded, though the str function is widely used for years, but <span class="citation" data-cites="dplyr">Wickham et al. (2022)</span> developed a <code>glimpse</code> function, which provide a nitty approach to look at the data and its associated variables;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">student <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;">glimpse</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 163
+Columns: 5
+$ Name   &lt;chr&gt; "Rashid Rahma A", "Muller Fransisca L", "Bitoye Mancef C", "Mma…
+$ gender &lt;chr&gt; "F", "F", "F", "F", "F", "M", "M", "M", "F", "F", "F", "F", "F"…
+$ field  &lt;chr&gt; "microbiology", "aquaculture", "ecosystem", "aquaculture", "soc…
+$ Title  &lt;chr&gt; "Assessing the prevalence and intensity of parasitic infections…
+$ year   &lt;dbl&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 202…</code></pre>
+</div>
+</div>
+<p>The printed output of the interval structure indicates tha the file has five variables—name, gender, field, title and year. With exception of the year, which is numeric, the other variables are character.</p>
+<section id="tidy-pproject-titles" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-pproject-titles">tidy pproject titles</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">student.text <span class="ot" style="color: #003B4F;">=</span> student<span class="sc" style="color: #5E5E5E;">$</span>Title </span></code></pre></div>
+</div>
+<p>Thereafter, a corpus will be generated from the vector using the <em>Corpus()</em> function of <strong>tm</strong> package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">student.doc <span class="ot" style="color: #003B4F;">=</span> tm<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">Corpus</span>(<span class="fu" style="color: #4758AB;">VectorSource</span>(student.text))</span></code></pre></div>
+</div>
+<p>Cleaning is an essential step to take before you generate your wordcloud. Indeed, for your analysis to bring useful insights, you may want to remove special characters, numbers or punctuation from your text. In addition, you should remove common stop words in order to produce meaningful results and avoid the most common frequent words such as “I” or “the” to appear in the word cloud. If you’re working with a corpus, there are several packages you can use to clean your text. The following lines of code show you how to do this using the tm package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">student.doc.clean <span class="ot" style="color: #003B4F;">=</span> student.doc <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;">tm_map</span>(removeNumbers) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb8-3">  <span class="fu" style="color: #4758AB;">tm_map</span>(removePunctuation) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb8-4">  <span class="fu" style="color: #4758AB;">tm_map</span>(stripWhitespace) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb8-5">  <span class="fu" style="color: #4758AB;">tm_map</span>(<span class="fu" style="color: #4758AB;">content_transformer</span>(tolower)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb8-6">  <span class="fu" style="color: #4758AB;">tm_map</span>(removeWords, <span class="fu" style="color: #4758AB;">stopwords</span>(<span class="at" style="color: #657422;">kind =</span> <span class="st" style="color: #20794D;">"en"</span>))</span></code></pre></div>
+</div>
+<section id="create-a-document-term-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-document-term-matrix">Create a document-term-matrix</h3>
+<p>What you want to do as a next step is to have a dataframe containing each word in your first column and their frequency in the second column. This can be done by creating a document term matrix with the TermDocumentMatrix function from the tm package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">student.matrix <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">TermDocumentMatrix</span>(student.doc.clean) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb9-2">  <span class="fu" style="color: #4758AB;">as.matrix</span>()</span>
+<span id="cb9-3"></span>
+<span id="cb9-4">student.word <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">sort</span>(<span class="fu" style="color: #4758AB;">rowSums</span>(student.matrix), <span class="at" style="color: #657422;">decreasing =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
+<span id="cb9-5">     </span>
+<span id="cb9-6"> student.word.df <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">word =</span> <span class="fu" style="color: #4758AB;">names</span>(student.word), <span class="at" style="color: #657422;">freq =</span> student.word)</span></code></pre></div>
+</div>
+</section>
+<section id="generate-the-word-cloud" class="level3">
+<h3 class="anchored" data-anchor-id="generate-the-word-cloud">Generate the word cloud</h3>
+<p>The wordcloud package is the most classic way to generate a word cloud. The following line of code shows you how to properly set the arguments. As an example, I chose to work with the student titles on their third year research project at SoAF.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>) <span class="co" style="color: #5E5E5E;"># for reproducibility</span></span>
+<span id="cb10-2"></span>
+<span id="cb10-3"><span class="fu" style="color: #4758AB;">wordcloud</span>(<span class="at" style="color: #657422;">words =</span> student.word.df<span class="sc" style="color: #5E5E5E;">$</span>word, </span>
+<span id="cb10-4">          <span class="at" style="color: #657422;">freq =</span> student.word.df<span class="sc" style="color: #5E5E5E;">$</span>freq, </span>
+<span id="cb10-5">          <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb10-6">          <span class="at" style="color: #657422;">random.order =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, </span>
+<span id="cb10-7">         <span class="at" style="color: #657422;">max.words =</span> <span class="dv" style="color: #AD0000;">200</span>,</span>
+<span id="cb10-8">         <span class="co" style="color: #5E5E5E;"># rot.per = 0.35,</span></span>
+<span id="cb10-9">          <span class="at" style="color: #657422;">colors =</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">8</span>, <span class="st" style="color: #20794D;">"Dark2"</span>),</span>
+<span id="cb10-10">         <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fl" style="color: #AD0000;">3.5</span>,<span class="fl" style="color: #AD0000;">0.4</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/worldcloud/index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It may happen that your word cloud crops certain words or simply doesn’t show them. If this happens, make sure to add the argument scale=c(3.5,0.25) and play around with the numbers to make the word cloud fit. Another common mistake with word clouds is to show too many words that have little frequency. If this is the case, make sure to adjust the minimum frequency argument (min.freq=…) in order to render your word cloud more meaningful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">1234</span>) <span class="co" style="color: #5E5E5E;"># for reproducibility</span></span>
+<span id="cb11-2"></span>
+<span id="cb11-3"><span class="fu" style="color: #4758AB;">wordcloud</span>(<span class="at" style="color: #657422;">words =</span> student.word.df<span class="sc" style="color: #5E5E5E;">$</span>word, </span>
+<span id="cb11-4">          <span class="at" style="color: #657422;">freq =</span> student.word.df<span class="sc" style="color: #5E5E5E;">$</span>freq, </span>
+<span id="cb11-5">          <span class="at" style="color: #657422;">min.freq =</span> <span class="dv" style="color: #AD0000;">3</span>,</span>
+<span id="cb11-6">          <span class="at" style="color: #657422;">random.order =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, </span>
+<span id="cb11-7">         <span class="co" style="color: #5E5E5E;"># max.words = 1000,</span></span>
+<span id="cb11-8">         <span class="co" style="color: #5E5E5E;"># rot.per = 0.35,</span></span>
+<span id="cb11-9">          <span class="at" style="color: #657422;">colors =</span> <span class="fu" style="color: #4758AB;">brewer.pal</span>(<span class="dv" style="color: #AD0000;">8</span>, <span class="st" style="color: #20794D;">"Dark2"</span>), </span>
+<span id="cb11-10">         <span class="at" style="color: #657422;">scale =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fl" style="color: #AD0000;">3.5</span>,<span class="fl" style="color: #AD0000;">0.6</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/worldcloud/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The <strong>wordcloud2</strong> package is a bit more fun to use, allowing us to do some more advanced visualisations. For instance, you can choose your wordcloud to appear in a specific shape or even letter (see this vignette for a useful tutorial). As an example, I used the same corpus of student title and generated the two word clouds shown below. Cool, right?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="fu" style="color: #4758AB;">wordcloud2</span>(<span class="at" style="color: #657422;">data =</span> student.word.df, </span>
+<span id="cb12-2">           <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">0.8</span>, </span>
+<span id="cb12-3">           <span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"random-dark"</span>,</span>
+<span id="cb12-4">           <span class="at" style="color: #657422;">minSize =</span> <span class="dv" style="color: #AD0000;">3</span>,</span>
+<span id="cb12-5">           <span class="at" style="color: #657422;">ellipticity =</span> <span class="dv" style="color: #AD0000;">2</span>,</span>
+<span id="cb12-6">           <span class="at" style="color: #657422;">gridSize =</span> <span class="dv" style="color: #AD0000;">11</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div class="wordcloud2 html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e841cfe017b85aa397a1" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e841cfe017b85aa397a1">{"x":{"word":["assessment","kunduchi","fish","tilapia","growth","nile","dar","salaam","assessing","water","performance","effects","catfish","mangrove","abundance","different","quality","study","using","market","fishing","african","rate","beach","river","diversity","sea","along","community","effect","cultured","marine","comparison","meal","production","aquaculture","determination","tanks","species","niloticus","seaweed","influence","comparative","ferry","fisheries","feed","survival","coastal","protein","efficiency","bagamoyo","seagrass","macrofauna","fed","sardine","oreochromis","chicken","ponds","system","gariepinus","beaches","relation","kinondoni","tanzania","forest","use","fingerlings","case","concentration","nutrients","commercial","mlingotini","moringa","phytoplankton","manure","clarias","levels","organic","mercury","ras","recirculating","farmers","local","mbweni","aquarium","fishermen","social","change","freshwater","activities","challenges","scale","small","intertidal","anchovies","fry","three","landing","application","feeds","factors","effectiveness","msimbazi","juvenile","catch","district","waste","art","leaves","powder","seed","concrete","plankton","wastes","artificial","propagation","zone","distribution","farming","ocean","pollution","structure","macroinvertebrate","surface","characteristics","microplastic","wetland","drying","contribution","intensity","municipal","economic","illegal","facing","women","chain","fishes","value","improving","seagrasses","acceptability","consumer","frying","locally","methods","processed","fresh","salinity","fried","rates","microbiological","sites","zones","kijichi","tegeta","bukoba","council","chlorophylla","relationship","variation","azolla","raised","feather","source","artemia","comparing","larvae","live","like","product","female","maggots","reproduction","farms","sources","extent","assemblages","treatment","cowdung","productivity","cow","eggs","investigation","tuna","fermented","substratum","food","grown","reproductive","destruction","functional","habitat","worms","anthropogenic","meiofauna","ecosystem","role","potential","benthic","solid","suspended","total","sediments","spatial","composition","analysis","loss","postharvest","waters","light","macro","morogoro","dynamics","matter","particulate","markets","tissues","aspt","bmwp","biological","management","coast","indian","mackerel","inorganic","preferences","shore","pituitary","sharptooth","profitability","microbial","probiotics","landed","sediment","traditional","pond","terebralia","mapping","region","male","sun","business","ornamental","accumulation","living","income","mixture","rotifers","infections","parasitic","prevalence","selected","wild","area","aloe","behavior","coat","dissolved","examining","gel","stress","vera","condition","climate","public","understanding","environment","carbon","found","stocks","aquacultural","involved","affects","availability","abudance","cpue","msasani","sardines","economy","jarida","langu","science","areas","puna","assessing ","boiling","sundrying","survivor","types","brackish","cats","catus","felis","raw","boat","building","indigenous","knowledge","nonpelleted","pelleted","coco","quantity","trash","trend","type","assesing","conservation","daressalaam","environmental","island","sinda","turtle","auctioning","systems","wellbeing","chemical","demand","oxygen","additional","fodder","hydropnics","increase","concentrate","diet","pea","substitute","replacement","snail","tilapiacatfish","effort","per","sangara","trends","unit","investigating"," msimbazi","gear","seasonal","usage","alternative","dietary","partial","bones","made","frozen","post"," tilapia","gill","nets","perch","sample","byproduct","belly","craft","flower","pots","producing","though","fecundity","impact","neem","common","heavy","metals","used","cause","decreased","lake","victoria","oil","response","spills","addressing","conflict","determining","reasons","oleifera","wastewater","chloride","polyvinyl","eutrophication","evaluation","urine","microplastics","biodegraded","biofertilizer","fertilizing","immuno","stimulating","black","flies","mass","solders","ginger","kmno","nacl","substrate","helmintheic","infection","clarius","examine","seminatural","controlling","pawpaw","diets","oleofera","power","root","seeds","baobab","fishmeal","junenile","broillers","background","color","dung","housefly","intestine","leftovers","produced","substrates","harak","luthjanus","pattern","taxonomic","wetlands","structural","erosion","experiencing","polychaete","two","impacts","crabs","feeding","fiddler","processing","uca","beachcast","disturbance","macroinvertebrates","subjected","university","regeneration","stages","stands","variability","speciation","tissue","bongoyo","mbudya","medical","reserves","around","awareness","importance","village","enterprises","smallscale","socialeconomic","artisanal","baits","status","bioindicators","road","sewage","bio","indicator","macrobenthic","intensities","bleaching","invertebrate","velocity","epilithic","epiphytic","periphyton","primary","shredders","streams","adipose","lates","muscle","parchased","identifiction","learning","machine","technology","bwawani","kibaha","indices","kizinga","mzinga","rivers","urban","ecological","modelling","stock","filters","framework","policy","regions","unregulated","unreported","bmu","roles","chitosan","coatings","fillets","nanochitosan","refrigerated","snapper","consumer’s","smoked","biomass","microlayer","sub","debris","macroplastic","bay","gratilla","oyster","tripneustes","assemblage","habitats","oysterbay","urchin","duck","glands","hormone","inducing","maturation","muscovy","ovaprim","cost","bioactive","compounds","farmed","offal","ingestion","kigamboni","bed","coastline","estuary","plastic","associates","plants","practices","complexity","culture","avian","estimation","anesthesia","dosage","mode","optimum","giant","micronutrients","pallustris","whelk","gradient","macrophyte","zonation","ecology","hatchability","latvae","photoperiod","regime","high","low","periods","fir","formulated","rearing","bacteria","coliform","fecal","sand","silver","associated","costal","investigate","cleaner","stocked","together","bufo","cartifish","gland","regularis","toad","gastropod","morphometric","mtoni","palustris","variations","nutrient","removal","salinities","seaweedenteromorpha","adult","calf","cattle","fertilization","aquatic","catchment","eco","hydrological","udzungwa","consumption","percapita","animal","based","cockroach","fly","maggot","pinnata","plant","density","prawns","stocking","ground","rack","reducing","safety","site","fishers","livelihood","crude","weight","licensing","registration","identification","remote","sensing","phosphorus","snappers","smoking","spoilage","preference","kawe","litter","standards","trade","traders","households","participating","prohibiting","standard","catches","corresponding","data","gisbased","meadow","approach","bags","biodegradable","hessian","pilot","restoration","activity","cucumber","holothuria","induction","scabra","spawning","tropical","mji","mwema","stars","micro","microworms","current","shrimp","development","hindering","villagebagamoyo","dried","juveniles","leaf","leucaena","leucocephala","mixed","utilization","bean","soya","cocktail","fertilizers","alpha","concentrations","egg","immersion","methyltestesterone","reversal","sex","technique","dasftkunduchi","makongo","tafiri","aureus","hirnorum","hybridization","inter","specific"],"freq":[63,38,35,31,28,27,24,24,22,22,19,16,14,13,12,12,11,11,11,10,10,10,10,10,10,9,9,9,9,9,8,8,8,8,8,8,8,8,7,7,7,7,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":3,"weightFactor":2.28571428571429,"backgroundColor":"white","gridSize":11,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":2,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+</div>
+</div>
+<p>In summary, R language provide myriad package for visualizing not only numeric data but also for textual information and summarize them in plots that are easily to understand. In the next post, we are going to use the approach to visualize textual information using alluvial plots</p>
+</section>
+</section>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-wordcloud" class="csl-entry">
+Fellows, Ian. 2018. <em>Wordcloud: Word Clouds</em>. <a href="https://CRAN.R-project.org/package=wordcloud">https://CRAN.R-project.org/package=wordcloud</a>.
+</div>
+<div id="ref-r" class="csl-entry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-readxl" class="csl-entry">
+Wickham, Hadley, and Jennifer Bryan. 2022. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-dplyr" class="csl-entry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>visualization</category>
+  <category>code</category>
+  <guid>https://nyamisi.github.io/nyamisi/posts/worldcloud/index.html</guid>
+  <pubDate>Tue, 14 Feb 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/worldcloud/wordcloud.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>The Family Affairs</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi-peter.netlify.app/posts/the-family-affairs/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/the-family-affairs/index.html</link>
   <description><![CDATA[ 
 
 
 
 <p>The year 2023 has come with its magics. In this post I am going to exlode the infation of basic items in my country, which has crippled many families down to poverty!!!</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/the-family-affairs/family.jpg" class="img-fluid"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/family.jpg" class="img-fluid"></p>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Ant es minciendit ommolut abor sinihite quidellibus eium que plabore ssimporum facipsumenis deles et voluptur? Quiatem. Ut essi omnit qui coratum quo con estem nonsers peleceribus erum et endaerchic te nis earchil maio ipsanti scidus porepta sus con resequibus et prepudae consequunt, sandundaest aut litiaest, occae parum niae nim ipsunt vendit excest quatas simoloriatur aut dolo evenimil iderovi tibusantiat autem a solor santia porere imusanda vid quibus dolorro remolla borrum veruptium aliquos numqui doluptatius eum simi, tem quiatib usaeperum aut molut ernatem laborio rumquiatem eicilis quis et litaquid qui doluptas num volore et ratur reprovitet aut et alique amust earum quas et audit harupta qui rectum re cullutento coribusam, conem hitatur?</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/the-family-affairs/nyaka2.jpg" class="img-fluid"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/nyaka2.jpg" class="img-fluid"></p>
 </section>
 <section id="why-price-fluctuation-matters" class="level1">
 <h1>Why price fluctuation matters!</h1>
 <p>Videlluptas molorem ad quo quis ut quissi doluptaspel ipsanda eribus ipsam am aut aut rehenis quaepe simpore rerciaes maio et, offic te di aliquunt ped expelendem ratio et que nus. Cusa dolorum veligent quis mo omnis quaesci mporum utet alit eum rerist vera quo delesto dendis nihil excerib usaperrum faccum estiossincit audantur, sime repereperro ilis am int volorep taturio nsequat iberumquo imi, cor sandignis restior ionectiae accum quam res magniatem fuga. Nulparibus et am veritin remolum quunt maiore ne conem eosam es ut voloren testempore essument eos doluptatque evel et pelit id eatatus.</p>
 <p><strong>Occulle ctionse quibus, quassi a sequaes</strong> erferrum expero es min consenim et hicte eumendem et aut enimolo rempelecta volorionsed ut arum reicipsam cus perio. Dolupta dolupiente venimus cillore poribus. Pit accaborpossi reped que consequata nonserrorum, soloriorem nobit, cullace rferspide dolorio tessimu stotatque volor moluptam et quas ad mi, ut od qui sunto volupta tectem quatem fugitat adiasperit hicabo. Neque sitatiust, ulliqua eratemod magnihil minus am nullore rupisciis et experrore verum, aditi ulla is nonsequi volorro <em>que pa nostrum quam</em> laborpo storesc itatas modigni consed ut quis vellita testia simaio berorrovid qui conse natemporiam hit remolor ereribustrum dolo offictatet doluptat.</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/the-family-affairs/nyaka.jpg" class="img-fluid"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/nyaka.jpg" class="img-fluid"></p>
 <section id="the-maize-price" class="level2">
 <h2 class="anchored" data-anchor-id="the-maize-price">The Maize Price</h2>
 <p>Doluptistia nis quo mil is magnihi tature debis num ipis porenda sectem quae doluptur? Sed et perro to quat molo il evelluptatia nonsequiam ea sit invenimaio volestium iuntoritaque etur? Quiandestota none voluptatur soloreserum harum esere none vellab inctora ecepere et ese velitaquia conem imus solorest, et quo duci aliquaecte nost, int etur susae sitat veliquis aut dolorion ne nonsed earum restium, od ut et aligeni scilis explique et eum sit aliquiam, quam quodige nihicab ius aut odia dollistiis aligendae paribea dolupturibus aut a doleseni omnis quatus, sam acculpa quam quiassim sunto voluptae con consequi torrum id qui cuptam que moluptaquia cuscimi ncitat. Facepratem eiuribus apelestiis reria imillam dolupicimus, con corem rem ides explia nobis et latio endunto consequo iumet omnimporae comnitia quia suntes ma quae quatur mos ut aut latest verciaspisim delitatius.</p>
@@ -70,7 +335,7 @@
 <p>Fugit maximint que nis et aligendis poressum quos ut id quos vellorum res enimpelia venientem quibusa</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://nyamisi-peter.netlify.app/posts/the-family-affairs/family.jpg" class="img-fluid figure-img"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/family.jpg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">The family is chilling at th east coast of Nevada</figcaption><p></p>
 </figure>
 </div>
@@ -83,50 +348,30 @@
 
  ]]></description>
   <category>affairs</category>
-  <guid>https://nyamisi-peter.netlify.app/posts/the-family-affairs/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/the-family-affairs/index.html</guid>
   <pubDate>Mon, 13 Feb 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://nyamisi-peter.netlify.app/posts/the-family-affairs/family.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Welcome To My Blog</title>
-  <dc:creator>Tristan O&#39;Malley</dc:creator>
-  <link>https://nyamisi-peter.netlify.app/posts/welcome/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/welcome/thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
-
-
-
- ]]></description>
-  <category>news</category>
-  <guid>https://nyamisi-peter.netlify.app/posts/welcome/index.html</guid>
-  <pubDate>Fri, 10 Feb 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://nyamisi-peter.netlify.app/posts/welcome/thumbnail.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/family.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>The Memorable Summer Time</title>
   <dc:creator>Grace Semba</dc:creator>
-  <link>https://nyamisi-peter.netlify.app/posts/summertime/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/summertime/index.html</link>
   <description><![CDATA[ 
 
 
 
 <p>The summer time holiday begin soon after first term, which usually ends at late May……..</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/summertime/family.png" class="img-fluid"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/summertime/family.png" class="img-fluid"></p>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Ant es minciendit ommolut abor sinihite quidellibus eium que plabore ssimporum facipsumenis deles et voluptur? Quiatem. Ut essi omnit qui coratum quo con estem nonsers peleceribus erum et endaerchic te nis earchil maio ipsanti scidus porepta sus con resequibus et prepudae consequunt, sandundaest aut litiaest, occae parum niae nim ipsunt vendit excest quatas simoloriatur aut dolo evenimil iderovi tibusantiat autem a solor santia porere imusanda vid quibus dolorro remolla borrum veruptium aliquos numqui doluptatius eum simi, tem quiatib usaeperum aut molut ernatem laborio rumquiatem eicilis quis et litaquid qui doluptas num volore et ratur reprovitet aut et alique amust earum quas et audit harupta qui rectum re cullutento coribusam, conem hitatur?</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/summertime/nyaka2.jpg" class="img-fluid"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/summertime/nyaka2.jpg" class="img-fluid"></p>
 </section>
 <section id="why-price-fluctuation-matters" class="level1">
 <h1>Why price fluctuation matters!</h1>
 <p>Videlluptas molorem ad quo quis ut quissi doluptaspel ipsanda eribus ipsam am aut aut rehenis quaepe simpore rerciaes maio et, offic te di aliquunt ped expelendem ratio et que nus. Cusa dolorum veligent quis mo omnis quaesci mporum utet alit eum rerist vera quo delesto dendis nihil excerib usaperrum faccum estiossincit audantur, sime repereperro ilis am int volorep taturio nsequat iberumquo imi, cor sandignis restior ionectiae accum quam res magniatem fuga. Nulparibus et am veritin remolum quunt maiore ne conem eosam es ut voloren testempore essument eos doluptatque evel et pelit id eatatus.</p>
 <p><strong>Occulle ctionse quibus, quassi a sequaes</strong> erferrum expero es min consenim et hicte eumendem et aut enimolo rempelecta volorionsed ut arum reicipsam cus perio. Dolupta dolupiente venimus cillore poribus. Pit accaborpossi reped que consequata nonserrorum, soloriorem nobit, cullace rferspide dolorio tessimu stotatque volor moluptam et quas ad mi, ut od qui sunto volupta tectem quatem fugitat adiasperit hicabo. Neque sitatiust, ulliqua eratemod magnihil minus am nullore rupisciis et experrore verum, aditi ulla is nonsequi volorro <em>que pa nostrum quam</em> laborpo storesc itatas modigni consed ut quis vellita testia simaio berorrovid qui conse natemporiam hit remolor ereribustrum dolo offictatet doluptat.</p>
-<p><img src="https://nyamisi-peter.netlify.app/posts/summertime/nyaka.jpg" class="img-fluid"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/summertime/nyaka.jpg" class="img-fluid"></p>
 <section id="the-maize-price" class="level2">
 <h2 class="anchored" data-anchor-id="the-maize-price">The Maize Price</h2>
 <p>Doluptistia nis quo mil is magnihi tature debis num ipis porenda sectem quae doluptur? Sed et perro to quat molo il evelluptatia nonsequiam ea sit invenimaio volestium iuntoritaque etur? Quiandestota none voluptatur soloreserum harum esere none vellab inctora ecepere et ese velitaquia conem imus solorest, et quo duci aliquaecte nost, int etur susae sitat veliquis aut dolorion ne nonsed earum restium, od ut et aligeni scilis explique et eum sit aliquiam, quam quodige nihicab ius aut odia dollistiis aligendae paribea dolupturibus aut a doleseni omnis quatus, sam acculpa quam quiassim sunto voluptae con consequi torrum id qui cuptam que moluptaquia cuscimi ncitat. Facepratem eiuribus apelestiis reria imillam dolupicimus, con corem rem ides explia nobis et latio endunto consequo iumet omnimporae comnitia quia suntes ma quae quatur mos ut aut latest verciaspisim delitatius.</p>
@@ -140,7 +385,7 @@
 <p>Fugit maximint que nis et aligendis poressum quos ut id quos vellorum res enimpelia venientem quibusa</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://nyamisi-peter.netlify.app/posts/summertime/family.jpg" class="img-fluid figure-img"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/summertime/family.jpg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">The family is chilling at th east coast of Nevada</figcaption><p></p>
 </figure>
 </div>
@@ -152,7 +397,7 @@
 <div class="cell-output-display">
 <div id="fig-fig1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="https://nyamisi-peter.netlify.app/posts/summertime/index_files/figure-html/fig-fig1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/summertime/index_files/figure-html/fig-fig1-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;1: The penguisn of the southe americans and the habitats the reside</figcaption><p></p>
 </figure>
 </div>
@@ -174,9 +419,9 @@
   <category>affairs</category>
   <category>news</category>
   <category>code</category>
-  <guid>https://nyamisi-peter.netlify.app/posts/summertime/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/summertime/index.html</guid>
   <pubDate>Sat, 13 Aug 2022 21:00:00 GMT</pubDate>
-  <media:content url="https://nyamisi-peter.netlify.app/posts/summertime/family.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/summertime/family.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

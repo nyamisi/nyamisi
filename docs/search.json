@@ -4,14 +4,14 @@
     "href": "archive.html",
     "title": "Archive",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\n\n\nFeb 14, 2023\n\n\n\n\n\n\n\n\nThe Family Affairs\n\n\n\n\n\n\n\n\n\nFeb 14, 2023\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\n\n\nFeb 11, 2023\n\n\n\n\n\n\n\n\nThe Memorable Summer Time\n\n\n\n\n\n\n\n\n\nAug 14, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Text analytics and alluvial plots in R\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\n\n\n\n\n\n\nText analytics and word cloud in R and ggplot2\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\n\n\n\n\n\n\nThe Family Affairs\n\n\n\n\n\n\n\n\n\nFeb 14, 2023\n\n\n\n\n\n\n\n\nThe Memorable Summer Time\n\n\n\n\n\n\n\n\n\nAug 14, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog.html",
     "href": "blog.html",
     "title": "Nyamisi Peter",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 14, 2023\n\n\nHarlow Malloc\n\n\n0 min\n\n\n\n\n\n\n  \n\n\n\n\nThe Family Affairs\n\n\n\n\n\n\n\naffairs\n\n\n\n\n\n\n\n\n\n\n\nFeb 14, 2023\n\n\nNyamisi Peter\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 11, 2023\n\n\nTristan O’Malley\n\n\n0 min\n\n\n\n\n\n\n  \n\n\n\n\nThe Memorable Summer Time\n\n\n\n\n\n\n\naffairs\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nAug 14, 2022\n\n\nGrace Semba\n\n\n3 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Text analytics and alluvial plots in R\n\n\n\n\n\n\n\nvisualization\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nNyamisi Peter\n\n\n3 min\n\n\n\n\n\n\n  \n\n\n\n\nText analytics and word cloud in R and ggplot2\n\n\n\n\n\n\n\nvisualization\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nNyamisi Peter\n\n\n4 min\n\n\n\n\n\n\n  \n\n\n\n\nThe Family Affairs\n\n\n\n\n\n\n\naffairs\n\n\n\n\n\n\n\n\n\n\n\nFeb 14, 2023\n\n\nNyamisi Peter\n\n\n2 min\n\n\n\n\n\n\n  \n\n\n\n\nThe Memorable Summer Time\n\n\n\n\n\n\n\naffairs\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nAug 14, 2022\n\n\nGrace Semba\n\n\n3 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -28,11 +28,11 @@
     "text": "References\n\nPeter, N., Semba, M., Lugomela, C., & Kyewalyanga, M. S. (2018). The influence of physical-chemical variables on the spatial and seasonal variation of Chlorophyll-a in coastal waters of Unguja, Zanzibar, Tanzania. Western Indian Ocean Journal of Marine Science, 17(2), 25-34.\nPeter, N., Semba, M., Lugomela, C., & Kyewalyanga, M. (2021). Seasonal variability of vertical patterns in chlorophyll-a fluorescence in the coastal waters off Kimbiji, Tanzania. Western Indian Ocean Journal of Marine Science, 20(1), 21-33.\nSemba, M., Kimirei, I., Kyewalyanga, M., Peter, N., Brendonck, L., & Somers, B. (2016). The decline in phytoplankton biomass and prawn catches in the Rufiji-Mafia Channel, Tanzania. Western Indian Ocean Journal of Marine Science, 15(1), 15-29."
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "objectID": "posts/alluvial/index.html",
+    "href": "posts/alluvial/index.html",
+    "title": "Text analytics and alluvial plots in R",
     "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+    "text": "In the previous post, we covered how to present textual information in wordcloud. In this post, we are going to extend what we have learned previous with a new visualiation technique in town—alluvial plots. An alluvial diagram or alluvial plot is a type of visualization that shows changes in flow over time. Alluvial plots are commonly used to show how information flows from one source and feed to another source or destination. Several packages are used to create alluvaial plots, but in this post we are going to learn how to use ggalluvial package (Brunson 2020) to make alluvial plots in R (R Core Team 2022). If the package ks installed in your computer, you can simply download and install it from CRAN as;\n\ninstall.packages(\"alluvial\")\n\nBefore we proceed, we need to load some packages, whose function we are going to use throughout this post. These packages are highlighted in the chunk below;\n\nrequire(tidyverse)\nrequire(readxl)\nrequire(tm)           # for text mining\nrequire(SnowballC)    # for text stemming\nrequire(wordcloud)    # word-cloud generator\nrequire(RColorBrewer) # color palettes\nrequire(wordcloud2)\nrequire(ggalluvial)"
   },
   {
     "objectID": "posts/summertime/index.html",
@@ -91,10 +91,17 @@
     "text": "The worse goes to school fees\nFugit maximint que nis et aligendis poressum quos ut id quos vellorum res enimpelia venientem quibusa\n\n\n\nThe family is chilling at th east coast of Nevada\n\n\nEquation 1 is the mathematical equation respresenting….\n\\[\n\\sigma = \\frac{\\phi}{\\alpha}\n\\tag{1}\\]"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "posts/worldcloud/index.html",
+    "href": "posts/worldcloud/index.html",
+    "title": "Text analytics and word cloud in R and ggplot2",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "wordcloud is an image composed of words used in a particular text or subject, in which the size of each word indicates its frequency or importance. In this post, we are going to learn how to create worldcloud in R language (R Core Team 2022). To generate wordcloud plot in R, we need either worcloud (Fellows 2018) or wordcloud2 (wordcloud2?) packages. If these packages are not installed in your machine, you can simply download and install them from CRAN as;\n\ninstall.packages(\"wordcloud\")\ninstall.packages(\"wordcloud2\")\n\nBefore we proceed, we need to load some packages, whose function we are going to use throughout this post. These packages are highlighted in the chunk below;\n\nrequire(tidyverse)\nrequire(readxl)\nrequire(tm)           # for text mining\nrequire(SnowballC)    # for text stemming\nrequire(wordcloud)    # word-cloud generator\nrequire(RColorBrewer) # color palettes\nrequire(wordcloud2)\nrequire(ggalluvial)"
+  },
+  {
+    "objectID": "posts/worldcloud/index.html#tidy-pproject-titles",
+    "href": "posts/worldcloud/index.html#tidy-pproject-titles",
+    "title": "Text analytics and word cloud in R and ggplot2",
+    "section": "tidy pproject titles",
+    "text": "tidy pproject titles\n\nstudent.text = student$Title \n\nThereafter, a corpus will be generated from the vector using the Corpus() function of tm package\n\nstudent.doc = tm::Corpus(VectorSource(student.text))\n\nCleaning is an essential step to take before you generate your wordcloud. Indeed, for your analysis to bring useful insights, you may want to remove special characters, numbers or punctuation from your text. In addition, you should remove common stop words in order to produce meaningful results and avoid the most common frequent words such as “I” or “the” to appear in the word cloud. If you’re working with a corpus, there are several packages you can use to clean your text. The following lines of code show you how to do this using the tm package.\n\nstudent.doc.clean = student.doc %>% \n  tm_map(removeNumbers) %>% \n  tm_map(removePunctuation) %>% \n  tm_map(stripWhitespace) %>% \n  tm_map(content_transformer(tolower)) %>% \n  tm_map(removeWords, stopwords(kind = \"en\"))\n\n\nCreate a document-term-matrix\nWhat you want to do as a next step is to have a dataframe containing each word in your first column and their frequency in the second column. This can be done by creating a document term matrix with the TermDocumentMatrix function from the tm package.\n\nstudent.matrix = TermDocumentMatrix(student.doc.clean) %>% \n  as.matrix()\n\nstudent.word = sort(rowSums(student.matrix), decreasing = TRUE)\n     \n student.word.df = data.frame(word = names(student.word), freq = student.word)\n\n\n\nGenerate the word cloud\nThe wordcloud package is the most classic way to generate a word cloud. The following line of code shows you how to properly set the arguments. As an example, I chose to work with the student titles on their third year research project at SoAF.\n\nset.seed(1234) # for reproducibility\n\nwordcloud(words = student.word.df$word, \n          freq = student.word.df$freq, \n          min.freq = 1,\n          random.order = FALSE, \n         max.words = 200,\n         # rot.per = 0.35,\n          colors = brewer.pal(8, \"Dark2\"),\n         scale = c(3.5,0.4))\n\n\n\n\nIt may happen that your word cloud crops certain words or simply doesn’t show them. If this happens, make sure to add the argument scale=c(3.5,0.25) and play around with the numbers to make the word cloud fit. Another common mistake with word clouds is to show too many words that have little frequency. If this is the case, make sure to adjust the minimum frequency argument (min.freq=…) in order to render your word cloud more meaningful.\n\nset.seed(1234) # for reproducibility\n\nwordcloud(words = student.word.df$word, \n          freq = student.word.df$freq, \n          min.freq = 3,\n          random.order = FALSE, \n         # max.words = 1000,\n         # rot.per = 0.35,\n          colors = brewer.pal(8, \"Dark2\"), \n         scale = c(3.5,0.6))\n\n\n\n\nThe wordcloud2 package is a bit more fun to use, allowing us to do some more advanced visualisations. For instance, you can choose your wordcloud to appear in a specific shape or even letter (see this vignette for a useful tutorial). As an example, I used the same corpus of student title and generated the two word clouds shown below. Cool, right?\n\nwordcloud2(data = student.word.df, \n           size = 0.8, \n           color = \"random-dark\",\n           minSize = 3,\n           ellipticity = 2,\n           gridSize = 11)\n\n\n\n\n\nIn summary, R language provide myriad package for visualizing not only numeric data but also for textual information and summarize them in plots that are easily to understand. In the next post, we are going to use the approach to visualize textual information using alluvial plots"
   }
 ]

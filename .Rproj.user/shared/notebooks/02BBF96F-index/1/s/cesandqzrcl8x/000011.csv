@@ -1,0 +1,17 @@
+"0","student %>% glimpse()"
+"1","Rows: 163"
+"1",""
+"1","
+"
+"1","Columns: 5"
+"1",""
+"1","
+"
+"1","$ Name   [3m[38;5;246m<chr>[39m[23m ""Rashid Rahma A"", ""Muller Fransisca L"", ""Bitoye Mancef C"", ""Mmari Elisifa M"", ""Amina Gumada G"", ""Damas Nelson M"",…
+$ gender [3m[38;5;246m<chr>[39m[23m ""F"", ""F"", ""F"", ""F"", ""F"", ""M"", ""M"", ""M"", ""F"", ""F"", ""F"", ""F"", ""F"", ""M"", ""M"", ""M"", ""M"", ""M"", ""F"", ""M"", ""M"", ""M"", ""M""…
+$ field  [3m[38;5;246m<chr>[39m[23m ""microbiology"", ""aquaculture"", ""ecosystem"", ""aquaculture"", ""social-economics"", ""social-economics"", ""fishery"", ""ec…
+$ Title  [3m[38;5;246m<chr>[39m[23m ""Assessing the prevalence and intensity of parasitic infections on cultured Nile tilapia in selected local tilapi…
+$ year   [3m[38;5;246m<dbl>[39m[23m 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023,…"
+"1",""
+"1","
+"

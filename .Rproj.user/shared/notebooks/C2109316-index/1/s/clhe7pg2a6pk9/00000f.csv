@@ -1,0 +1,7 @@
+"0","student.matrix = TermDocumentMatrix(student.doc.clean) %>% "
+"0","  as.matrix()"
+"0",""
+"0","student.word = sort(rowSums(student.matrix), decreasing = TRUE)"
+"0","     "
+"0"," student.word.df = data.frame(word = names(student.word), freq = student.word)"
+"0","  "
