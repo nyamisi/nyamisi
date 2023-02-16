@@ -79,31 +79,9 @@ student %>%
 ```
 
 
-```{r}
-#|eval: false
-#|include: false
-student %>% 
-  mutate(field = replace(field, field == "GIS" | field == "policy", "fishery"),
-         field = replace(field, field == "plankton", "ecosystem"),
-         field = replace(field, field == "physical", "pollution")) %>% 
-  filter(year %in% c(2021,2023)) %>% 
-  mutate(year = as.factor(year)) %>% 
-  group_by(gender, field, year) %>% 
-  count() %>% 
-  ggplot(aes(axis1 = year, axis3 = gender, axis2 = field, y = n)) +
-  geom_alluvium(aes(fill = field), curve_type = "xspline", alpha = 0.6, width = 1/3)+
-  geom_stratum(aes(fill = field), width = 1/3)+
-  geom_label(stat = "stratum", aes(label = after_stat(stratum)), size = 3, alpha = 0.6)+
-  theme_void()+
-  theme(legend.position = "none")+
-  ggsci::scale_fill_futurama()+
-  scale_fill_brewer(palette = "Dark2")
-  # scale_x_discrete(expand = c(0.1,0.05))
-  
-  # ggsave("aa.pdf")
-```
 
-In summary, R language provide myriad package for visualizing not only numeric data but also for textual information and summarize them in plots that are easily to understand. In the next post, we are going to use the approach to visualize textual information using alluvial plots
+
+In summary, R language provide a good visualization tool for both quantitative and qualitative data. The alluvial plots is one of the best tool for visualizing the flow of qualitative variables of different categories.
 
 
 ## Consultated references

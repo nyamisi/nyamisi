@@ -85,37 +85,7 @@ $ year   &lt;dbl&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023,
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;">#|eval: false</span></span>
-<span id="cb7-2"><span class="co" style="color: #5E5E5E;">#|include: false</span></span>
-<span id="cb7-3">student <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-4">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"GIS"</span> <span class="sc" style="color: #5E5E5E;">|</span> field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"policy"</span>, <span class="st" style="color: #20794D;">"fishery"</span>),</span>
-<span id="cb7-5">         <span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"plankton"</span>, <span class="st" style="color: #20794D;">"ecosystem"</span>),</span>
-<span id="cb7-6">         <span class="at" style="color: #657422;">field =</span> <span class="fu" style="color: #4758AB;">replace</span>(field, field <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"physical"</span>, <span class="st" style="color: #20794D;">"pollution"</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-7">  <span class="fu" style="color: #4758AB;">filter</span>(year <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2021</span>,<span class="dv" style="color: #AD0000;">2023</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-8">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">year =</span> <span class="fu" style="color: #4758AB;">as.factor</span>(year)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-9">  <span class="fu" style="color: #4758AB;">group_by</span>(gender, field, year) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-10">  <span class="fu" style="color: #4758AB;">count</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
-<span id="cb7-11">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">axis1 =</span> year, <span class="at" style="color: #657422;">axis3 =</span> gender, <span class="at" style="color: #657422;">axis2 =</span> field, <span class="at" style="color: #657422;">y =</span> n)) <span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-12">  <span class="fu" style="color: #4758AB;">geom_alluvium</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> field), <span class="at" style="color: #657422;">curve_type =</span> <span class="st" style="color: #20794D;">"xspline"</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">3</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-13">  <span class="fu" style="color: #4758AB;">geom_stratum</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">fill =</span> field), <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">3</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-14">  <span class="fu" style="color: #4758AB;">geom_label</span>(<span class="at" style="color: #657422;">stat =</span> <span class="st" style="color: #20794D;">"stratum"</span>, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">label =</span> <span class="fu" style="color: #4758AB;">after_stat</span>(stratum)), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.6</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-15">  <span class="fu" style="color: #4758AB;">theme_void</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-16">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">"none"</span>)<span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-17">  ggsci<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">scale_fill_futurama</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
-<span id="cb7-18">  <span class="fu" style="color: #4758AB;">scale_fill_brewer</span>(<span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">"Dark2"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Scale for fill is already present.
-Adding another scale for fill, which will replace the existing scale.</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="https://nyamisi.github.io/nyamisi/posts/alluvial/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">  <span class="co" style="color: #5E5E5E;"># scale_x_discrete(expand = c(0.1,0.05))</span></span>
-<span id="cb9-2">  </span>
-<span id="cb9-3">  <span class="co" style="color: #5E5E5E;"># ggsave("aa.pdf")</span></span></code></pre></div>
-</div>
-<p>In summary, R language provide myriad package for visualizing not only numeric data but also for textual information and summarize them in plots that are easily to understand. In the next post, we are going to use the approach to visualize textual information using alluvial plots</p>
+<p>In summary, R language provide a good visualization tool for both quantitative and qualitative data. The alluvial plots is one of the best tool for visualizing the flow of qualitative variables of different categories.</p>
 <section id="consultated-references" class="level2">
 
 
