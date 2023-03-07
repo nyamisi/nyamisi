@@ -28,5 +28,8 @@
   },
   "posts/alluvial/index.qmd": {
     "index.html": "dfa95359"
+  },
+  "posts/github-deploy-publish/index.qmd": {
+    "index.html": "27b003fd"
   }
 }

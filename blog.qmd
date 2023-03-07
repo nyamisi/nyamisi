@@ -2,6 +2,7 @@
 title: ""
 listing:
   contents: posts
+  page-size: 120
   sort: "date desc"
   type: default
   categories: true
@@ -12,3 +13,22 @@ listing:
 page-layout: full
 title-block-banner: false
 ---
+
+<!-- :::: {.columns} -->
+
+<!-- ::: {.column width="40%"} -->
+<!-- # Series -->
+
+<!-- #### [TextAnalytics-series](ggplot-series.html) -->
+<!-- This series contains a great deal of tips, tricks and packages that you can use to level up your text analysis and categorical data visualization  -->
+<!-- ::: -->
+
+<!-- ::: {.column width="60%"} -->
+
+<!-- # Subscribe -->
+<!-- <iframe id="beehiiv-form" src="https://embeds.beehiiv.com/9232d2a2-6e85-4beb-b8ed-1de94e9e4f01?slim=true" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent; height: 75px; width: 90%;"></iframe> -->
+
+<!-- ::: -->
+
+
+<!-- :::: -->

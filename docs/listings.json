@@ -2,6 +2,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/github-deploy-publish/index.html",
       "/posts/alluvial/index.html",
       "/posts/worldcloud/index.html",
       "/posts/the-family-affairs/index.html",
@@ -11,6 +12,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/github-deploy-publish/index.html",
       "/posts/alluvial/index.html",
       "/posts/worldcloud/index.html",
       "/posts/the-family-affairs/index.html",

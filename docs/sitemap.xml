@@ -2,30 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nyamisi.github.io/nyamisi/archive.html</loc>
-    <lastmod>2023-02-16T06:48:58.549Z</lastmod>
+    <lastmod>2023-03-07T12:56:35.196Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/blog.html</loc>
-    <lastmod>2023-02-16T06:48:17.578Z</lastmod>
+    <lastmod>2023-03-07T12:56:35.690Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/index.html</loc>
-    <lastmod>2023-02-14T22:12:46.395Z</lastmod>
+    <lastmod>2023-02-18T18:32:12.809Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/alluvial/index.html</loc>
-    <lastmod>2023-02-16T06:48:30.062Z</lastmod>
+    <lastmod>2023-03-07T11:39:35.905Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/index.html</loc>
+    <lastmod>2023-03-07T12:56:37.510Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/summertime/index.html</loc>
-    <lastmod>2023-02-14T22:12:47.558Z</lastmod>
+    <lastmod>2023-02-18T18:32:15.178Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/the-family-affairs/index.html</loc>
-    <lastmod>2023-02-14T22:12:47.915Z</lastmod>
+    <lastmod>2023-03-07T12:25:01.442Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/worldcloud/index.html</loc>
-    <lastmod>2023-02-16T06:48:45.895Z</lastmod>
+    <lastmod>2023-03-07T11:40:28.460Z</lastmod>
   </url>
 </urlset>
