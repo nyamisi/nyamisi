@@ -10,7 +10,384 @@
 <atom:link href="https://nyamisi.github.io/nyamisi/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Coding for all for better today and tommorow</description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Mon, 06 Mar 2023 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 07 Mar 2023 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Machine Learning (ML) and Artificial Intelligence (AI) using classification Algorithm in R</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Technology is becoming more important in our daily lives in every second. In order to keep up with the pace of these technological changes, scientists are more heavily learning different algorithms to make things easier so as to meet consumer’s demand. These technologies are commonly associated with artificial intelligence, machine learning, deep learning, and neural networks.</p>
+<p><strong>Machine learning (ML)</strong> and <strong>artificial intelligence (AI)</strong> are closely related concepts that are often used interchangeably, but they are not the same thing.</p>
+<p><strong>Artificial intelligence</strong> refers to the ability of machines to mimic human cognitive functions such as learning, reasoning, and problem-solving <a href="https://www.ibm.com/cloud/blog/ai-vs-machine-learning-vs-deep-learning-vs-neural-networks">IBM</a>. AI encompasses a wide range of techniques and approaches, including rule-based systems, expert systems, and machine learning. It is used to predict, automate, and optimize tasks that humans have historically done, such as speech and facial recognition, decision making, and translation.</p>
+<p><strong>Machine learning</strong> is a specific type of AI that involves the development of algorithms that can learn from data and make predictions or decisions based on that data <span class="citation" data-cites="mitchell07">(Mitchell et al. 2007)</span>. In other words, machine learning algorithms are designed to learn patterns and relationships in data without being explicitly programmed to do so.</p>
+<section id="machine-learning-algorithms" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-algorithms">Machine Learning Algorithms</h2>
+<p>There are several types of machine learning algorithms, including <strong>supervised learning</strong>, <strong>unsupervised learning</strong>, and <strong>reinforcement learning</strong>. Supervised learning involves using labeled (predictor) training data to train a model to make predictions on new, unseen data. Unsupervised learning involves finding patterns and relationships in data without the use of labeled training data. Reinforcement learning involves training a model to make decisions based on feedback in the form of rewards or punishments.</p>
+<p><strong>Classification and regression</strong> are two of the most common types of supervised learning algorithms in machine learning and artificial intelligence. Classification is a type of supervised learning algorithm used for predicting discrete or categorical outcomes. It involves mapping input variables to discrete output categories or labels. The objective of classification is to build a model that accurately assigns new data points to the correct class or label.</p>
+<p>On the other hand, regression is a type of supervised learning algorithm used for predicting continuous or numeric outcomes. It involves mapping input variables to continuous output values. The objective of regression is to build a model that accurately predicts the value of the dependent variable based on the values of the independent variables.</p>
+<p>In this tutorial we are going to deal with classification algorithm in predicting the type of penguin species flipper length, bill dimensions and sex. We will use penguins data from the <strong>palmerpenguins</strong> package <span class="citation" data-cites="penguin20">(Horst, Hill, and Gorman 2020)</span>. It includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.</p>
+<p>First, we will load the packages which we are going to use in this tutorial; I will use <code>require()</code> function, but you may also use <code>library()</code> function depending on your preferences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">require</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">require</span>(tidymodels)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">require</span>(palmerpenguins)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">require</span>(ranger)</span></code></pre></div>
+</div>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>After loading the packages, we will load the penguins data <span class="citation" data-cites="penguin20">(Horst, Hill, and Gorman 2020)</span> and remove all the missing values in the dataset and equate them as <strong><em>penguin.data</em></strong>. The dataset consist of 333 rows and 8 columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">penguin.data <span class="ot" style="color: #003B4F;">=</span> palmerpenguins<span class="sc" style="color: #5E5E5E;">::</span>penguins <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;">drop_na</span>()</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">penguin.data</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 333 × 8
+   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;      &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007
+ 2 Adelie  Torgersen           39.5          17.4        186    3800 fema…  2007
+ 3 Adelie  Torgersen           40.3          18          195    3250 fema…  2007
+ 4 Adelie  Torgersen           36.7          19.3        193    3450 fema…  2007
+ 5 Adelie  Torgersen           39.3          20.6        190    3650 male   2007
+ 6 Adelie  Torgersen           38.9          17.8        181    3625 fema…  2007
+ 7 Adelie  Torgersen           39.2          19.6        195    4675 male   2007
+ 8 Adelie  Torgersen           41.1          17.6        182    3200 fema…  2007
+ 9 Adelie  Torgersen           38.6          21.2        191    3800 male   2007
+10 Adelie  Torgersen           34.6          21.1        198    4400 male   2007
+# … with 323 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g</code></pre>
+</div>
+</div>
+<p>Then, we will look on the internal structure of the dataset using <code>glimpse()</code> function of <strong>dplyr</strong> package. Our dataset consist of 8 variables (columns); 3 are factors data (species, island and sex), 2 numeric or double data (bill_length_mm, bill_depth_mm) and 3 integers (flipper_length_mm, body_mass_g, year). The variable species have 3 different levels which are <em>Adelie</em>, <em>Gentoo</em> and <em>Chinstrap</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;">glimpse</span>(penguin.data)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 333
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, 36.7, 39.3, 38.9, 39.2, 41.1, 38.6…
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, 19.3, 20.6, 17.8, 19.6, 17.6, 21.2…
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, 193, 190, 181, 195, 182, 191, 198, 18…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, 3450, 3650, 3625, 4675, 3200, 3800…
+$ sex               &lt;fct&gt; male, female, female, female, male, female, male, fe…
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
+</div>
+</div>
+<p>In this tutorial we will use only three variables from penguins data; which are species, bill_length_mm, bill_depth_mm. We will run the <code>select()</code> function of <strong>dplyr</strong> package <span class="citation" data-cites="dplyr">(Wickham et al. 2022)</span> to select our variables of interest</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">penguin.data <span class="ot" style="color: #003B4F;">=</span> penguin.data <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;">select</span>(species, </span>
+<span id="cb6-3">         bill_length_mm, </span>
+<span id="cb6-4">         bill_depth_mm)</span></code></pre></div>
+</div>
+<p>Before we apply ML algorithms, first we will crosscheck whether the predictor variable (in this case, species), have distinct features (like size) which will help in providing the more accurate output during predictions. When there is interconnection or inter-relation between response variables, some confusion might arise during predictions.</p>
+<p>We will use scatter plot between bill_length_mm and bill_depth_mm to see the distribution of each species in the dataset. There is a distinct differences between the size of the three penguins species (Figure&nbsp;1). Each species has its size range; therefore, the dataset fit best in our analysis.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">penguin.data <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb7-2">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">y =</span> bill_length_mm, </span>
+<span id="cb7-3">             <span class="at" style="color: #657422;">x =</span> bill_depth_mm, </span>
+<span id="cb7-4">             <span class="at" style="color: #657422;">color =</span> species)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-5">  <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-6">  <span class="fu" style="color: #4758AB;">theme_bw</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-scatter" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/index_files/figure-html/fig-scatter-1.png" class="img-fluid figure-img" width="480"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Scatter plot showing the distribution of <em>Adelie</em>, <em>Gentoo</em> and <em>Chinstrap</em> species</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="classification-algorithm">Classification algorithm</h2>
+<p>As explained earlier, supervised learning involves training a dataset before you have your predictions. Since our output is categorical (prediction of the species type), then we will use classification algorithm in our analysis.</p>
+<section id="data-spliting" class="level3">
+<h3 class="anchored" data-anchor-id="data-spliting">Data Spliting</h3>
+<p>Classification algorithm as one of the supervised learning, needs two data types; the <strong>training</strong> and <strong>testing</strong> data set. Our <code>penguin.data</code> will be split into these two groups. The training dataset will have a proportion of 70% and the remaining 30% will be the test dataset. In total, our dataset has 333 observations in which 233 samples will be used to train our model while in testing the accuracy of the model 100 samples will used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">split.penguin <span class="ot" style="color: #003B4F;">=</span> penguin.data <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;">initial_split</span>(<span class="at" style="color: #657422;">prop =</span> <span class="fl" style="color: #AD0000;">0.7</span>)</span>
+<span id="cb8-3"></span>
+<span id="cb8-4">split.penguin</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Training/Testing/Total&gt;
+&lt;233/100/333&gt;</code></pre>
+</div>
+</div>
+<p>The training data below with 233 samples will be used for training the model;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">train.set <span class="ot" style="color: #003B4F;">=</span> split.penguin <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb10-2">  <span class="fu" style="color: #4758AB;">training</span>()</span>
+<span id="cb10-3"></span>
+<span id="cb10-4">train.set</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 233 × 3
+   species   bill_length_mm bill_depth_mm
+   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Gentoo              51.1          16.3
+ 2 Adelie              39.6          20.7
+ 3 Chinstrap           50.1          17.9
+ 4 Gentoo              46.8          15.4
+ 5 Gentoo              48.7          15.7
+ 6 Chinstrap           45.5          17  
+ 7 Chinstrap           51.3          19.2
+ 8 Adelie              41.5          18.5
+ 9 Chinstrap           50.5          18.4
+10 Adelie              40.2          17.1
+# … with 223 more rows</code></pre>
+</div>
+</div>
+<p>The testing data with 100 observations will be used to test the accuracy of the model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">test.set <span class="ot" style="color: #003B4F;">=</span> split.penguin <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb12-2">  <span class="fu" style="color: #4758AB;">testing</span>()</span>
+<span id="cb12-3"></span>
+<span id="cb12-4">test.set</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 3
+   species bill_length_mm bill_depth_mm
+   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie            39.1          18.7
+ 2 Adelie            39.3          20.6
+ 3 Adelie            38.9          17.8
+ 4 Adelie            41.1          17.6
+ 5 Adelie            38.6          21.2
+ 6 Adelie            34.6          21.1
+ 7 Adelie            36.6          17.8
+ 8 Adelie            46            21.5
+ 9 Adelie            37.8          18.3
+10 Adelie            38.8          17.2
+# … with 90 more rows</code></pre>
+</div>
+</div>
+<section id="data-training" class="level4">
+<h4 class="anchored" data-anchor-id="data-training">Data training</h4>
+<p>Use the <strong><em>train.set</em></strong> data to train the model. Run the <code>rand_forest()</code> of the <strong>parsnip</strong> package <span class="citation" data-cites="parsnip22">(Kuhn and Vaughan 2022)</span>, set engine as <strong>ranger</strong> and the mode as <strong>classification</strong>. Fit the train data set with the response be the <strong>species</strong>. The summary of the training model will be shown with the predictions error of 0.02 equivalent to 2%.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">mod <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">rand_forest</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb14-2">  <span class="fu" style="color: #4758AB;">set_engine</span>(<span class="at" style="color: #657422;">engine =</span> <span class="st" style="color: #20794D;">"ranger"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb14-3">  <span class="fu" style="color: #4758AB;">set_mode</span>(<span class="at" style="color: #657422;">mode =</span> <span class="st" style="color: #20794D;">"classification"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb14-4">  <span class="fu" style="color: #4758AB;">fit</span>(species<span class="sc" style="color: #5E5E5E;">~</span>., <span class="at" style="color: #657422;">data =</span> train.set)</span>
+<span id="cb14-5"></span>
+<span id="cb14-6">mod</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1), probability = TRUE) 
+
+Type:                             Probability estimation 
+Number of trees:                  500 
+Sample size:                      233 
+Number of independent variables:  2 
+Mtry:                             1 
+Target node size:                 10 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.03539074 </code></pre>
+</div>
+</div>
+</section>
+<section id="predictions" class="level4">
+<h4 class="anchored" data-anchor-id="predictions">Predictions</h4>
+<p>Then, the <strong><em>test.set</em></strong> data will be used in predictions of the type of the species provided we have the bill length and bill depth. The predicted class and the test dataset will be binded together to see if there is a match or mismatch of the predicted versus the actual species type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">rf.pred <span class="ot" style="color: #003B4F;">=</span> mod <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb16-2">  <span class="fu" style="color: #4758AB;">predict</span>(test.set) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb16-3">  <span class="fu" style="color: #4758AB;">bind_cols</span>(test.set)</span>
+<span id="cb16-4"></span>
+<span id="cb16-5">rf.pred</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 4
+   .pred_class species bill_length_mm bill_depth_mm
+   &lt;fct&gt;       &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie      Adelie            39.1          18.7
+ 2 Adelie      Adelie            39.3          20.6
+ 3 Adelie      Adelie            38.9          17.8
+ 4 Adelie      Adelie            41.1          17.6
+ 5 Adelie      Adelie            38.6          21.2
+ 6 Adelie      Adelie            34.6          21.1
+ 7 Adelie      Adelie            36.6          17.8
+ 8 Chinstrap   Adelie            46            21.5
+ 9 Adelie      Adelie            37.8          18.3
+10 Adelie      Adelie            38.8          17.2
+# … with 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="accuracy-testing" class="level4">
+<h4 class="anchored" data-anchor-id="accuracy-testing">Accuracy testing</h4>
+<p>We have already predicted for the results, then we need to test for the accuracy of the model. The model is considered accurate when its accuracy value is higher or equal to 80%. The obtained accuracy of our model is 0.98 (98%) and the kap 96%. Our model can then be used to predict the type of species provided you have the bill length and the bill depth of the penguins.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">rf.pred <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb18-2">  <span class="fu" style="color: #4758AB;">metrics</span>(<span class="at" style="color: #657422;">truth =</span> species,</span>
+<span id="cb18-3">          <span class="at" style="color: #657422;">estimate =</span> .pred_class)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.94 
+2 kap      multiclass     0.902</code></pre>
+</div>
+</div>
+<p>Now, we need to see the accuracy for each predicted species versus the actual type. We will use <code>conf_mat()</code> of the <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(Kuhn, Vaughan, and Hvitfeldt 2022)</span>. The result indicate that 43 <em>Adelie</em> were correctly predicted while 1 <em>Chinstrap</em> was incorrectly predicted as <em>Adelie</em>. While 16 <em>Chinstrap</em> were correctly predicted, 1 of this species was wrongly predicted as <em>Gentoo</em>. On the other hand, all 39 <em>Gentoo</em> were correctly predicted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">rf.pred <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb20-2">  <span class="fu" style="color: #4758AB;">conf_mat</span>(<span class="at" style="color: #657422;">truth =</span> species, </span>
+<span id="cb20-3">           <span class="at" style="color: #657422;">estimate =</span> .pred_class)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Truth
+Prediction  Adelie Chinstrap Gentoo
+  Adelie        46         3      0
+  Chinstrap      1        12      2
+  Gentoo         0         0     36</code></pre>
+</div>
+</div>
+<p>Then, we need to calculate the probability of each observation be accurate for every species. We will use <code>predict()</code> function of *<strong>stats</strong> package of R <span class="citation" data-cites="r">(R Core Team 2022)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1">rf.preda <span class="ot" style="color: #003B4F;">=</span> mod <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb22-2">  <span class="fu" style="color: #4758AB;">predict</span>(test.set, </span>
+<span id="cb22-3">          <span class="at" style="color: #657422;">type =</span> <span class="st" style="color: #20794D;">"prob"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb22-4">  <span class="fu" style="color: #4758AB;">bind_cols</span>(test.set)</span>
+<span id="cb22-5"></span>
+<span id="cb22-6">rf.preda</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 6
+   .pred_Adelie .pred_Chinstrap .pred_Gentoo species bill_length_mm bill_depth…¹
+          &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;            &lt;dbl&gt;        &lt;dbl&gt;
+ 1        0.991         0.00917      0       Adelie            39.1         18.7
+ 2        0.988         0.0118       0       Adelie            39.3         20.6
+ 3        0.997         0.00266      0       Adelie            38.9         17.8
+ 4        0.999         0.00111      0       Adelie            41.1         17.6
+ 5        0.985         0.0152       0       Adelie            38.6         21.2
+ 6        0.985         0.0152       0       Adelie            34.6         21.1
+ 7        0.997         0.00266      0       Adelie            36.6         17.8
+ 8        0.331         0.667        0.00138 Adelie            46           21.5
+ 9        0.996         0.00375      0       Adelie            37.8         18.3
+10        0.997         0.00152      0.00102 Adelie            38.8         17.2
+# … with 90 more rows, and abbreviated variable name ¹​bill_depth_mm</code></pre>
+</div>
+</div>
+</section>
+<section id="roc-curve" class="level4">
+<h4 class="anchored" data-anchor-id="roc-curve">Roc Curve</h4>
+<p>The probability results will then be used to plot the roc curve (Figure&nbsp;2). The <code>roc_curve()</code> function of <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(Kuhn, Vaughan, and Hvitfeldt 2022)</span> will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The <code>autoplot()</code> function of the <strong><em>workflowsets</em></strong> package <span class="citation" data-cites="workflowsets22">(Kuhn and Couch 2022)</span> will then be applied to create the curve. From the curve it is shown that all the three species (<em>Adelie</em>, <em>Gentoo</em> and <em>Chinstrap</em>) fits better to the model (Figure&nbsp;2).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">rf.preda <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb24-2">  <span class="fu" style="color: #4758AB;">roc_curve</span>(species, </span>
+<span id="cb24-3">            .pred_Adelie, </span>
+<span id="cb24-4">            .pred_Chinstrap, </span>
+<span id="cb24-5">            .pred_Gentoo) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb24-6">  <span class="fu" style="color: #4758AB;">autoplot</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb24-7">  ggpubr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_pubclean</span>()<span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb24-8">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">strip.background =</span> <span class="fu" style="color: #4758AB;">element_blank</span>())</span></code></pre></div>
+<div class="cell-output-display">
+<div id="fig-roc-curve" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/index_files/figure-html/fig-roc-curve-1.png" class="img-fluid figure-img" width="480"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: The ROC curve of <em>Adelie</em>, <em>Chinstrap</em> and <em>Gentoo</em> species</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="model-validation" class="level4">
+<h4 class="anchored" data-anchor-id="model-validation">Model validation</h4>
+<p>In order to validate whether the model works</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">new.penguin <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">tibble</span>(<span class="at" style="color: #657422;">bill_length_mm =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">35</span>,<span class="fl" style="color: #AD0000;">47.5</span>, <span class="dv" style="color: #AD0000;">70</span>),</span>
+<span id="cb25-2">                     <span class="at" style="color: #657422;">bill_depth_mm =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">13</span>,<span class="dv" style="color: #AD0000;">17</span>, <span class="dv" style="color: #AD0000;">18</span>))</span>
+<span id="cb25-3"></span>
+<span id="cb25-4">mod <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb25-5">  <span class="fu" style="color: #4758AB;">predict</span>(new.penguin)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 1
+  .pred_class
+  &lt;fct&gt;      
+1 Adelie     
+2 Chinstrap  
+3 Chinstrap  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1">aa <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">tibble</span>(<span class="at" style="color: #657422;">bill_depth_mm =</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="at" style="color: #657422;">n =</span> <span class="dv" style="color: #AD0000;">10</span>,</span>
+<span id="cb27-2">                                  <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">15</span>, </span>
+<span id="cb27-3">                                  <span class="at" style="color: #657422;">sd =</span> <span class="dv" style="color: #AD0000;">3</span>),</span>
+<span id="cb27-4">            <span class="at" style="color: #657422;">bill_length_mm =</span> <span class="fu" style="color: #4758AB;">rnorm</span>(<span class="at" style="color: #657422;">n =</span> <span class="dv" style="color: #AD0000;">10</span>,</span>
+<span id="cb27-5">                                   <span class="at" style="color: #657422;">mean =</span> <span class="dv" style="color: #AD0000;">50</span>, </span>
+<span id="cb27-6">                                   <span class="at" style="color: #657422;">sd =</span> <span class="dv" style="color: #AD0000;">10</span>))</span>
+<span id="cb27-7"></span>
+<span id="cb27-8">mod <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb27-9">  <span class="fu" style="color: #4758AB;">predict</span>(aa) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb27-10">  <span class="fu" style="color: #4758AB;">bind_cols</span>(aa)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   .pred_class bill_depth_mm bill_length_mm
+   &lt;fct&gt;               &lt;dbl&gt;          &lt;dbl&gt;
+ 1 Gentoo               13.9           48.4
+ 2 Adelie               19.1           31.0
+ 3 Gentoo               12.9           61.4
+ 4 Gentoo               14.6           39.8
+ 5 Gentoo               10.6           42.3
+ 6 Gentoo               15.4           46.6
+ 7 Gentoo               14.6           48.2
+ 8 Chinstrap            18.9           52.6
+ 9 Adelie               14.0           36.4
+10 Gentoo               12.9           46.1</code></pre>
+</div>
+</div>
+<p>But machine learning comes with disadvantages. First and foremost, it can be expensive. Machine learning projects are typically driven by data scientists, who command high salaries. These projects also require software infrastructure that can be expensive.</p>
+<p>There is also the problem of machine learning bias. Algorithms trained on data sets that exclude certain populations or contain errors can lead to inaccurate models of the world that, at best, fail and, at worst, are discriminatory. When an enterprise bases core business processes on biased models it can run into regulatory and reputational harm.</p>
+</section>
+</section>
+</section>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-penguin20" class="csl-entry">
+Horst, Allison Marie, Alison Presmanes Hill, and Kristen B Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://doi.org/10.5281/zenodo.3960218">https://doi.org/10.5281/zenodo.3960218</a>.
+</div>
+<div id="ref-workflowsets22" class="csl-entry">
+Kuhn, Max, and Simon Couch. 2022. <em>Workflowsets: Create a Collection of ’Tidymodels’ Workflows</em>. <a href="https://CRAN.R-project.org/package=workflowsets">https://CRAN.R-project.org/package=workflowsets</a>.
+</div>
+<div id="ref-parsnip22" class="csl-entry">
+Kuhn, Max, and Davis Vaughan. 2022. <em>Parsnip: A Common API to Modeling and Analysis Functions</em>. <a href="https://CRAN.R-project.org/package=parsnip">https://CRAN.R-project.org/package=parsnip</a>.
+</div>
+<div id="ref-yardstick22" class="csl-entry">
+Kuhn, Max, Davis Vaughan, and Emil Hvitfeldt. 2022. <em>Yardstick: Tidy Characterizations of Model Performance</em>. <a href="https://CRAN.R-project.org/package=yardstick">https://CRAN.R-project.org/package=yardstick</a>.
+</div>
+<div id="ref-mitchell07" class="csl-entry">
+Mitchell, Tom Michael et al. 2007. <em>Machine Learning</em>. Vol. 1. McGraw-hill New York.
+</div>
+<div id="ref-r" class="csl-entry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-dplyr" class="csl-entry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>visualization</category>
+  <category>code</category>
+  <guid>https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/index.html</guid>
+  <pubDate>Tue, 07 Mar 2023 21:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Deploying and publishing to GitHub</title>
   <dc:creator>Nyamisi Peter</dc:creator>

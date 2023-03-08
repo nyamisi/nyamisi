@@ -31,5 +31,8 @@
   },
   "posts/github-deploy-publish/index.qmd": {
     "index.html": "27b003fd"
+  },
+  "posts/machine-learning-classification/index.qmd": {
+    "index.html": "39845176"
   }
 }
