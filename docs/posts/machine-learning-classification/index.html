@@ -9,7 +9,7 @@
 <meta name="author" content="Nyamisi Peter">
 <meta name="dcterms.date" content="2023-03-08">
 
-<title>Nyamisi Peter - Machine Learning (ML) and Artificial Intelligence (AI) using classification Algorithm in R</title>
+<title>Nyamisi Peter - Machine Learning (ML) using classification Algorithm in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -171,7 +171,7 @@ cookieconsent.run({
   
 
 
-<meta name="twitter:title" content="Nyamisi Peter - Machine Learning (ML) and Artificial Intelligence (AI) using classification Algorithm in R">
+<meta name="twitter:title" content="Nyamisi Peter - Machine Learning (ML) using classification Algorithm in R">
 <meta name="twitter:description" content="Technology is becoming more important in our daily lives in every second.">
 <meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/posts\machine-learning-classification\thumbnail_blog.png">
 <meta name="twitter:creator" content="@rappa753">
@@ -254,6 +254,7 @@ cookieconsent.run({
   <ul class="collapse">
   <li><a href="#data-spliting" id="toc-data-spliting" class="nav-link" data-scroll-target="#data-spliting">Data Spliting</a></li>
   </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#consultated-references" id="toc-consultated-references" class="nav-link" data-scroll-target="#consultated-references">Consultated references</a></li>
   </ul></li>
   </ul>
@@ -264,9 +265,8 @@ cookieconsent.run({
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Machine Learning (ML) and Artificial Intelligence (AI) using classification Algorithm in R</h1>
+<h1 class="title">Machine Learning (ML) using classification Algorithm in R</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">visualization</div>
     <div class="quarto-category">code</div>
   </div>
   </div>
@@ -301,18 +301,31 @@ cookieconsent.run({
 <p><strong>Machine learning (ML)</strong> and <strong>artificial intelligence (AI)</strong> are closely related concepts that are often used interchangeably, but they are not the same thing.</p>
 <p><strong>Artificial intelligence</strong> refers to the ability of machines to mimic human cognitive functions such as learning, reasoning, and problem-solving <a href="https://www.ibm.com/cloud/blog/ai-vs-machine-learning-vs-deep-learning-vs-neural-networks">IBM</a>. AI encompasses a wide range of techniques and approaches, including rule-based systems, expert systems, and machine learning. It is used to predict, automate, and optimize tasks that humans have historically done, such as speech and facial recognition, decision making, and translation.</p>
 <p><strong>Machine learning</strong> is a specific type of AI that involves the development of algorithms that can learn from data and make predictions or decisions based on that data <span class="citation" data-cites="mitchell07">(<a href="#ref-mitchell07" role="doc-biblioref">Mitchell et al. 2007</a>)</span>. In other words, machine learning algorithms are designed to learn patterns and relationships in data without being explicitly programmed to do so.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ML-image.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Machine learning and artificial intelligence</figcaption><p></p>
+</figure>
+</div>
 <section id="machine-learning-algorithms" class="level2">
 <h2 class="anchored" data-anchor-id="machine-learning-algorithms">Machine Learning Algorithms</h2>
 <p>There are several types of machine learning algorithms, including <strong>supervised learning</strong>, <strong>unsupervised learning</strong>, and <strong>reinforcement learning</strong>. Supervised learning involves using labeled (predictor) training data to train a model to make predictions on new, unseen data. Unsupervised learning involves finding patterns and relationships in data without the use of labeled training data. Reinforcement learning involves training a model to make decisions based on feedback in the form of rewards or punishments.</p>
 <p><strong>Classification and regression</strong> are two of the most common types of supervised learning algorithms in machine learning and artificial intelligence. Classification is a type of supervised learning algorithm used for predicting discrete or categorical outcomes. It involves mapping input variables to discrete output categories or labels. The objective of classification is to build a model that accurately assigns new data points to the correct class or label.</p>
 <p>On the other hand, regression is a type of supervised learning algorithm used for predicting continuous or numeric outcomes. It involves mapping input variables to continuous output values. The objective of regression is to build a model that accurately predicts the value of the dependent variable based on the values of the independent variables.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="class-regression.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Difference between classification and regression</figcaption><p></p>
+</figure>
+</div>
 <p>In this tutorial we are going to deal with classification algorithm in predicting the type of penguin species flipper length, bill dimensions and sex. We will use penguins data from the <strong>palmerpenguins</strong> package <span class="citation" data-cites="penguin20">(<a href="#ref-penguin20" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span>. It includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.</p>
 <p>First, we will load the packages which we are going to use in this tutorial; I will use <code>require()</code> function, but you may also use <code>library()</code> function depending on your preferences.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(tidymodels)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(palmerpenguins)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ranger)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ranger)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data" class="level2">
@@ -409,16 +422,16 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <pre><code># A tibble: 233 × 3
    species   bill_length_mm bill_depth_mm
    &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;
- 1 Gentoo              51.1          16.3
- 2 Adelie              39.6          20.7
- 3 Chinstrap           50.1          17.9
- 4 Gentoo              46.8          15.4
- 5 Gentoo              48.7          15.7
- 6 Chinstrap           45.5          17  
- 7 Chinstrap           51.3          19.2
- 8 Adelie              41.5          18.5
- 9 Chinstrap           50.5          18.4
-10 Adelie              40.2          17.1
+ 1 Adelie              45.6          20.3
+ 2 Chinstrap           49.8          17.3
+ 3 Adelie              41.1          18.1
+ 4 Adelie              36            18.5
+ 5 Adelie              34            17.1
+ 6 Adelie              37.3          20.5
+ 7 Chinstrap           50.5          18.4
+ 8 Gentoo              48.7          15.7
+ 9 Adelie              41.3          20.3
+10 Adelie              40.8          18.9
 # … with 223 more rows</code></pre>
 </div>
 </div>
@@ -432,16 +445,16 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <pre><code># A tibble: 100 × 3
    species bill_length_mm bill_depth_mm
    &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
- 1 Adelie            39.1          18.7
- 2 Adelie            39.3          20.6
- 3 Adelie            38.9          17.8
- 4 Adelie            41.1          17.6
- 5 Adelie            38.6          21.2
- 6 Adelie            34.6          21.1
- 7 Adelie            36.6          17.8
- 8 Adelie            46            21.5
- 9 Adelie            37.8          18.3
-10 Adelie            38.8          17.2
+ 1 Adelie            38.9          17.8
+ 2 Adelie            39.2          19.6
+ 3 Adelie            34.4          18.4
+ 4 Adelie            37.8          18.3
+ 5 Adelie            38.8          17.2
+ 6 Adelie            37.9          18.6
+ 7 Adelie            39.5          16.7
+ 8 Adelie            37.2          18.1
+ 9 Adelie            40.9          18.9
+10 Adelie            39.2          21.1
 # … with 90 more rows</code></pre>
 </div>
 </div>
@@ -471,7 +484,7 @@ Mtry:                             1
 Target node size:                 10 
 Variable importance mode:         none 
 Splitrule:                        gini 
-OOB prediction error (Brier s.):  0.03539074 </code></pre>
+OOB prediction error (Brier s.):  0.04521139 </code></pre>
 </div>
 </div>
 </section>
@@ -488,16 +501,16 @@ OOB prediction error (Brier s.):  0.03539074 </code></pre>
 <pre><code># A tibble: 100 × 4
    .pred_class species bill_length_mm bill_depth_mm
    &lt;fct&gt;       &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
- 1 Adelie      Adelie            39.1          18.7
- 2 Adelie      Adelie            39.3          20.6
- 3 Adelie      Adelie            38.9          17.8
- 4 Adelie      Adelie            41.1          17.6
- 5 Adelie      Adelie            38.6          21.2
- 6 Adelie      Adelie            34.6          21.1
- 7 Adelie      Adelie            36.6          17.8
- 8 Chinstrap   Adelie            46            21.5
- 9 Adelie      Adelie            37.8          18.3
-10 Adelie      Adelie            38.8          17.2
+ 1 Adelie      Adelie            38.9          17.8
+ 2 Adelie      Adelie            39.2          19.6
+ 3 Adelie      Adelie            34.4          18.4
+ 4 Adelie      Adelie            37.8          18.3
+ 5 Adelie      Adelie            38.8          17.2
+ 6 Adelie      Adelie            37.9          18.6
+ 7 Adelie      Adelie            39.5          16.7
+ 8 Adelie      Adelie            37.2          18.1
+ 9 Adelie      Adelie            40.9          18.9
+10 Adelie      Adelie            39.2          21.1
 # … with 90 more rows</code></pre>
 </div>
 </div>
@@ -513,8 +526,8 @@ OOB prediction error (Brier s.):  0.03539074 </code></pre>
 <pre><code># A tibble: 2 × 3
   .metric  .estimator .estimate
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-1 accuracy multiclass     0.94 
-2 kap      multiclass     0.902</code></pre>
+1 accuracy multiclass     0.97 
+2 kap      multiclass     0.953</code></pre>
 </div>
 </div>
 <p>Now, we need to see the accuracy for each predicted species versus the actual type. We will use <code>conf_mat()</code> of the <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span>. The result indicate that 43 <em>Adelie</em> were correctly predicted while 1 <em>Chinstrap</em> was incorrectly predicted as <em>Adelie</em>. While 16 <em>Chinstrap</em> were correctly predicted, 1 of this species was wrongly predicted as <em>Gentoo</em>. On the other hand, all 39 <em>Gentoo</em> were correctly predicted.</p>
@@ -525,9 +538,9 @@ OOB prediction error (Brier s.):  0.03539074 </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Truth
 Prediction  Adelie Chinstrap Gentoo
-  Adelie        46         3      0
-  Chinstrap      1        12      2
-  Gentoo         0         0     36</code></pre>
+  Adelie        47         0      0
+  Chinstrap      1        20      1
+  Gentoo         0         1     30</code></pre>
 </div>
 </div>
 <p>Then, we need to calculate the probability of each observation be accurate for every species. We will use <code>predict()</code> function of *<strong>stats</strong> package of R <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>.</p>
@@ -542,23 +555,23 @@ Prediction  Adelie Chinstrap Gentoo
 <pre><code># A tibble: 100 × 6
    .pred_Adelie .pred_Chinstrap .pred_Gentoo species bill_length_mm bill_depth…¹
           &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;            &lt;dbl&gt;        &lt;dbl&gt;
- 1        0.991         0.00917      0       Adelie            39.1         18.7
- 2        0.988         0.0118       0       Adelie            39.3         20.6
- 3        0.997         0.00266      0       Adelie            38.9         17.8
- 4        0.999         0.00111      0       Adelie            41.1         17.6
- 5        0.985         0.0152       0       Adelie            38.6         21.2
- 6        0.985         0.0152       0       Adelie            34.6         21.1
- 7        0.997         0.00266      0       Adelie            36.6         17.8
- 8        0.331         0.667        0.00138 Adelie            46           21.5
- 9        0.996         0.00375      0       Adelie            37.8         18.3
-10        0.997         0.00152      0.00102 Adelie            38.8         17.2
+ 1        0.998         0.002        0       Adelie            38.9         17.8
+ 2        0.980         0.0204       0       Adelie            39.2         19.6
+ 3        1             0            0       Adelie            34.4         18.4
+ 4        1             0            0       Adelie            37.8         18.3
+ 5        0.995         0.00333      0.00214 Adelie            38.8         17.2
+ 6        1.00          0.0002       0       Adelie            37.9         18.6
+ 7        0.781         0.207        0.0116  Adelie            39.5         16.7
+ 8        0.998         0.00189      0       Adelie            37.2         18.1
+ 9        0.897         0.0772       0.0254  Adelie            40.9         18.9
+10        0.991         0.00906      0       Adelie            39.2         21.1
 # … with 90 more rows, and abbreviated variable name ¹​bill_depth_mm</code></pre>
 </div>
 </div>
 </section>
 <section id="roc-curve" class="level4">
 <h4 class="anchored" data-anchor-id="roc-curve">Roc Curve</h4>
-<p>The probability results will then be used to plot the roc curve (<a href="#fig-roc-curve">Figure&nbsp;2</a>). The <code>roc_curve()</code> function of <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span> will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The <code>autoplot()</code> function of the <strong><em>workflowsets</em></strong> package <span class="citation" data-cites="workflowsets22">(<a href="#ref-workflowsets22" role="doc-biblioref">Kuhn and Couch 2022</a>)</span> will then be applied to create the curve. From the curve it is shown that all the three species (<em>Adelie</em>, <em>Gentoo</em> and <em>Chinstrap</em>) fits better to the model (<a href="#fig-roc-curve">Figure&nbsp;2</a>).</p>
+<p>The probability results will then be used to plot the roc curve (<a href="#fig-roc-curve">Figure&nbsp;2</a>). The <code>roc_curve()</code> function of <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span> will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The <code>autoplot()</code> function of the <strong><em>workflowsets</em></strong> package <span class="citation" data-cites="workflowsets22">(<a href="#ref-workflowsets22" role="doc-biblioref">Kuhn and Couch 2022</a>)</span> will then be applied to create the curve. The curve shows that <em>Adelie</em> species fitted better to the model than other the <em>Gentoo</em> and <em>Chinstrap</em> species (<a href="#fig-roc-curve">Figure&nbsp;2</a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>rf.preda <span class="sc">%&gt;%</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(species, </span>
@@ -571,22 +584,35 @@ Prediction  Adelie Chinstrap Gentoo
 <div class="cell-output-display">
 <div id="fig-roc-curve" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/fig-roc-curve-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="index_files/figure-html/fig-roc-curve-1.png" class="img-fluid figure-img" width="528"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2: The ROC curve of <em>Adelie</em>, <em>Chinstrap</em> and <em>Gentoo</em> species</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="model-validation" class="level4">
-<h4 class="anchored" data-anchor-id="model-validation">Model validation</h4>
-<p>In order to validate whether the model works</p>
+<section id="model-validation-for-the-future-data" class="level4">
+<h4 class="anchored" data-anchor-id="model-validation-for-the-future-data">Model validation for the future data</h4>
+<p>In order to validate whether the model works to other newly collected data, we will validate it using the created data consists of bill length and depth. The data will be applied to the model and test if the prediction of the type of species will be done. The new created data will be named as <strong><em>new.penguin</em></strong> containing three observations;</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>new.penguin <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">bill_length_mm =</span> <span class="fu">c</span>(<span class="dv">35</span>,<span class="fl">47.5</span>, <span class="dv">70</span>),</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">bill_depth_mm =</span> <span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">17</span>, <span class="dv">18</span>))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(new.penguin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>new.penguin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  bill_length_mm bill_depth_mm
+           &lt;dbl&gt;         &lt;dbl&gt;
+1           35              13
+2           47.5            17
+3           70              18</code></pre>
+</div>
+</div>
+<p>Then, the model will be applied and see if it will predict the type of species. We will use <code>predict()</code> function.</p>
+<p>Hoolah!! the model give us the predicted species as <em>Adelie</em> and <em>Chinstrap</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(new.penguin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   .pred_class
@@ -596,37 +622,43 @@ Prediction  Adelie Chinstrap Gentoo
 3 Chinstrap  </code></pre>
 </div>
 </div>
+<p>We will also create another data named as <strong><em>aa</em></strong> with 10 observations using <code>rnorm()</code> function of <strong>stats</strong> package <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>. We will also predict the type of species for these data using our model. Again the model works and give us predictions!!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">bill_depth_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">mean =</span> <span class="dv">15</span>, </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">sd =</span> <span class="dv">3</span>),</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">bill_length_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">mean =</span> <span class="dv">50</span>, </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">sd =</span> <span class="dv">10</span>))</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(aa) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(aa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>aa <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">bill_depth_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">mean =</span> <span class="dv">15</span>, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">sd =</span> <span class="dv">3</span>),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">bill_length_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">mean =</span> <span class="dv">50</span>, </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">sd =</span> <span class="dv">10</span>))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(aa) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(aa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    .pred_class bill_depth_mm bill_length_mm
    &lt;fct&gt;               &lt;dbl&gt;          &lt;dbl&gt;
- 1 Gentoo               13.9           48.4
- 2 Adelie               19.1           31.0
- 3 Gentoo               12.9           61.4
- 4 Gentoo               14.6           39.8
- 5 Gentoo               10.6           42.3
- 6 Gentoo               15.4           46.6
- 7 Gentoo               14.6           48.2
- 8 Chinstrap            18.9           52.6
- 9 Adelie               14.0           36.4
-10 Gentoo               12.9           46.1</code></pre>
+ 1 Adelie               14.5           33.7
+ 2 Chinstrap            18.8           68.7
+ 3 Adelie               14.1           30.0
+ 4 Gentoo               13.4           38.6
+ 5 Gentoo               11.0           79.2
+ 6 Gentoo               15.1           46.3
+ 7 Gentoo               14.0           43.8
+ 8 Gentoo               12.1           56.9
+ 9 Gentoo               15.3           50.5
+10 Adelie               10.1           38.5</code></pre>
 </div>
 </div>
-<p>But machine learning comes with disadvantages. First and foremost, it can be expensive. Machine learning projects are typically driven by data scientists, who command high salaries. These projects also require software infrastructure that can be expensive.</p>
-<p>There is also the problem of machine learning bias. Algorithms trained on data sets that exclude certain populations or contain errors can lead to inaccurate models of the world that, at best, fail and, at worst, are discriminatory. When an enterprise bases core business processes on biased models it can run into regulatory and reputational harm.</p>
 </section>
 </section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>All in all, the success of machine learning and artificial intelligence depend on the <strong>quality of the data</strong>, the <strong>complexity of the problem</strong>, and the <strong>choice of the appropriate algorithms</strong> and techniques <span class="citation" data-cites="han11 witten05">(<a href="#ref-han11" role="doc-biblioref">Jiawei Han and Pei 2011</a>; <a href="#ref-witten05" role="doc-biblioref">Witten et al. 2005</a>)</span>.</p>
+<p>The quality of the data is one of the most important factors for the success of machine learning. The data should be accurate, complete, and representative of the problem domain <span class="citation" data-cites="han11 witten05">(<a href="#ref-han11" role="doc-biblioref">Jiawei Han and Pei 2011</a>; <a href="#ref-witten05" role="doc-biblioref">Witten et al. 2005</a>)</span>. In addition, the data should be properly labeled and preprocessed to ensure that the machine learning algorithms can effectively learn from it.</p>
+<p>The complexity of the problem is also a key factor in determining the success of machine learning <span class="citation" data-cites="gomez14">(<a href="#ref-gomez14" role="doc-biblioref">Gomez-Cabrero et al. 2014</a>)</span>. Some problems are inherently more complex than others, and require more sophisticated algorithms and techniques to solve. For example, image recognition and natural language processing are typically more complex than simple regression problems.</p>
+<p>Finally, the choice of the appropriate algorithms and techniques is critical for the success of machine learning <span class="citation" data-cites="sarker21 gomez14">(<a href="#ref-sarker21" role="doc-biblioref">Sarker 2021</a>; <a href="#ref-gomez14" role="doc-biblioref">Gomez-Cabrero et al. 2014</a>)</span>. Different algorithms and techniques are suited for different types of problems, and the choice of the appropriate one will depend on the specific problem and the available data. Additionally, the parameters and hyperparameters of the algorithms need to be properly tuned to ensure that the models are optimized for the problem at hand.</p>
 </section>
 <section id="consultated-references" class="level2">
 
@@ -637,8 +669,14 @@ Prediction  Adelie Chinstrap Gentoo
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-gomez14" class="csl-entry" role="doc-biblioentry">
+Gomez-Cabrero, David, Imad Abugessaisa, Dieter Maier, Andrew Teschendorff, Matthias Merkenschlager, Andreas Gisel, Esteban Ballestar, Erik Bongcam-Rudloff, Ana Conesa, and Jesper Tegnér. 2014. <span>“Data Integration in the Era of Omics: Current and Future Challenges.”</span> <em>BMC Systems Biology</em> 8 (2): 1–10.
+</div>
 <div id="ref-penguin20" class="csl-entry" role="doc-biblioentry">
 Horst, Allison Marie, Alison Presmanes Hill, and Kristen B Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://doi.org/10.5281/zenodo.3960218">https://doi.org/10.5281/zenodo.3960218</a>.
+</div>
+<div id="ref-han11" class="csl-entry" role="doc-biblioentry">
+Jiawei Han, MK, and Jian Pei. 2011. <span>“Data Mining: Concepts and Techniques: Concepts and Techniques.”</span> Elsevier, Amsterdam.
 </div>
 <div id="ref-workflowsets22" class="csl-entry" role="doc-biblioentry">
 Kuhn, Max, and Simon Couch. 2022. <em>Workflowsets: Create a Collection of ’Tidymodels’ Workflows</em>. <a href="https://CRAN.R-project.org/package=workflowsets">https://CRAN.R-project.org/package=workflowsets</a>.
@@ -655,8 +693,14 @@ Mitchell, Tom Michael et al. 2007. <em>Machine Learning</em>. Vol. 1. McGraw-hil
 <div id="ref-r" class="csl-entry" role="doc-biblioentry">
 R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 </div>
+<div id="ref-sarker21" class="csl-entry" role="doc-biblioentry">
+Sarker, IH. 2021. <span>“Machine Learning: Algorithms, Real-World Applications and Research Directions. SN Comput Sci 2: 160.”</span>
+</div>
 <div id="ref-dplyr" class="csl-entry" role="doc-biblioentry">
 Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-witten05" class="csl-entry" role="doc-biblioentry">
+Witten, Ian H, Eibe Frank, Mark A Hall, Christopher J Pal, and MINING DATA. 2005. <span>“Practical Machine Learning Tools and Techniques.”</span> In <em>Data Mining</em>. Vol. 2. 4.
 </div>
 </div></section></div></main> <!-- /main -->
 <div>

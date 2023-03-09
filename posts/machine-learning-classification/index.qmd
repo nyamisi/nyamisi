@@ -1,9 +1,9 @@
 ---
-title: "Machine Learning (ML) and Artificial Intelligence (AI) using classification Algorithm in R"
+title: "Machine Learning (ML) using classification Algorithm in R"
 author: "Nyamisi Peter"
 date: "2023-03-08"
-categories: [visualization, code]
-#image: "alluvial.jpg"
+categories: [code]
+image: "ML-image.jpg"
 bibliography: "../blog.bib"
 ---
 
@@ -17,6 +17,8 @@ Technology is becoming more important in our daily lives in every second. In ord
 
 **Machine learning** is a specific type of AI that involves the development of algorithms that can learn from data and make predictions or decisions based on that data [@mitchell07]. In other words, machine learning algorithms are designed to learn patterns and relationships in data without being explicitly programmed to do so.
 
+![Machine learning and artificial intelligence](ML-image.jpg)
+
 ## Machine Learning Algorithms
 
 There are several types of machine learning algorithms, including **supervised learning**, **unsupervised learning**, and **reinforcement learning**. Supervised learning involves using labeled (predictor) training data to train a model to make predictions on new, unseen data. Unsupervised learning involves finding patterns and relationships in data without the use of labeled training data. Reinforcement learning involves training a model to make decisions based on feedback in the form of rewards or punishments.
@@ -24,6 +26,8 @@ There are several types of machine learning algorithms, including **supervised l
 **Classification and regression** are two of the most common types of supervised learning algorithms in machine learning and artificial intelligence. Classification is a type of supervised learning algorithm used for predicting discrete or categorical outcomes. It involves mapping input variables to discrete output categories or labels. The objective of classification is to build a model that accurately assigns new data points to the correct class or label.
 
 On the other hand, regression is a type of supervised learning algorithm used for predicting continuous or numeric outcomes. It involves mapping input variables to continuous output values. The objective of regression is to build a model that accurately predicts the value of the dependent variable based on the values of the independent variables.
+
+![Difference between classification and regression](class-regression.jpg)
 
 In this tutorial we are going to deal with classification algorithm in predicting the type of penguin species flipper length, bill dimensions and sex. We will use penguins data from the **palmerpenguins** package [@penguin20]. It includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.
 
@@ -37,6 +41,7 @@ require(tidyverse)
 require(tidymodels)
 require(palmerpenguins)
 require(ranger)
+require(patchwork)
 
 ```
 
@@ -60,6 +65,7 @@ Then, we will look on the internal structure of the dataset using `glimpse()` fu
 #| message: false
 glimpse(penguin.data)
 ```
+
 
 In this tutorial we will use only three variables from penguins data; which are species, bill_length_mm, bill_depth_mm. We will run the `select()` function of **dplyr** package [@dplyr] to select our variables of interest
 
@@ -189,12 +195,12 @@ rf.preda
 
 #### Roc Curve
 
-The probability results will then be used to plot the roc curve (@fig-roc-curve). The `roc_curve()` function of ***yardstick*** package [@yardstick22] will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The `autoplot()` function of the ***workflowsets*** package [@workflowsets22] will then be applied to create the curve. From the curve it is shown that all the three species (*Adelie*, *Gentoo* and *Chinstrap*) fits better to the model (@fig-roc-curve).
+The probability results will then be used to plot the roc curve (@fig-roc-curve). The `roc_curve()` function of ***yardstick*** package [@yardstick22] will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The `autoplot()` function of the ***workflowsets*** package [@workflowsets22] will then be applied to create the curve. The curve shows that *Adelie* species fitted better to the model than other the *Gentoo* and *Chinstrap* species (@fig-roc-curve).
 
 ```{r}
 #| label: fig-roc-curve
 #| fig-cap: The ROC curve of *Adelie*, *Chinstrap* and *Gentoo* species
-#| fig-width: 5
+#| fig-width: 5.5
 #| fig-height: 3
 #| warning: false
 #| message: false
@@ -208,18 +214,28 @@ rf.preda %>%
   theme(strip.background = element_blank())
 ```
 
-#### Model validation
+#### Model validation for the future data
 
-In order to validate whether the model works
+In order to validate whether the model works to other newly collected data, we will validate it using the created data consists of bill length and depth. The data will be applied to the model and test if the prediction of the type of species will be done. The new created data will be named as ***new.penguin*** containing three observations;
 
 ```{r}
 new.penguin = tibble(bill_length_mm = c(35,47.5, 70),
                      bill_depth_mm = c(13,17, 18))
 
+new.penguin
+```
+
+Then, the model will be applied and see if it will predict the type of species. We will use `predict()` function.
+
+Hoolah!! the model give us the predicted species as *Adelie* and *Chinstrap*
+
+```{r}
 mod %>% 
   predict(new.penguin)
 
 ```
+
+We will also create another data named as ***aa*** with 10 observations using `rnorm()` function of **stats** package [@r]. We will also predict the type of species for these data using our model. Again the model works and give us predictions!!
 
 ```{r}
 aa = tibble(bill_depth_mm = rnorm(n = 10,
@@ -235,9 +251,15 @@ mod %>%
 
 ```
 
-But machine learning comes with disadvantages. First and foremost, it can be expensive. Machine learning projects are typically driven by data scientists, who command high salaries. These projects also require software infrastructure that can be expensive.
+## Summary
 
-There is also the problem of machine learning bias. Algorithms trained on data sets that exclude certain populations or contain errors can lead to inaccurate models of the world that, at best, fail and, at worst, are discriminatory. When an enterprise bases core business processes on biased models it can run into regulatory and reputational harm.
+All in all, the success of machine learning and artificial intelligence depend on the **quality of the data**, the **complexity of the problem**, and the **choice of the appropriate algorithms** and techniques [@han11; @witten05]. 
+
+The quality of the data is one of the most important factors for the success of machine learning. The data should be accurate, complete, and representative of the problem domain [@han11; @witten05]. In addition, the data should be properly labeled and preprocessed to ensure that the machine learning algorithms can effectively learn from it.
+
+The complexity of the problem is also a key factor in determining the success of machine learning [@gomez14]. Some problems are inherently more complex than others, and require more sophisticated algorithms and techniques to solve. For example, image recognition and natural language processing are typically more complex than simple regression problems.
+
+Finally, the choice of the appropriate algorithms and techniques is critical for the success of machine learning [@sarker21; @gomez14]. Different algorithms and techniques are suited for different types of problems, and the choice of the appropriate one will depend on the specific problem and the available data. Additionally, the parameters and hyperparameters of the algorithms need to be properly tuned to ensure that the models are optimized for the problem at hand.
 
 
 ## Consultated references
