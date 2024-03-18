@@ -1,0 +1,34 @@
+---
+title: ""
+listing:
+  contents: posts
+  page-size: 120
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  fields: [date, title, reading-time, description, categories, image, author]
+  feed: true
+page-layout: article
+title-block-banner: false
+---
+
+<!-- :::: {.columns} -->
+
+<!-- ::: {.column width="40%"} -->
+<!-- # Series -->
+
+<!-- #### [TextAnalytics-series](https://nyamisi.github.io/nyamisi/posts/worldcloud/) -->
+<!-- This series contains a great deal of tips, tricks and packages that you can use to level up your text analysis and categorical data visualization -->
+<!-- ::: -->
+
+<!-- ::: {.column width="60%"} -->
+
+<!-- # Subscribe -->
+<!-- <iframe id="nyamisi-form" src="https://github.com/nyamisi/" data-test-id="nyamisi-embed" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent; height: 75px; width: 90%;"></iframe> -->
+
+<!-- ::: -->
+
+
+<!-- :::: -->

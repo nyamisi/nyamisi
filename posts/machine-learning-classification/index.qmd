@@ -1,0 +1,270 @@
+---
+title: "Machine Learning (ML) using classification Algorithm in R"
+author: "Nyamisi Peter"
+date: "2023-03-08"
+categories: [code, ML & AI]
+image: "ML-image.jpg"
+bibliography: "../blog.bib"
+---
+
+# Introduction
+
+Technology is becoming more important in our daily lives in every second. In order to keep up with the pace of these technological changes, scientists are more heavily learning different algorithms to make things easier so as to meet consumer's demand. These technologies are commonly associated with artificial intelligence, machine learning, deep learning, and neural networks.
+
+**Machine learning (ML)** and **artificial intelligence (AI)** are closely related concepts that are often used interchangeably, but they are not the same thing.
+
+**Artificial intelligence** refers to the ability of machines to mimic human cognitive functions such as learning, reasoning, and problem-solving [IBM](https://www.ibm.com/cloud/blog/ai-vs-machine-learning-vs-deep-learning-vs-neural-networks). AI encompasses a wide range of techniques and approaches, including rule-based systems, expert systems, and machine learning. It is used to predict, automate, and optimize tasks that humans have historically done, such as speech and facial recognition, decision making, and translation.
+
+**Machine learning** is a specific type of AI that involves the development of algorithms that can learn from data and make predictions or decisions based on that data [@mitchell07]. In other words, machine learning algorithms are designed to learn patterns and relationships in data without being explicitly programmed to do so.
+
+![Machine learning](ML-image.jpg)
+
+## Machine Learning Algorithms
+
+There are several types of machine learning algorithms, including **supervised learning**, **unsupervised learning**, and **reinforcement learning**. Supervised learning involves using labeled (predictor) training data to train a model to make predictions on new, unseen data. Unsupervised learning involves finding patterns and relationships in data without the use of labeled training data. Reinforcement learning involves training a model to make decisions based on feedback in the form of rewards or punishments.
+
+**Classification and regression** are two of the most common types of supervised learning algorithms in machine learning and artificial intelligence. Classification is a type of supervised learning algorithm used for predicting discrete or categorical outcomes. It involves mapping input variables to discrete output categories or labels. The objective of classification is to build a model that accurately assigns new data points to the correct class or label.
+
+On the other hand, regression is a type of supervised learning algorithm used for predicting continuous or numeric outcomes. It involves mapping input variables to continuous output values. The objective of regression is to build a model that accurately predicts the value of the dependent variable based on the values of the independent variables.
+
+![Difference between classification and regression](class-regression.jpg)
+
+In this tutorial we are going to deal with classification algorithm in predicting the type of penguin species flipper length, bill dimensions and sex. We will use penguins data from the **palmerpenguins** package [@penguin20]. It includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.
+
+First, we will load the packages which we are going to use in this tutorial; I will use `require()` function, but you may also use `library()` function depending on your preferences.
+
+```{r}
+#| warning: false
+#| message: false
+#| 
+require(tidyverse)
+require(tidymodels)
+require(palmerpenguins)
+require(ranger)
+require(patchwork)
+
+```
+
+## Data
+
+After loading the packages, we will load the penguins data [@penguin20] and remove all the missing values in the dataset and equate them as ***penguin.data***. The dataset consist of 333 rows and 8 columns
+
+```{r}
+#| warning: false
+#| message: false
+penguin.data = palmerpenguins::penguins %>% 
+  drop_na()
+
+penguin.data
+```
+
+Then, we will look on the internal structure of the dataset using `glimpse()` function of **dplyr** package. Our dataset consist of 8 variables (columns); 3 are factors data (species, island and sex), 2 numeric or double data (bill_length_mm, bill_depth_mm) and 3 integers (flipper_length_mm, body_mass_g, year). The variable species have 3 different levels which are *Adelie*, *Gentoo* and *Chinstrap*
+
+```{r}
+#| warning: false
+#| message: false
+glimpse(penguin.data)
+```
+
+In this tutorial we will use only three variables from penguins data; which are species, bill_length_mm, bill_depth_mm. We will run the `select()` function of **dplyr** package [@dplyr] to select our variables of interest
+
+```{r}
+#| warning: false
+#| message: false
+penguin.data = penguin.data %>% 
+  select(species, 
+         bill_length_mm, 
+         bill_depth_mm)
+```
+
+Before we apply ML algorithms, first we will crosscheck whether the predictor variable (in this case, species), have distinct features (like size) which will help in providing the more accurate output during predictions. When there is interconnection or inter-relation between response variables, some confusion might arise during predictions.
+
+We will use scatter plot between bill_length_mm and bill_depth_mm to see the distribution of each species in the dataset. There is a distinct differences between the size of the three penguins species (@fig-scatter). Each species has its size range; therefore, the dataset fit best in our analysis.
+
+```{r}
+#| warning: false
+#| message: false
+#| label: fig-scatter
+#| fig-cap: Scatter plot showing the distribution of *Adelie*, *Gentoo* and *Chinstrap* species
+#| fig-width: 5
+#| fig-height: 3
+#| fig-align: center
+penguin.data %>% 
+  ggplot(aes(y = bill_length_mm, 
+             x = bill_depth_mm, 
+             color = species)) +
+  geom_point() +
+  theme_bw()
+```
+
+## Classification algorithm
+
+As explained earlier, supervised learning involves training a dataset before you have your predictions. Since our output is categorical (prediction of the species type), then we will use classification algorithm in our analysis.
+
+### Data Spliting
+
+Classification algorithm as one of the supervised learning, needs two data types; the **training** and **testing** data set. Our `penguin.data` will be split into these two groups. The training dataset will have a proportion of 70% and the remaining 30% will be the test dataset. In total, our dataset has 333 observations in which 233 samples will be used to train our model while in testing the accuracy of the model 100 samples will used.
+
+```{r}
+#| warning: false
+#| message: false
+split.penguin = penguin.data %>% 
+  initial_split(prop = 0.7)
+
+split.penguin
+```
+
+The training data below with 233 samples will be used for training the model;
+
+```{r}
+#| warning: false
+#| message: false
+train.set = split.penguin %>% 
+  training()
+
+train.set
+```
+
+The testing data with 100 observations will be used to test the accuracy of the model
+
+```{r}
+#| warning: false
+#| message: false
+test.set = split.penguin %>% 
+  testing()
+
+test.set
+```
+
+#### Data training
+
+Use the ***train.set*** data to train the model. Run the `rand_forest()` of the **parsnip** package [@parsnip22], set engine as **ranger** and the mode as **classification**. Fit the train data set with the response be the **species**. The summary of the training model will be shown with the predictions error of 0.02 equivalent to 2%.
+
+```{r}
+#| warning: false
+#| message: false
+mod = rand_forest() %>% 
+  set_engine(engine = "ranger") %>% 
+  set_mode(mode = "classification") %>% 
+  fit(species~., data = train.set)
+
+mod
+```
+
+#### Predictions
+
+Then, the ***test.set*** data will be used in predictions of the type of the species provided we have the bill length and bill depth. The predicted class and the test dataset will be binded together to see if there is a match or mismatch of the predicted versus the actual species type.
+
+```{r}
+rf.pred = mod %>% 
+  predict(test.set) %>% 
+  bind_cols(test.set)
+
+rf.pred
+```
+
+#### Accuracy testing
+
+We have already predicted for the results, then we need to test for the accuracy of the model. The model is considered accurate when its accuracy value is higher or equal to 80%. The obtained accuracy of our model is 0.98 (98%) and the kap 96%. Our model can then be used to predict the type of species provided you have the bill length and the bill depth of the penguins.
+
+```{r}
+rf.pred %>% 
+  metrics(truth = species,
+          estimate = .pred_class)
+```
+
+Now, we need to see the accuracy for each predicted species versus the actual type. We will use `conf_mat()` of the ***yardstick*** package [@yardstick22]. The result indicate that 43 *Adelie* were correctly predicted while 1 *Chinstrap* was incorrectly predicted as *Adelie*. While 16 *Chinstrap* were correctly predicted, 1 of this species was wrongly predicted as *Gentoo*. On the other hand, all 39 *Gentoo* were correctly predicted.
+
+```{r}
+rf.pred %>% 
+  conf_mat(truth = species, 
+           estimate = .pred_class)
+```
+
+Then, we need to calculate the probability of each observation be accurate for every species. We will use `predict()` function of \***stats** package of R [@r].
+
+```{r}
+rf.preda = mod %>% 
+  predict(test.set, 
+          type = "prob") %>% 
+  bind_cols(test.set)
+
+rf.preda
+```
+
+#### Roc Curve
+
+The probability results will then be used to plot the roc curve (@fig-roc-curve). The `roc_curve()` function of ***yardstick*** package [@yardstick22] will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The `autoplot()` function of the ***workflowsets*** package [@workflowsets22] will then be applied to create the curve. The curve shows that *Adelie* species fitted better to the model than other the *Gentoo* and *Chinstrap* species (@fig-roc-curve).
+
+```{r}
+#| label: fig-roc-curve
+#| fig-cap: The ROC curve of *Adelie*, *Chinstrap* and *Gentoo* species
+#| fig-width: 5.5
+#| fig-height: 3
+#| warning: false
+#| message: false
+rf.preda %>% 
+  roc_curve(species, 
+            .pred_Adelie, 
+            .pred_Chinstrap, 
+            .pred_Gentoo) %>% 
+  autoplot()+
+  ggpubr::theme_pubclean()+
+  theme(strip.background = element_blank())
+```
+
+#### Model validation for the future data
+
+In order to validate whether the model works to other newly collected data, we will validate it using the created data consists of bill length and depth. The data will be applied to the model and test if the prediction of the type of species will be done. The new created data will be named as ***new.penguin*** containing three observations;
+
+```{r}
+new.penguin = tibble(bill_length_mm = c(35,47.5, 70),
+                     bill_depth_mm = c(13,17, 18))
+
+new.penguin
+```
+
+Then, the model will be applied and see if it will predict the type of species. We will use `predict()` function.
+
+Hoolah!! the model give us the predicted species as *Adelie* and *Chinstrap*
+
+```{r}
+mod %>% 
+  predict(new.penguin)
+
+```
+
+We will also create another data named as ***aa*** with 10 observations using `rnorm()` function of **stats** package [@r]. We will also predict the type of species for these data using our model. Again the model works and give us predictions!!
+
+```{r}
+aa = tibble(bill_depth_mm = rnorm(n = 10,
+                                  mean = 15, 
+                                  sd = 3),
+            bill_length_mm = rnorm(n = 10,
+                                   mean = 50, 
+                                   sd = 10))
+
+mod %>% 
+  predict(aa) %>% 
+  bind_cols(aa)
+
+```
+
+
+## Summary
+
+
+All in all, the success of machine learning and artificial intelligence depend on the **quality of the data**, the **complexity of the problem**, and the **choice of the appropriate algorithms** and techniques [@han11; @witten05].
+
+The quality of the data is one of the most important factors for the success of machine learning. The data should be accurate, complete, and representative of the problem domain [@han11; @witten05]. In addition, the data should be properly labeled and preprocessed to ensure that the machine learning algorithms can effectively learn from it.
+
+The complexity of the problem is also a key factor in determining the success of machine learning [@gomez14]. Some problems are inherently more complex than others, and require more sophisticated algorithms and techniques to solve. For example, image recognition and natural language processing are typically more complex than simple regression problems.
+
+Finally, the choice of the appropriate algorithms and techniques is critical for the success of machine learning [@sarker21; @gomez14]. Different algorithms and techniques are suited for different types of problems, and the choice of the appropriate one will depend on the specific problem and the available data. Additionally, the parameters and hyperparameters of the algorithms need to be properly tuned to ensure that the models are optimized for the problem at hand.
+
+::: callout-note
+
+Don't miss out our next tutorial on Machine Learning (ML) using regression Algorithm!!!
+
+:::
+## Consultated references

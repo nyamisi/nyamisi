@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nyamisi Peter">
+<meta name="dcterms.date" content="2023-03-13">
+
+<title>Nyamisi Peter - Machine Learning (ML) using Regression Algorithm in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=14521548"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '14521548', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"headline",
+  "consent_type":"express",
+  "palette":"dark",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+
+
+<meta name="twitter:title" content="Nyamisi Peter - Machine Learning (ML) using Regression Algorithm in R">
+<meta name="twitter:description" content="In the previous post we saw how classification algorithm may be applied in machine learning (ML). In this post we are going to look the application of regression algorithm in machine learning.">
+<meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/michi.jpg">
+<meta name="twitter:creator" content="@nyamisi">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nyamisi Peter</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nyamisi"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ressources</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-ressources">    
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://semba.netlify.app/">
+ <span class="dropdown-text">Semba-blog</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html">
+ <span class="menu-text">Archive</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#data-loading-and-preprocessing" id="toc-data-loading-and-preprocessing" class="nav-link" data-scroll-target="#data-loading-and-preprocessing">Data loading and preprocessing</a></li>
+  <li><a href="#data-spliting" id="toc-data-spliting" class="nav-link" data-scroll-target="#data-spliting">Data Spliting</a></li>
+  <li><a href="#model-specification" id="toc-model-specification" class="nav-link" data-scroll-target="#model-specification">Model specification</a>
+  <ul class="collapse">
+  <li><a href="#random-forest-model" id="toc-random-forest-model" class="nav-link" data-scroll-target="#random-forest-model">Random forest model</a></li>
+  <li><a href="#linear-regression-model" id="toc-linear-regression-model" class="nav-link" data-scroll-target="#linear-regression-model">Linear regression model</a></li>
+  </ul></li>
+  <li><a href="#comparison-between-the-two-models" id="toc-comparison-between-the-two-models" class="nav-link" data-scroll-target="#comparison-between-the-two-models">Comparison between the two models</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#consultated-references" id="toc-consultated-references" class="nav-link" data-scroll-target="#consultated-references">Consultated references</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Machine Learning (ML) using Regression Algorithm in R</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+    <div class="quarto-category">ML &amp; AI</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nyamisi Peter </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 13, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>In the previous <a href="https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/">post</a> we saw how classification algorithm may be applied in machine learning (ML). In this post we are going to look the application of regression algorithm in machine learning. We will use penguins data from the <strong>palmerpenguins</strong> package <span class="citation" data-cites="penguin20">(<a href="#ref-penguin20" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span>. It includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.</p>
+<p>First, we will load the packages which we are going to use in this post; I will use <code>require()</code> function, but you may also use <code>library()</code> function depending on your preferences. The <code>tidyverse</code> is a collection of R packages that are designed to work together to make data manipulation and analysis easier and more efficient. Tidyverse is used as a workflow from data preprocessing to model fitting and evaluation. The packages in the Tidyverse, such as <code>dplyr</code> and <code>ggplot2</code>, will be used in data manipulation and plotting of graphs respectively.</p>
+<p><code>Tidymodels</code>, on the other hand, is a collection of R packages for modeling and machine learning tasks. Tidymodels includes packages such as <code>rsample</code> for the initial splitting and training of the data, <code>parsnip</code> for specifying and fitting models, and <code>yardstick</code> for evaluating model performance. The <code>ranger</code> package will be used in setting the engine in <strong>random forest</strong> model.</p>
+<p>The data used will come from <code>palmerpenguins</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">require</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">require</span>(tidymodels)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">require</span>(ranger)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">require</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="data-loading-and-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-preprocessing">Data loading and preprocessing</h2>
+<p>After loading the packages, load the penguins data <span class="citation" data-cites="penguin20">(<a href="#ref-penguin20" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span> and remove all the missing values in the dataset. Name the dataset as <strong><em>penguin.data</em></strong>. The dataset consist of 333 rows and 8 columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>penguin.data <span class="ot">=</span> palmerpenguins<span class="sc">::</span>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 333 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           36.7          19.3               193        3450
+ 5 Adelie  Torgersen           39.3          20.6               190        3650
+ 6 Adelie  Torgersen           38.9          17.8               181        3625
+ 7 Adelie  Torgersen           39.2          19.6               195        4675
+ 8 Adelie  Torgersen           41.1          17.6               182        3200
+ 9 Adelie  Torgersen           38.6          21.2               191        3800
+10 Adelie  Torgersen           34.6          21.1               198        4400
+# ℹ 323 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Then, observe the internal structure of the dataset using <code>glimpse()</code> function of <strong>dplyr</strong> package. The dataset consist of 8 variables (columns); 3 are factors data (species, island and sex), 2 numeric or double data (bill_length_mm, bill_depth_mm) and 3 integers (flipper_length_mm, body_mass_g, year).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">glimpse</span>(penguin.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 333
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, 36.7, 39.3, 38.9, 39.2, 41.1, 38.6…
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, 19.3, 20.6, 17.8, 19.6, 17.6, 21.2…
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, 193, 190, 181, 195, 182, 191, 198, 18…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, 3450, 3650, 3625, 4675, 3200, 3800…
+$ sex               &lt;fct&gt; male, female, female, female, male, female, male, fe…
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
+</div>
+</div>
+<p>In this post we will use four variables from penguins data; which are bill_length_mm, bill_depth_mm, flipper_length_mm and body_mass_g. Use the <code>select()</code> function of <strong>dplyr</strong> package <span class="citation" data-cites="dplyr">(<a href="#ref-dplyr" role="doc-biblioref">Wickham et al. 2022</a>)</span> to select the variables of interest.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>penguin.data <span class="ot">=</span> penguin.data <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">select</span>(flipper_length_mm, </span>
+<span id="cb6-3"><a href="#cb6-3"></a>         bill_length_mm, </span>
+<span id="cb6-4"><a href="#cb6-4"></a>         bill_depth_mm,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>         body_mass_g)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 333 × 4
+   flipper_length_mm bill_length_mm bill_depth_mm body_mass_g
+               &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;
+ 1               181           39.1          18.7        3750
+ 2               186           39.5          17.4        3800
+ 3               195           40.3          18          3250
+ 4               193           36.7          19.3        3450
+ 5               190           39.3          20.6        3650
+ 6               181           38.9          17.8        3625
+ 7               195           39.2          19.6        4675
+ 8               182           41.1          17.6        3200
+ 9               191           38.6          21.2        3800
+10               198           34.6          21.1        4400
+# ℹ 323 more rows</code></pre>
+</div>
+</div>
+<p>Before we apply ML regression algorithms, first we will look on the distribution of the response variable (body_mass_g). Our response variable ranges from around 2700 to 6700 grams with the median value at around 4050 grams <a href="#fig-density">Figure&nbsp;1</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>penguin.data <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">mutate</span>(<span class="at">med.mass =</span> <span class="fu">median</span>(body_mass_g, <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> <span class="co">#median value = 4050</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g))<span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"cyan3"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>)<span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span>  <span class="dv">4050</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)<span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-density" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-density-1.png" class="img-fluid figure-img" width="384"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: The distribution of the body mass of Penguin species. The vertical dashed red line indicate the median body mass</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="data-spliting" class="level2">
+<h2 class="anchored" data-anchor-id="data-spliting">Data Spliting</h2>
+<p>Regression algorithm as one of the supervised learning, needs two data types; the <strong>training</strong> and <strong>testing</strong> data set. The <code>penguin.data</code> will be split into two groups; training and testing dataset. The training dataset will have a proportion of 70% and the testing data will carry 30% of the total data. In total, our dataset has 333 observations in which 233 samples will be used to train the model while in validation of the accuracy of the model, we will use the testing set with 100 samples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>split.penguin <span class="ot">=</span> penguin.data <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">initial_split</span>(<span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>split.penguin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Training/Testing/Total&gt;
+&lt;233/100/333&gt;</code></pre>
+</div>
+</div>
+<p>The training data below with 233 samples will be used to training the model;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>train.set <span class="ot">=</span> split.penguin <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">training</span>()</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a>train.set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 233 × 4
+   flipper_length_mm bill_length_mm bill_depth_mm body_mass_g
+               &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;
+ 1               230           59.6          17          6050
+ 2               184           34.4          18.4        3325
+ 3               215           45.2          15.8        5300
+ 4               210           49            19.5        3950
+ 5               202           41.4          18.5        3875
+ 6               203           51            18.8        4100
+ 7               212           44.9          13.8        4750
+ 8               225           51.1          16.5        5250
+ 9               210           50.8          19          4100
+10               211           45.4          14.6        4800
+# ℹ 223 more rows</code></pre>
+</div>
+</div>
+<p>The testing data with 100 observations will be used to test the accuracy of the model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>test.set <span class="ot">=</span> split.penguin <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">testing</span>()</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a>test.set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 4
+   flipper_length_mm bill_length_mm bill_depth_mm body_mass_g
+               &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;
+ 1               186           39.5          17.4        3800
+ 2               195           40.3          18          3250
+ 3               195           38.7          19          3450
+ 4               194           46            21.5        4200
+ 5               189           35.9          19.2        3800
+ 6               185           38.2          18.1        3950
+ 7               188           39.5          17.8        3300
+ 8               186           36            18.5        3100
+ 9               191           42.3          21.2        4150
+10               186           39.6          17.7        3500
+# ℹ 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="model-specification" class="level2">
+<h2 class="anchored" data-anchor-id="model-specification">Model specification</h2>
+<p>In order to perform the predictions on the body weight of the penguin species, we will use two different regression model types; The <strong>Random Forest</strong> and the <strong>Linear Regression</strong> model. The regression algorithm is applied when the response variable is numeric. We will look at one model after another and then at the end we will compare the best model among the two.</p>
+<section id="random-forest-model" class="level3">
+<h3 class="anchored" data-anchor-id="random-forest-model">Random forest model</h3>
+<p>First, we will specify the model type as random forest using the <code>rand_forest()</code> function of the <strong>parsnip</strong> package <span class="citation" data-cites="parsnip22">(<a href="#ref-parsnip22" role="doc-biblioref">Kuhn and Vaughan 2022</a>)</span>. The set engine <strong>ranger</strong> and the mode <strong>regression</strong> will be used.</p>
+<p>Finally, the model will be fitted with the train data set using the <code>fit()</code> function of the <strong>parsnip</strong> package <span class="citation" data-cites="parsnip22">(<a href="#ref-parsnip22" role="doc-biblioref">Kuhn and Vaughan 2022</a>)</span> with the response variable as <strong>body_mass_g</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>mod.rf <span class="ot">=</span> <span class="fu">rand_forest</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">fit</span>(body_mass_g<span class="sc">~</span>., <span class="at">data =</span> train.set)</span>
+<span id="cb15-5"><a href="#cb15-5"></a></span>
+<span id="cb15-6"><a href="#cb15-6"></a>mod.rf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
+
+Type:                             Regression 
+Number of trees:                  500 
+Sample size:                      233 
+Number of independent variables:  3 
+Mtry:                             1 
+Target node size:                 5 
+Variable importance mode:         none 
+Splitrule:                        variance 
+OOB prediction error (MSE):       119311.9 
+R squared (OOB):                  0.8177082 </code></pre>
+</div>
+</div>
+<p>The summary of the fitted model shows the R-squared value is 0.80. This shows that 80% of our data fits better to the model.</p>
+<section id="model-validation" class="level4">
+<h4 class="anchored" data-anchor-id="model-validation">Model Validation</h4>
+<p>Then, we will evaluate the model’s performance on the testing data using the <code>predict()</code> function of <strong>stats</strong> package <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>. The model have achieved predictions of body weight of the penguins using the test data set which was not used in data training. The values of the predictions are within the distribution ranges of the response variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>pred.rf <span class="ot">=</span> mod.rf <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">predict</span>(test.set) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">bind_cols</span>(test.set)</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a>pred.rf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 5
+   .pred flipper_length_mm bill_length_mm bill_depth_mm body_mass_g
+   &lt;dbl&gt;             &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;
+ 1 3583.               186           39.5          17.4        3800
+ 2 3833.               195           40.3          18          3250
+ 3 3931.               195           38.7          19          3450
+ 4 3980.               194           46            21.5        4200
+ 5 3709.               189           35.9          19.2        3800
+ 6 3693.               185           38.2          18.1        3950
+ 7 3587.               188           39.5          17.8        3300
+ 8 3509.               186           36            18.5        3100
+ 9 4040.               191           42.3          21.2        4150
+10 3595.               186           39.6          17.7        3500
+# ℹ 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="accuracy-testing" class="level4">
+<h4 class="anchored" data-anchor-id="accuracy-testing">Accuracy testing</h4>
+<p>After validating the model performance, then we need to test its accuracy using the <code>metrics()</code> function of <strong>yardstick</strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span>. The data used will be the output of the trained model (<em>pred.rf</em>), the <strong>truth</strong> variable will be the actual values of the body mass and the estimate variable will be the the predicted values of the body mass.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>bb <span class="ot">=</span> pred.rf <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> body_mass_g,</span>
+<span id="cb19-3"><a href="#cb19-3"></a>          <span class="at">estimate =</span> .pred)</span>
+<span id="cb19-4"><a href="#cb19-4"></a></span>
+<span id="cb19-5"><a href="#cb19-5"></a>bb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard     343.   
+2 rsq     standard       0.815
+3 mae     standard     279.   </code></pre>
+</div>
+</div>
+<p>The accuracy result shows the R-squared value of 0.81 meaning that our model is accurate for more than 80%. Other performance indicators like <strong>Root Mean Squared Error (RMSE)</strong> and the <strong>Mean Absolute Error (MAE)</strong> are also low. The RMSE measures the average difference between values predicted by a model and the actual values while the MAE measures the average absolute error between actual and predicted values.</p>
+</section>
+<section id="model-predictions-on-the-new-data" class="level4">
+<h4 class="anchored" data-anchor-id="model-predictions-on-the-new-data">Model predictions on the new data</h4>
+<p>Finally, we will use the tuned model to make predictions on new data. First we will create the new dataset using the <code>rnorm()</code> function of R software <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>. We will name our new data as <strong>data.new</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>data.new <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">bill_depth_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb21-2"><a href="#cb21-2"></a>                                  <span class="at">mean =</span> <span class="dv">15</span>, </span>
+<span id="cb21-3"><a href="#cb21-3"></a>                                  <span class="at">sd =</span> <span class="dv">3</span>),</span>
+<span id="cb21-4"><a href="#cb21-4"></a>            <span class="at">bill_length_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>                                   <span class="at">mean =</span> <span class="dv">50</span>, </span>
+<span id="cb21-6"><a href="#cb21-6"></a>                                   <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb21-7"><a href="#cb21-7"></a>            <span class="at">flipper_length_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb21-8"><a href="#cb21-8"></a>                                      <span class="at">mean =</span> <span class="dv">195</span>,</span>
+<span id="cb21-9"><a href="#cb21-9"></a>                                      <span class="at">sd =</span> <span class="dv">50</span>))</span>
+<span id="cb21-10"><a href="#cb21-10"></a></span>
+<span id="cb21-11"><a href="#cb21-11"></a>mod.rf <span class="sc">%&gt;%</span> </span>
+<span id="cb21-12"><a href="#cb21-12"></a>  <span class="fu">predict</span>(data.new) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-13"><a href="#cb21-13"></a>  <span class="fu">bind_cols</span>(data.new) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-14"><a href="#cb21-14"></a>  <span class="fu">mutate</span>(<span class="at">.pred =</span> <span class="fu">as.integer</span>(.pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+   .pred bill_depth_mm bill_length_mm flipper_length_mm
+   &lt;int&gt;         &lt;dbl&gt;          &lt;dbl&gt;             &lt;dbl&gt;
+ 1  5417          14.0           57.9              263.
+ 2  3305          14.1           29.0              166.
+ 3  4022          15.9           49.6              155.
+ 4  3818          20.5           46.0              168.
+ 5  5266          12.1           48.9              235.
+ 6  4179          21.6           68.0              160.
+ 7  3743          14.4           41.9              131.
+ 8  5599          17.9           69.0              314.
+ 9  4192          12.4           57.1              140.
+10  4745          13.5           57.4              205.</code></pre>
+</div>
+</div>
+<p>That’s great!!</p>
+<p>Our model has predicts the body mass for the penguin species for the new data.</p>
+</section>
+</section>
+<section id="linear-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="linear-regression-model">Linear regression model</h3>
+<p>When using the linear regression model we will first specify the model type as Linear Regression using the <code>linear_reg()</code> function of the <strong>parsnip</strong> package <span class="citation" data-cites="parsnip22">(<a href="#ref-parsnip22" role="doc-biblioref">Kuhn and Vaughan 2022</a>)</span>. The set engine <strong>lm</strong> and the mode <strong>regression</strong> will be used.</p>
+<p>Finally, the model will be fitted with the train data set using the <code>fit()</code> function of the <strong>parsnip</strong> package <span class="citation" data-cites="parsnip22">(<a href="#ref-parsnip22" role="doc-biblioref">Kuhn and Vaughan 2022</a>)</span> with the response variable as <strong>body_mass_g</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>mod.lm <span class="ot">=</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"lm"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">fit</span>(body_mass_g<span class="sc">~</span>., <span class="at">data =</span> train.set <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>flipper_length_mm))</span>
+<span id="cb23-5"><a href="#cb23-5"></a></span>
+<span id="cb23-6"><a href="#cb23-6"></a>mod.lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+
+Call:
+stats::lm(formula = body_mass_g ~ ., data = data)
+
+Coefficients:
+   (Intercept)  bill_length_mm   bill_depth_mm  
+       2704.67           82.83         -123.51  </code></pre>
+</div>
+</div>
+<section id="model-validation-1" class="level4">
+<h4 class="anchored" data-anchor-id="model-validation-1">Model Validation</h4>
+<p>Then, we will evaluate the model’s performance on the testing data using the <code>predict()</code> function of <strong>stats</strong> package <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>. Our model has predicted for the body weight values of the penguins.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>pred.lm <span class="ot">=</span> mod.lm <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">predict</span>(test.set) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">bind_cols</span>(test.set)</span>
+<span id="cb25-4"><a href="#cb25-4"></a></span>
+<span id="cb25-5"><a href="#cb25-5"></a>pred.lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 5
+   .pred flipper_length_mm bill_length_mm bill_depth_mm body_mass_g
+   &lt;dbl&gt;             &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;
+ 1 3827.               186           39.5          17.4        3800
+ 2 3819.               195           40.3          18          3250
+ 3 3563.               195           38.7          19          3450
+ 4 3859.               194           46            21.5        4200
+ 5 3307.               189           35.9          19.2        3800
+ 6 3633.               185           38.2          18.1        3950
+ 7 3778.               188           39.5          17.8        3300
+ 8 3401.               186           36            18.5        3100
+ 9 3590.               191           42.3          21.2        4150
+10 3798.               186           39.6          17.7        3500
+# ℹ 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="accuracy-testing-1" class="level4">
+<h4 class="anchored" data-anchor-id="accuracy-testing-1">Accuracy testing</h4>
+<p>The model accuracy will be tested using the <code>metrics()</code> function of <strong>yardstick</strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>cc <span class="ot">=</span> pred.lm <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> body_mass_g,</span>
+<span id="cb27-3"><a href="#cb27-3"></a>          <span class="at">estimate =</span> .pred)</span>
+<span id="cb27-4"><a href="#cb27-4"></a></span>
+<span id="cb27-5"><a href="#cb27-5"></a>cc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard     616.   
+2 rsq     standard       0.411
+3 mae     standard     506.   </code></pre>
+</div>
+</div>
+<p>The accuracy result shows the R-square is 0.41, RMSE is 616.14 and the MAE value is 505.88.</p>
+</section>
+</section>
+</section>
+<section id="comparison-between-the-two-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-between-the-two-models">Comparison between the two models</h2>
+<p>We have seen the performance of each model. We have to choose which model is more accurate and performs better than the other. I will join the two accuracy test results; the one from the random forest and the other from the linear regression model (<a href="#tbl-model-best">Table&nbsp;1</a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>pred.rf <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> body_mass_g,</span>
+<span id="cb29-3"><a href="#cb29-3"></a>          <span class="at">estimate =</span> .pred) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, </span>
+<span id="cb29-5"><a href="#cb29-5"></a>              <span class="at">values_from =</span> .estimate) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Random Forest"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">select</span>(<span class="at">Model =</span> <span class="dv">5</span>, <span class="at">Rsquare=</span><span class="dv">3</span>, <span class="at">RMSE=</span><span class="dv">2</span>, <span class="at">MAE=</span><span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb29-9"><a href="#cb29-9"></a>    </span>
+<span id="cb29-10"><a href="#cb29-10"></a>pred.lm <span class="sc">%&gt;%</span> </span>
+<span id="cb29-11"><a href="#cb29-11"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> body_mass_g,</span>
+<span id="cb29-12"><a href="#cb29-12"></a>          <span class="at">estimate =</span> .pred)  <span class="sc">%&gt;%</span> </span>
+<span id="cb29-13"><a href="#cb29-13"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> .metric, </span>
+<span id="cb29-14"><a href="#cb29-14"></a>              <span class="at">values_from =</span> .estimate) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-15"><a href="#cb29-15"></a>  <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Linear Regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-16"><a href="#cb29-16"></a>  <span class="fu">select</span>(<span class="at">Model =</span> <span class="dv">5</span>, <span class="at">Rsquare=</span><span class="dv">3</span>, <span class="at">RMSE=</span><span class="dv">2</span>, <span class="at">MAE=</span><span class="dv">4</span>)</span>
+<span id="cb29-17"><a href="#cb29-17"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-18"><a href="#cb29-18"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(is.numeric, round, <span class="dv">2</span>))  <span class="sc">%&gt;%</span> </span>
+<span id="cb29-19"><a href="#cb29-19"></a>  gt<span class="sc">::</span><span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 2 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `across(is.numeric, round, 2)`.
+Caused by warning:
+! Use of bare predicate functions was deprecated in tidyselect 1.1.0.
+ℹ Please use wrap predicates in `where()` instead.
+  # Was:
+  data %&gt;% select(is.numeric)
+
+  # Now:
+  data %&gt;% select(where(is.numeric))
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="tbl-model-best" class="anchored">
+
+<div id="idbvzlikgm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#idbvzlikgm) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#idbvzlikgm) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#idbvzlikgm) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#idbvzlikgm) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#idbvzlikgm) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#idbvzlikgm) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#idbvzlikgm) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#idbvzlikgm) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#idbvzlikgm) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#idbvzlikgm) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#idbvzlikgm) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#idbvzlikgm) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#idbvzlikgm) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#idbvzlikgm) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#idbvzlikgm) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#idbvzlikgm) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#idbvzlikgm) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#idbvzlikgm) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#idbvzlikgm) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#idbvzlikgm) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#idbvzlikgm) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#idbvzlikgm) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#idbvzlikgm) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#idbvzlikgm) .gt_left {
+  text-align: left;
+}
+
+:where(#idbvzlikgm) .gt_center {
+  text-align: center;
+}
+
+:where(#idbvzlikgm) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#idbvzlikgm) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#idbvzlikgm) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#idbvzlikgm) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#idbvzlikgm) .gt_super {
+  font-size: 65%;
+}
+
+:where(#idbvzlikgm) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#idbvzlikgm) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#idbvzlikgm) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#idbvzlikgm) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#idbvzlikgm) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#idbvzlikgm) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#idbvzlikgm) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table"><caption>Table&nbsp;1:  The table showing the model performance indicators </caption>
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Model">Model</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Rsquare">Rsquare</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="RMSE">RMSE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="MAE">MAE</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Model" class="gt_row gt_left">Random Forest</td>
+<td headers="Rsquare" class="gt_row gt_right">0.81</td>
+<td headers="RMSE" class="gt_row gt_right">343.03</td>
+<td headers="MAE" class="gt_row gt_right">279.11</td></tr>
+    <tr><td headers="Model" class="gt_row gt_left">Linear Regression</td>
+<td headers="Rsquare" class="gt_row gt_right">0.41</td>
+<td headers="RMSE" class="gt_row gt_right">616.14</td>
+<td headers="MAE" class="gt_row gt_right">505.88</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+<p>The table shows that the Random Forest is the best than the Linear Regression Model!! This is because it has higher R-squared value with low RMSE and MAE values (<a href="#tbl-model-best">Table&nbsp;1</a>).</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>All in all, the success of machine learning and artificial intelligence depend on the <strong>quality of the data</strong>, the <strong>complexity of the problem</strong>, and the <strong>choice of the appropriate algorithms</strong> and techniques <span class="citation" data-cites="han11 witten05">(<a href="#ref-han11" role="doc-biblioref">Jiawei Han and Pei 2011</a>; <a href="#ref-witten05" role="doc-biblioref">Witten et al. 2005</a>)</span>.</p>
+<p>The quality of the data is one of the most important factors for the success of machine learning. The data should be accurate, complete, and representative of the problem domain <span class="citation" data-cites="han11 witten05">(<a href="#ref-han11" role="doc-biblioref">Jiawei Han and Pei 2011</a>; <a href="#ref-witten05" role="doc-biblioref">Witten et al. 2005</a>)</span>. In addition, the data should be properly labeled and preprocessed to ensure that the machine learning algorithms can effectively learn from it.</p>
+<p>The complexity of the problem is also a key factor in determining the success of machine learning <span class="citation" data-cites="gomez14">(<a href="#ref-gomez14" role="doc-biblioref">Gomez-Cabrero et al. 2014</a>)</span>. Some problems are inherently more complex than others, and require more sophisticated algorithms and techniques to solve. For example, image recognition and natural language processing are typically more complex than simple regression problems.</p>
+<p>Finally, the choice of the appropriate algorithms and techniques is critical for the success of machine learning <span class="citation" data-cites="sarker21 gomez14">(<a href="#ref-sarker21" role="doc-biblioref">Sarker 2021</a>; <a href="#ref-gomez14" role="doc-biblioref">Gomez-Cabrero et al. 2014</a>)</span>. Different algorithms and techniques are suited for different types of problems, and the choice of the appropriate one will depend on the specific problem and the available data. Additionally, the parameters and hyperparameters of the algorithms need to be properly tuned to ensure that the models are optimized for the problem at hand.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t miss out our next post in this blog!!!</p>
+</div>
+</div>
+</section>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-gomez14" class="csl-entry" role="doc-biblioentry">
+Gomez-Cabrero, David, Imad Abugessaisa, Dieter Maier, Andrew Teschendorff, Matthias Merkenschlager, Andreas Gisel, Esteban Ballestar, Erik Bongcam-Rudloff, Ana Conesa, and Jesper Tegnér. 2014. <span>“Data Integration in the Era of Omics: Current and Future Challenges.”</span> <em>BMC Systems Biology</em> 8 (2): 1–10.
+</div>
+<div id="ref-penguin20" class="csl-entry" role="doc-biblioentry">
+Horst, Allison Marie, Alison Presmanes Hill, and Kristen B Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://doi.org/10.5281/zenodo.3960218">https://doi.org/10.5281/zenodo.3960218</a>.
+</div>
+<div id="ref-han11" class="csl-entry" role="doc-biblioentry">
+Jiawei Han, MK, and Jian Pei. 2011. <span>“Data Mining: Concepts and Techniques: Concepts and Techniques.”</span> Elsevier, Amsterdam.
+</div>
+<div id="ref-parsnip22" class="csl-entry" role="doc-biblioentry">
+Kuhn, Max, and Davis Vaughan. 2022. <em>Parsnip: A Common API to Modeling and Analysis Functions</em>. <a href="https://CRAN.R-project.org/package=parsnip">https://CRAN.R-project.org/package=parsnip</a>.
+</div>
+<div id="ref-yardstick22" class="csl-entry" role="doc-biblioentry">
+Kuhn, Max, Davis Vaughan, and Emil Hvitfeldt. 2022. <em>Yardstick: Tidy Characterizations of Model Performance</em>. <a href="https://CRAN.R-project.org/package=yardstick">https://CRAN.R-project.org/package=yardstick</a>.
+</div>
+<div id="ref-r" class="csl-entry" role="doc-biblioentry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-sarker21" class="csl-entry" role="doc-biblioentry">
+Sarker, IH. 2021. <span>“Machine Learning: Algorithms, Real-World Applications and Research Directions. SN Comput Sci 2: 160.”</span>
+</div>
+<div id="ref-dplyr" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-witten05" class="csl-entry" role="doc-biblioentry">
+Witten, Ian H, Eibe Frank, Mark A Hall, Christopher J Pal, and MINING DATA. 2005. <span>“Practical Machine Learning Tools and Techniques.”</span> In <em>Data Mining</em>. Vol. 2. 4.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+  </div>
+</footer>
+
+
+
+</body></html>

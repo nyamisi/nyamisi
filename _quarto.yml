@@ -1,0 +1,65 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  page-navigation: true
+  title: "Nyamisi Peter"
+  site-url: https://nyamisi.github.io/nyamisi/
+  description: "Coding for all for better today and tommorow"
+
+  
+  navbar:
+      right:
+        - text: Blog
+          href: blog.qmd 
+        - icon: github
+          href: https://github.com/nyamisi
+        # - icon: twitter
+        #   href: https://twitter.com/rappa753
+        # - icon: youtube
+        #   href: https://www.youtube.com/user/Alfrodo123
+  #########################
+  # You can ignore this part in the first step
+        - icon: rss
+          href: blog.xml
+        - text: Resources
+          menu: 
+            - text: R Weekly
+              href: https://rweekly.org/
+            - text: R Bloggers
+              href: https://www.r-bloggers.com/
+            - text: Semba-blog
+              href: https://semba.netlify.app/
+            - text: Nyamisi ShinyApps
+              href: https://nyamisi.shinyapps.io/agricultureApp/
+        - text: Archive
+          href: archive.qmd
+  google-analytics: "14521548"
+  cookie-consent: 
+      type: express
+      style: headline
+      palette: dark
+  twitter-card: 
+    image: michi.jpg
+    card-style: summary_large_image
+    creator: "@nyamisi"
+  
+# filters:
+#   - code-filename
+######################### 
+
+format:
+  html:
+    theme: 
+      light: cosmo
+      dark: superhero
+    css: style.css
+    fontcolor: rebeccapurple
+    code-line-numbers: true
+    code-copy: true
+    
+    
+  
+ 
+

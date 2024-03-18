@@ -1,0 +1,83 @@
+---
+title: "Deploying and publishing to GitHub"
+author: "Nyamisi Peter"
+date: "2023-03-07"
+categories: [code]
+image: "deployment-process.jpg"
+bibliography: "../blog.bib"
+---
+
+# GitHub
+
+GitHub is a web-based platform that provides version control and collaborative software development services. It is primarily used for source code management and version control. GitHub also provides features such as bug tracking, task management, and project wikis.
+
+GitHub allows developers to collaborate on projects with other developers around the world. Users can create and manage their own repositories, which are collections of files and folders that are tracked by Git, a distributed version control system. Developers can then use Git to make changes to the codebase, track those changes over time, and collaborate with others on the same codebase.
+
+GitHub also provides a social networking aspect, allowing users to follow other developers and organizations, explore popular repositories, and contribute to open source projects. It is widely used in the software development community, with millions of users and tens of millions of repositories.
+
+In addition to its core features, GitHub also offers additional services such as GitHub Pages, which allows users to host static websites on the platform, and GitHub Actions, which provides continuous integration and continuous deployment services.
+
+## Benefits of using GitHub 
+
+Deploying to GitHub has several benefits, including:
+
+1. **Version control**: GitHub provides an easy-to-use platform for version control, which allows you to track changes to your code over time and collaborate with other developers.
+
+1. **Free hosting**: GitHub offers free hosting for static websites through its GitHub Pages service. This means you can host your website on GitHub without having to pay for hosting services.
+
+1. **Accessibility**: GitHub is widely used by developers around the world, which means your code and website are accessible to a large audience. It also makes it easy for others to contribute to your project.
+
+1. **Showcase your work**: GitHub provides a platform to showcase your work to potential employers or clients. You can also use GitHub to build a portfolio of your work, which can be a valuable asset in your career.
+
+1. **Continuous integration**: GitHub supports continuous integration, which allows you to automatically build and deploy your code whenever changes are made. This can save time and effort in the deployment process.
+
+Generally, deploying to GitHub can help streamline the development process, provide a platform to showcase your work, and offer free hosting for your projects.
+
+## GitHub deployment steps
+
+![Steps in GitHub deployment](deployment-process.jpg)
+
+Deploying to GitHub typically involves the following steps:
+
+First, create a GitHub account: If you don't already have one. You may create an account by opening [GitHub](https://github.com) page. Click the **Sign up** button at the top right corner of the page. This will navigate to the sign up window at [GitHubSignUp](https://github.com/signup). Fill in your particulars including user name and password.
+
+![Sign up to GitHub](github-signup.jpg)
+
+
+
+After you have already created an account, create a new repository in GitHub from which you will deploy your work: Navigate to the GitHub homepage and click the **New Repository** button in the top-right corner of the page. This will open a new window. Give your repository a name; I have named my repository as github-deployment. Choose whether it should be public or private, and add a description if you like and click `create repository`
+
+![Creating a new repository in GitHub](new-repository.jpg)
+
+Initialize Git: In your local development environment (Local Host) by opening the GitBash. Navigate to the directory where your project is located in your local host using `cd` function of the GitBash. Run the command `git init` to initialize Git. Check the status of your work by running `git status` in GitBash. It is adviced to check the status of your work after every step before proceeding to the new step to crosscheck if there is no any error or mistake made in the previous step
+
+Add files to the repository: Use the `git add` command to add the files you want to include in your repository. You can use the command `git add .` (add .(period)) to add all the files in your current directory. Check for status of your work
+
+Commit changes: Use the `git commit` command to commit your changes to the repository. Remember to include a descriptive commit message to explain what changes you made. Check for the status of your work
+
+Add the remote repository: Use the command `git remote add origin` https://github.com/your-username/your-repository.git to add the remote repository as the origin. Check for status of your work
+
+If the working tree is clean, Push changes to the remote repository: Use the command `git push -u origin main` to push your changes to the remote repository. The -u flag sets the upstream branch to main, which means you'll only need to run git push in the future to push changes.
+
+Verify deployment: Once you've pushed your changes, navigate to your repository on GitHub and verify that the changes have been deployed successfully.
+
+
+That's it! Your project is now deployed to GitHub and your client may access it from the cloud.
+
+
+If you made changes to your project after first commit, then you will only run three steps to make those changes to your GitHub repository; add, commit and push
+
+Add all your files in the working directory using `git add .`
+
+Commit changes to your repository using `git commit -m` "Add commit message"
+
+push your work using `git push`
+
+Navigate to your repository on GitHub and verify that the changes have been deployed successfully.
+
+If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the client as a web page
+
+
+
+
+

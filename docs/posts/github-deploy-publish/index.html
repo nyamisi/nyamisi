@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nyamisi Peter">
+<meta name="dcterms.date" content="2023-03-07">
+
+<title>Nyamisi Peter - Deploying and publishing to GitHub</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=14521548"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '14521548', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"headline",
+  "consent_type":"express",
+  "palette":"dark",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+
+
+<meta name="twitter:title" content="Nyamisi Peter - Deploying and publishing to GitHub">
+<meta name="twitter:description" content="GitHub is a web-based platform that provides version control and collaborative software development services. It is primarily used for source code management and version control.">
+<meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/michi.jpg">
+<meta name="twitter:creator" content="@nyamisi">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nyamisi Peter</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nyamisi"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ressources</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-ressources">    
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://semba.netlify.app/">
+ <span class="dropdown-text">Semba-blog</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html">
+ <span class="menu-text">Archive</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#github" id="toc-github" class="nav-link active" data-scroll-target="#github">GitHub</a>
+  <ul class="collapse">
+  <li><a href="#benefits-of-using-github" id="toc-benefits-of-using-github" class="nav-link" data-scroll-target="#benefits-of-using-github">Benefits of using GitHub</a></li>
+  <li><a href="#github-deployment-steps" id="toc-github-deployment-steps" class="nav-link" data-scroll-target="#github-deployment-steps">GitHub deployment steps</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Deploying and publishing to GitHub</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nyamisi Peter </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 7, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="github" class="level1">
+<h1>GitHub</h1>
+<p>GitHub is a web-based platform that provides version control and collaborative software development services. It is primarily used for source code management and version control. GitHub also provides features such as bug tracking, task management, and project wikis.</p>
+<p>GitHub allows developers to collaborate on projects with other developers around the world. Users can create and manage their own repositories, which are collections of files and folders that are tracked by Git, a distributed version control system. Developers can then use Git to make changes to the codebase, track those changes over time, and collaborate with others on the same codebase.</p>
+<p>GitHub also provides a social networking aspect, allowing users to follow other developers and organizations, explore popular repositories, and contribute to open source projects. It is widely used in the software development community, with millions of users and tens of millions of repositories.</p>
+<p>In addition to its core features, GitHub also offers additional services such as GitHub Pages, which allows users to host static websites on the platform, and GitHub Actions, which provides continuous integration and continuous deployment services.</p>
+<section id="benefits-of-using-github" class="level2">
+<h2 class="anchored" data-anchor-id="benefits-of-using-github">Benefits of using GitHub</h2>
+<p>Deploying to GitHub has several benefits, including:</p>
+<ol type="1">
+<li><p><strong>Version control</strong>: GitHub provides an easy-to-use platform for version control, which allows you to track changes to your code over time and collaborate with other developers.</p></li>
+<li><p><strong>Free hosting</strong>: GitHub offers free hosting for static websites through its GitHub Pages service. This means you can host your website on GitHub without having to pay for hosting services.</p></li>
+<li><p><strong>Accessibility</strong>: GitHub is widely used by developers around the world, which means your code and website are accessible to a large audience. It also makes it easy for others to contribute to your project.</p></li>
+<li><p><strong>Showcase your work</strong>: GitHub provides a platform to showcase your work to potential employers or clients. You can also use GitHub to build a portfolio of your work, which can be a valuable asset in your career.</p></li>
+<li><p><strong>Continuous integration</strong>: GitHub supports continuous integration, which allows you to automatically build and deploy your code whenever changes are made. This can save time and effort in the deployment process.</p></li>
+</ol>
+<p>Generally, deploying to GitHub can help streamline the development process, provide a platform to showcase your work, and offer free hosting for your projects.</p>
+</section>
+<section id="github-deployment-steps" class="level2">
+<h2 class="anchored" data-anchor-id="github-deployment-steps">GitHub deployment steps</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="deployment-process.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Steps in GitHub deployment</figcaption><p></p>
+</figure>
+</div>
+<p>Deploying to GitHub typically involves the following steps:</p>
+<p>First, create a GitHub account: If you don’t already have one. You may create an account by opening <a href="https://github.com">GitHub</a> page. Click the <strong>Sign up</strong> button at the top right corner of the page. This will navigate to the sign up window at <a href="https://github.com/signup">GitHubSignUp</a>. Fill in your particulars including user name and password.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="github-signup.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Sign up to GitHub</figcaption><p></p>
+</figure>
+</div>
+<p>After you have already created an account, create a new repository in GitHub from which you will deploy your work: Navigate to the GitHub homepage and click the <strong>New Repository</strong> button in the top-right corner of the page. This will open a new window. Give your repository a name; I have named my repository as github-deployment. Choose whether it should be public or private, and add a description if you like and click <code>create repository</code></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="new-repository.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Creating a new repository in GitHub</figcaption><p></p>
+</figure>
+</div>
+<p>Initialize Git: In your local development environment (Local Host) by opening the GitBash. Navigate to the directory where your project is located in your local host using <code>cd</code> function of the GitBash. Run the command <code>git init</code> to initialize Git. Check the status of your work by running <code>git status</code> in GitBash. It is adviced to check the status of your work after every step before proceeding to the new step to crosscheck if there is no any error or mistake made in the previous step</p>
+<p>Add files to the repository: Use the <code>git add</code> command to add the files you want to include in your repository. You can use the command <code>git add .</code> (add .(period)) to add all the files in your current directory. Check for status of your work</p>
+<p>Commit changes: Use the <code>git commit</code> command to commit your changes to the repository. Remember to include a descriptive commit message to explain what changes you made. Check for the status of your work</p>
+<p>Add the remote repository: Use the command <code>git remote add origin</code> https://github.com/your-username/your-repository.git to add the remote repository as the origin. Check for status of your work</p>
+<p>If the working tree is clean, Push changes to the remote repository: Use the command <code>git push -u origin main</code> to push your changes to the remote repository. The -u flag sets the upstream branch to main, which means you’ll only need to run git push in the future to push changes.</p>
+<p>Verify deployment: Once you’ve pushed your changes, navigate to your repository on GitHub and verify that the changes have been deployed successfully.</p>
+<p>That’s it! Your project is now deployed to GitHub and your client may access it from the cloud.</p>
+<p>If you made changes to your project after first commit, then you will only run three steps to make those changes to your GitHub repository; add, commit and push</p>
+<p>Add all your files in the working directory using <code>git add .</code></p>
+<p>Commit changes to your repository using <code>git commit -m</code> “Add commit message”</p>
+<p>push your work using <code>git push</code></p>
+<p>Navigate to your repository on GitHub and verify that the changes have been deployed successfully.</p>
+<p>If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the client as a web page</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<div>
+<hr>
+
+<h3> Stay in touch </h3>
+
+<p> If you enjoyed this post, then don't miss out on any future posts by subscribing to my email newsletter. </p>
+
+<iframe id="beehiiv-form" src="https://embeds.beehiiv.com/9232d2a2-6e85-4beb-b8ed-1de94e9e4f01?slim=true" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent; height: 55px;"></iframe>
+
+
+<h3> Support my work with a coffee </h3>
+
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="rappa753" data-color="#06436e" data-emoji="☕" data-font="Lato" data-text="Support me" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" data-height="40px"></script>
+
+<h3> Share </h3>
+
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-hashtags="#rstats" data-show-count="false">Tweet</a><script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<hr>
+</div>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nyamisi Peter">
+<meta name="dcterms.date" content="2023-02-15">
+
+<title>Nyamisi Peter - Text analytics and word cloud in R and ggplot2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=14521548"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '14521548', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"headline",
+  "consent_type":"express",
+  "palette":"dark",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+<script src="../../site_libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<link href="../../site_libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet">
+<script src="../../site_libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="../../site_libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="../../site_libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+
+
+<link rel="stylesheet" href="style.css">
+<meta name="twitter:title" content="Nyamisi Peter - Text analytics and word cloud in R and ggplot2">
+<meta name="twitter:description" content="wordcloud is an image composed of words used in a particular text or subject, in which the size of each word indicates its frequency or importance.">
+<meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/michi.jpg">
+<meta name="twitter:creator" content="@nyamisi">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nyamisi Peter</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nyamisi"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ressources</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-ressources">    
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://semba.netlify.app/">
+ <span class="dropdown-text">Semba-blog</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html">
+ <span class="menu-text">Archive</span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
+  <ul class="collapse">
+  <li><a href="#tidy-pproject-titles" id="toc-tidy-pproject-titles" class="nav-link" data-scroll-target="#tidy-pproject-titles">tidy pproject titles</a>
+  <ul class="collapse">
+  <li><a href="#create-a-document-term-matrix" id="toc-create-a-document-term-matrix" class="nav-link" data-scroll-target="#create-a-document-term-matrix">Create a document-term-matrix</a></li>
+  <li><a href="#generate-the-word-cloud" id="toc-generate-the-word-cloud" class="nav-link" data-scroll-target="#generate-the-word-cloud">Generate the word cloud</a></li>
+  </ul></li>
+  <li><a href="#consultated-references" id="toc-consultated-references" class="nav-link" data-scroll-target="#consultated-references">Consultated references</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Text analytics and word cloud in R and ggplot2</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">visualization</div>
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nyamisi Peter </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 15, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p><em>wordcloud</em> is an image composed of words used in a particular text or subject, in which the size of each word indicates its frequency or importance. In this post, we are going to learn how to create worldcloud in R language <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>. To generate wordcloud plot in R, we need either worcloud <span class="citation" data-cites="wordcloud">(<a href="#ref-wordcloud" role="doc-biblioref">Fellows 2018</a>)</span> or wordcloud2 <span class="citation" data-cites="wordcloud2">(<a href="#ref-wordcloud2" role="doc-biblioref">Lang and Chien 2018</a>)</span> packages. If these packages are not installed in your machine, you can simply download and install them from CRAN as;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"wordcloud"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">install.packages</span>(<span class="st">"wordcloud2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before we proceed, we need to load some packages, whose function we are going to use throughout this post. These packages are highlighted in the chunk below;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">require</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">require</span>(readxl)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">require</span>(tm)           <span class="co"># for text mining</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">require</span>(SnowballC)    <span class="co"># for text stemming</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">require</span>(wordcloud)    <span class="co"># word-cloud generator</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">require</span>(RColorBrewer) <span class="co"># color palettes</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">require</span>(wordcloud2)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">require</span>(ggalluvial)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<p>In this post we are going to assess third year project student titles. The data has been organized and compiled in Excel spreadsheet. We can load this dataset into R session using <code>read_excel()</code> function from <strong>readxl</strong> package <span class="citation" data-cites="readxl">(<a href="#ref-readxl" role="doc-biblioref">Wickham and Bryan 2022</a>)</span> and assign the loaded file as <code>student</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>student <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"student_2020-23.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Its a good practise to explore the internal structure of the loaded, though the str function is widely used for years, but <span class="citation" data-cites="dplyr">Wickham et al. (<a href="#ref-dplyr" role="doc-biblioref">2022</a>)</span> developed a <code>glimpse</code> function, which provide a nitty approach to look at the data and its associated variables;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>student <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 163
+Columns: 5
+$ Name   &lt;chr&gt; "Rashid Rahma A", "Muller Fransisca L", "Bitoye Mancef C", "Mma…
+$ gender &lt;chr&gt; "F", "F", "F", "F", "F", "M", "M", "M", "F", "F", "F", "F", "F"…
+$ field  &lt;chr&gt; "microbiology", "aquaculture", "ecosystem", "aquaculture", "soc…
+$ Title  &lt;chr&gt; "Assessing the prevalence and intensity of parasitic infections…
+$ year   &lt;dbl&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 202…</code></pre>
+</div>
+</div>
+<p>The printed output of the interval structure indicates tha the file has five variables—name, gender, field, title and year. With exception of the year, which is numeric, the other variables are character.</p>
+<section id="tidy-pproject-titles" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-pproject-titles">tidy pproject titles</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>student.text <span class="ot">=</span> student<span class="sc">$</span>Title </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Thereafter, a corpus will be generated from the vector using the <em>Corpus()</em> function of <strong>tm</strong> package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>student.doc <span class="ot">=</span> tm<span class="sc">::</span><span class="fu">Corpus</span>(<span class="fu">VectorSource</span>(student.text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cleaning is an essential step to take before you generate your wordcloud. Indeed, for your analysis to bring useful insights, you may want to remove special characters, numbers or punctuation from your text. In addition, you should remove common stop words in order to produce meaningful results and avoid the most common frequent words such as “I” or “the” to appear in the word cloud. If you’re working with a corpus, there are several packages you can use to clean your text. The following lines of code show you how to do this using the tm package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>student.doc.clean <span class="ot">=</span> student.doc <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">tm_map</span>(removeNumbers) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">tm_map</span>(removePunctuation) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">tm_map</span>(stripWhitespace) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">tm_map</span>(<span class="fu">content_transformer</span>(tolower)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">tm_map</span>(removeWords, <span class="fu">stopwords</span>(<span class="at">kind =</span> <span class="st">"en"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="create-a-document-term-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-document-term-matrix">Create a document-term-matrix</h3>
+<p>What you want to do as a next step is to have a dataframe containing each word in your first column and their frequency in the second column. This can be done by creating a document term matrix with the TermDocumentMatrix function from the tm package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>student.matrix <span class="ot">=</span> <span class="fu">TermDocumentMatrix</span>(student.doc.clean) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>student.word <span class="ot">=</span> <span class="fu">sort</span>(<span class="fu">rowSums</span>(student.matrix), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>     </span>
+<span id="cb9-6"><a href="#cb9-6"></a> student.word.df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">word =</span> <span class="fu">names</span>(student.word), <span class="at">freq =</span> student.word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="generate-the-word-cloud" class="level3">
+<h3 class="anchored" data-anchor-id="generate-the-word-cloud">Generate the word cloud</h3>
+<p>The wordcloud package is the most classic way to generate a word cloud. The following line of code shows you how to properly set the arguments. As an example, I chose to work with the student titles on their third year research project at SoAF.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">wordcloud</span>(<span class="at">words =</span> student.word.df<span class="sc">$</span>word, </span>
+<span id="cb10-4"><a href="#cb10-4"></a>          <span class="at">freq =</span> student.word.df<span class="sc">$</span>freq, </span>
+<span id="cb10-5"><a href="#cb10-5"></a>          <span class="at">min.freq =</span> <span class="dv">1</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>          <span class="at">random.order =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb10-7"><a href="#cb10-7"></a>         <span class="at">max.words =</span> <span class="dv">200</span>,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>         <span class="co"># rot.per = 0.35,</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>          <span class="at">colors =</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>, <span class="st">"Dark2"</span>),</span>
+<span id="cb10-10"><a href="#cb10-10"></a>         <span class="at">scale =</span> <span class="fu">c</span>(<span class="fl">3.5</span>,<span class="fl">0.4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It may happen that your word cloud crops certain words or simply doesn’t show them. If this happens, make sure to add the argument scale=c(3.5,0.25) and play around with the numbers to make the word cloud fit. Another common mistake with word clouds is to show too many words that have little frequency. If this is the case, make sure to adjust the minimum frequency argument (min.freq=…) in order to render your word cloud more meaningful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="fu">wordcloud</span>(<span class="at">words =</span> student.word.df<span class="sc">$</span>word, </span>
+<span id="cb11-4"><a href="#cb11-4"></a>          <span class="at">freq =</span> student.word.df<span class="sc">$</span>freq, </span>
+<span id="cb11-5"><a href="#cb11-5"></a>          <span class="at">min.freq =</span> <span class="dv">3</span>,</span>
+<span id="cb11-6"><a href="#cb11-6"></a>          <span class="at">random.order =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb11-7"><a href="#cb11-7"></a>         <span class="co"># max.words = 1000,</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>         <span class="co"># rot.per = 0.35,</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>          <span class="at">colors =</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>, <span class="st">"Dark2"</span>), </span>
+<span id="cb11-10"><a href="#cb11-10"></a>         <span class="at">scale =</span> <span class="fu">c</span>(<span class="fl">3.5</span>,<span class="fl">0.6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The <strong>wordcloud2</strong> package is a bit more fun to use, allowing us to do some more advanced visualisations. For instance, you can choose your wordcloud to appear in a specific shape or even letter (see this vignette for a useful tutorial). As an example, I used the same corpus of student title and generated the two word clouds shown below. Cool, right?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">wordcloud2</span>(<span class="at">data =</span> student.word.df, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>           <span class="at">size =</span> <span class="fl">0.8</span>, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>           <span class="at">color =</span> <span class="st">"random-dark"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>           <span class="at">minSize =</span> <span class="dv">3</span>,</span>
+<span id="cb12-5"><a href="#cb12-5"></a>           <span class="at">ellipticity =</span> <span class="dv">2</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>           <span class="at">gridSize =</span> <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="wordcloud2 html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e841cfe017b85aa397a1" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-e841cfe017b85aa397a1">{"x":{"word":["assessment","kunduchi","fish","tilapia","growth","nile","dar","salaam","assessing","water","performance","effects","catfish","mangrove","abundance","different","quality","study","using","market","fishing","african","rate","beach","river","diversity","sea","along","community","effect","cultured","marine","comparison","meal","production","aquaculture","determination","tanks","species","niloticus","seaweed","influence","comparative","ferry","fisheries","feed","survival","coastal","protein","efficiency","bagamoyo","seagrass","macrofauna","fed","sardine","oreochromis","chicken","ponds","system","gariepinus","beaches","relation","kinondoni","tanzania","forest","use","fingerlings","case","concentration","nutrients","commercial","mlingotini","moringa","phytoplankton","manure","clarias","levels","organic","mercury","ras","recirculating","farmers","local","mbweni","aquarium","fishermen","social","change","freshwater","activities","challenges","scale","small","intertidal","anchovies","fry","three","landing","application","feeds","factors","effectiveness","msimbazi","juvenile","catch","district","waste","art","leaves","powder","seed","concrete","plankton","wastes","artificial","propagation","zone","distribution","farming","ocean","pollution","structure","macroinvertebrate","surface","characteristics","microplastic","wetland","drying","contribution","intensity","municipal","economic","illegal","facing","women","chain","fishes","value","improving","seagrasses","acceptability","consumer","frying","locally","methods","processed","fresh","salinity","fried","rates","microbiological","sites","zones","kijichi","tegeta","bukoba","council","chlorophylla","relationship","variation","azolla","raised","feather","source","artemia","comparing","larvae","live","like","product","female","maggots","reproduction","farms","sources","extent","assemblages","treatment","cowdung","productivity","cow","eggs","investigation","tuna","fermented","substratum","food","grown","reproductive","destruction","functional","habitat","worms","anthropogenic","meiofauna","ecosystem","role","potential","benthic","solid","suspended","total","sediments","spatial","composition","analysis","loss","postharvest","waters","light","macro","morogoro","dynamics","matter","particulate","markets","tissues","aspt","bmwp","biological","management","coast","indian","mackerel","inorganic","preferences","shore","pituitary","sharptooth","profitability","microbial","probiotics","landed","sediment","traditional","pond","terebralia","mapping","region","male","sun","business","ornamental","accumulation","living","income","mixture","rotifers","infections","parasitic","prevalence","selected","wild","area","aloe","behavior","coat","dissolved","examining","gel","stress","vera","condition","climate","public","understanding","environment","carbon","found","stocks","aquacultural","involved","affects","availability","abudance","cpue","msasani","sardines","economy","jarida","langu","science","areas","puna","assessing ","boiling","sundrying","survivor","types","brackish","cats","catus","felis","raw","boat","building","indigenous","knowledge","nonpelleted","pelleted","coco","quantity","trash","trend","type","assesing","conservation","daressalaam","environmental","island","sinda","turtle","auctioning","systems","wellbeing","chemical","demand","oxygen","additional","fodder","hydropnics","increase","concentrate","diet","pea","substitute","replacement","snail","tilapiacatfish","effort","per","sangara","trends","unit","investigating"," msimbazi","gear","seasonal","usage","alternative","dietary","partial","bones","made","frozen","post"," tilapia","gill","nets","perch","sample","byproduct","belly","craft","flower","pots","producing","though","fecundity","impact","neem","common","heavy","metals","used","cause","decreased","lake","victoria","oil","response","spills","addressing","conflict","determining","reasons","oleifera","wastewater","chloride","polyvinyl","eutrophication","evaluation","urine","microplastics","biodegraded","biofertilizer","fertilizing","immuno","stimulating","black","flies","mass","solders","ginger","kmno","nacl","substrate","helmintheic","infection","clarius","examine","seminatural","controlling","pawpaw","diets","oleofera","power","root","seeds","baobab","fishmeal","junenile","broillers","background","color","dung","housefly","intestine","leftovers","produced","substrates","harak","luthjanus","pattern","taxonomic","wetlands","structural","erosion","experiencing","polychaete","two","impacts","crabs","feeding","fiddler","processing","uca","beachcast","disturbance","macroinvertebrates","subjected","university","regeneration","stages","stands","variability","speciation","tissue","bongoyo","mbudya","medical","reserves","around","awareness","importance","village","enterprises","smallscale","socialeconomic","artisanal","baits","status","bioindicators","road","sewage","bio","indicator","macrobenthic","intensities","bleaching","invertebrate","velocity","epilithic","epiphytic","periphyton","primary","shredders","streams","adipose","lates","muscle","parchased","identifiction","learning","machine","technology","bwawani","kibaha","indices","kizinga","mzinga","rivers","urban","ecological","modelling","stock","filters","framework","policy","regions","unregulated","unreported","bmu","roles","chitosan","coatings","fillets","nanochitosan","refrigerated","snapper","consumer’s","smoked","biomass","microlayer","sub","debris","macroplastic","bay","gratilla","oyster","tripneustes","assemblage","habitats","oysterbay","urchin","duck","glands","hormone","inducing","maturation","muscovy","ovaprim","cost","bioactive","compounds","farmed","offal","ingestion","kigamboni","bed","coastline","estuary","plastic","associates","plants","practices","complexity","culture","avian","estimation","anesthesia","dosage","mode","optimum","giant","micronutrients","pallustris","whelk","gradient","macrophyte","zonation","ecology","hatchability","latvae","photoperiod","regime","high","low","periods","fir","formulated","rearing","bacteria","coliform","fecal","sand","silver","associated","costal","investigate","cleaner","stocked","together","bufo","cartifish","gland","regularis","toad","gastropod","morphometric","mtoni","palustris","variations","nutrient","removal","salinities","seaweedenteromorpha","adult","calf","cattle","fertilization","aquatic","catchment","eco","hydrological","udzungwa","consumption","percapita","animal","based","cockroach","fly","maggot","pinnata","plant","density","prawns","stocking","ground","rack","reducing","safety","site","fishers","livelihood","crude","weight","licensing","registration","identification","remote","sensing","phosphorus","snappers","smoking","spoilage","preference","kawe","litter","standards","trade","traders","households","participating","prohibiting","standard","catches","corresponding","data","gisbased","meadow","approach","bags","biodegradable","hessian","pilot","restoration","activity","cucumber","holothuria","induction","scabra","spawning","tropical","mji","mwema","stars","micro","microworms","current","shrimp","development","hindering","villagebagamoyo","dried","juveniles","leaf","leucaena","leucocephala","mixed","utilization","bean","soya","cocktail","fertilizers","alpha","concentrations","egg","immersion","methyltestesterone","reversal","sex","technique","dasftkunduchi","makongo","tafiri","aureus","hirnorum","hybridization","inter","specific"],"freq":[63,38,35,31,28,27,24,24,22,22,19,16,14,13,12,12,11,11,11,10,10,10,10,10,10,9,9,9,9,9,8,8,8,8,8,8,8,8,7,7,7,7,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":3,"weightFactor":2.28571428571429,"backgroundColor":"white","gridSize":11,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":2,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+</div>
+</div>
+<p>In summary, R language provide myriad package for visualizing not only numeric data but also for textual information and summarize them in plots that are easily to understand. In the next post, we are going to use the approach to visualize textual information using alluvial plots</p>
+</section>
+</section>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-wordcloud" class="csl-entry" role="doc-biblioentry">
+Fellows, Ian. 2018. <em>Wordcloud: Word Clouds</em>. <a href="https://CRAN.R-project.org/package=wordcloud">https://CRAN.R-project.org/package=wordcloud</a>.
+</div>
+<div id="ref-wordcloud2" class="csl-entry" role="doc-biblioentry">
+Lang, Dawei, and Guan-tin Chien. 2018. <em>Wordcloud2: Create Word Cloud by ’Htmlwidget’</em>. <a href="https://CRAN.R-project.org/package=wordcloud2">https://CRAN.R-project.org/package=wordcloud2</a>.
+</div>
+<div id="ref-r" class="csl-entry" role="doc-biblioentry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-readxl" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, and Jennifer Bryan. 2022. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-dplyr" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nyamisi Peter">
+<meta name="dcterms.date" content="2023-03-08">
+
+<title>Nyamisi Peter - Machine Learning (ML) using classification Algorithm in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=14521548"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '14521548', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"headline",
+  "consent_type":"express",
+  "palette":"dark",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  });
+});
+</script> 
+  
+
+
+<link rel="stylesheet" href="style.css">
+<meta name="twitter:title" content="Nyamisi Peter - Machine Learning (ML) using classification Algorithm in R">
+<meta name="twitter:description" content="Technology is becoming more important in our daily lives in every second.">
+<meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/michi.jpg">
+<meta name="twitter:creator" content="@nyamisi">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Nyamisi Peter</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/nyamisi"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../blog.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ressources</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-ressources">    
+        <li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://semba.netlify.app/">
+ <span class="dropdown-text">Semba-blog</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html">
+ <span class="menu-text">Archive</span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#machine-learning-algorithms" id="toc-machine-learning-algorithms" class="nav-link" data-scroll-target="#machine-learning-algorithms">Machine Learning Algorithms</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#classification-algorithm" id="toc-classification-algorithm" class="nav-link" data-scroll-target="#classification-algorithm">Classification algorithm</a>
+  <ul class="collapse">
+  <li><a href="#data-spliting" id="toc-data-spliting" class="nav-link" data-scroll-target="#data-spliting">Data Spliting</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#consultated-references" id="toc-consultated-references" class="nav-link" data-scroll-target="#consultated-references">Consultated references</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Machine Learning (ML) using classification Algorithm in R</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nyamisi Peter </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 8, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Technology is becoming more important in our daily lives in every second. In order to keep up with the pace of these technological changes, scientists are more heavily learning different algorithms to make things easier so as to meet consumer’s demand. These technologies are commonly associated with artificial intelligence, machine learning, deep learning, and neural networks.</p>
+<p><strong>Machine learning (ML)</strong> and <strong>artificial intelligence (AI)</strong> are closely related concepts that are often used interchangeably, but they are not the same thing.</p>
+<p><strong>Artificial intelligence</strong> refers to the ability of machines to mimic human cognitive functions such as learning, reasoning, and problem-solving <a href="https://www.ibm.com/cloud/blog/ai-vs-machine-learning-vs-deep-learning-vs-neural-networks">IBM</a>. AI encompasses a wide range of techniques and approaches, including rule-based systems, expert systems, and machine learning. It is used to predict, automate, and optimize tasks that humans have historically done, such as speech and facial recognition, decision making, and translation.</p>
+<p><strong>Machine learning</strong> is a specific type of AI that involves the development of algorithms that can learn from data and make predictions or decisions based on that data <span class="citation" data-cites="mitchell07">(<a href="#ref-mitchell07" role="doc-biblioref">Mitchell et al. 2007</a>)</span>. In other words, machine learning algorithms are designed to learn patterns and relationships in data without being explicitly programmed to do so.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ML-image.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Machine learning and artificial intelligence</figcaption><p></p>
+</figure>
+</div>
+<section id="machine-learning-algorithms" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-algorithms">Machine Learning Algorithms</h2>
+<p>There are several types of machine learning algorithms, including <strong>supervised learning</strong>, <strong>unsupervised learning</strong>, and <strong>reinforcement learning</strong>. Supervised learning involves using labeled (predictor) training data to train a model to make predictions on new, unseen data. Unsupervised learning involves finding patterns and relationships in data without the use of labeled training data. Reinforcement learning involves training a model to make decisions based on feedback in the form of rewards or punishments.</p>
+<p><strong>Classification and regression</strong> are two of the most common types of supervised learning algorithms in machine learning and artificial intelligence. Classification is a type of supervised learning algorithm used for predicting discrete or categorical outcomes. It involves mapping input variables to discrete output categories or labels. The objective of classification is to build a model that accurately assigns new data points to the correct class or label.</p>
+<p>On the other hand, regression is a type of supervised learning algorithm used for predicting continuous or numeric outcomes. It involves mapping input variables to continuous output values. The objective of regression is to build a model that accurately predicts the value of the dependent variable based on the values of the independent variables.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="class-regression.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Difference between classification and regression</figcaption><p></p>
+</figure>
+</div>
+<p>In this tutorial we are going to deal with classification algorithm in predicting the type of penguin species flipper length, bill dimensions and sex. We will use penguins data from the <strong>palmerpenguins</strong> package <span class="citation" data-cites="penguin20">(<a href="#ref-penguin20" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span>. It includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.</p>
+<p>First, we will load the packages which we are going to use in this tutorial; I will use <code>require()</code> function, but you may also use <code>library()</code> function depending on your preferences.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">require</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">require</span>(tidymodels)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">require</span>(palmerpenguins)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">require</span>(ranger)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">require</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>After loading the packages, we will load the penguins data <span class="citation" data-cites="penguin20">(<a href="#ref-penguin20" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span> and remove all the missing values in the dataset and equate them as <strong><em>penguin.data</em></strong>. The dataset consist of 333 rows and 8 columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>penguin.data <span class="ot">=</span> palmerpenguins<span class="sc">::</span>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 333 × 8
+   species island    bill_length_mm bill_depth_mm flipper_…¹ body_…² sex    year
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;      &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7        181    3750 male   2007
+ 2 Adelie  Torgersen           39.5          17.4        186    3800 fema…  2007
+ 3 Adelie  Torgersen           40.3          18          195    3250 fema…  2007
+ 4 Adelie  Torgersen           36.7          19.3        193    3450 fema…  2007
+ 5 Adelie  Torgersen           39.3          20.6        190    3650 male   2007
+ 6 Adelie  Torgersen           38.9          17.8        181    3625 fema…  2007
+ 7 Adelie  Torgersen           39.2          19.6        195    4675 male   2007
+ 8 Adelie  Torgersen           41.1          17.6        182    3200 fema…  2007
+ 9 Adelie  Torgersen           38.6          21.2        191    3800 male   2007
+10 Adelie  Torgersen           34.6          21.1        198    4400 male   2007
+# … with 323 more rows, and abbreviated variable names ¹​flipper_length_mm,
+#   ²​body_mass_g</code></pre>
+</div>
+</div>
+<p>Then, we will look on the internal structure of the dataset using <code>glimpse()</code> function of <strong>dplyr</strong> package. Our dataset consist of 8 variables (columns); 3 are factors data (species, island and sex), 2 numeric or double data (bill_length_mm, bill_depth_mm) and 3 integers (flipper_length_mm, body_mass_g, year). The variable species have 3 different levels which are <em>Adelie</em>, <em>Gentoo</em> and <em>Chinstrap</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">glimpse</span>(penguin.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 333
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, 36.7, 39.3, 38.9, 39.2, 41.1, 38.6…
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, 19.3, 20.6, 17.8, 19.6, 17.6, 21.2…
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, 193, 190, 181, 195, 182, 191, 198, 18…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, 3450, 3650, 3625, 4675, 3200, 3800…
+$ sex               &lt;fct&gt; male, female, female, female, male, female, male, fe…
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
+</div>
+</div>
+<p>In this tutorial we will use only three variables from penguins data; which are species, bill_length_mm, bill_depth_mm. We will run the <code>select()</code> function of <strong>dplyr</strong> package <span class="citation" data-cites="dplyr">(<a href="#ref-dplyr" role="doc-biblioref">Wickham et al. 2022</a>)</span> to select our variables of interest</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>penguin.data <span class="ot">=</span> penguin.data <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">select</span>(species, </span>
+<span id="cb6-3"><a href="#cb6-3"></a>         bill_length_mm, </span>
+<span id="cb6-4"><a href="#cb6-4"></a>         bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before we apply ML algorithms, first we will crosscheck whether the predictor variable (in this case, species), have distinct features (like size) which will help in providing the more accurate output during predictions. When there is interconnection or inter-relation between response variables, some confusion might arise during predictions.</p>
+<p>We will use scatter plot between bill_length_mm and bill_depth_mm to see the distribution of each species in the dataset. There is a distinct differences between the size of the three penguins species (<a href="#fig-scatter">Figure&nbsp;1</a>). Each species has its size range; therefore, the dataset fit best in our analysis.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>penguin.data <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> bill_length_mm, </span>
+<span id="cb7-3"><a href="#cb7-3"></a>             <span class="at">x =</span> bill_depth_mm, </span>
+<span id="cb7-4"><a href="#cb7-4"></a>             <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-scatter" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-scatter-1.png" class="img-fluid figure-img" width="480"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Scatter plot showing the distribution of <em>Adelie</em>, <em>Gentoo</em> and <em>Chinstrap</em> species</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="classification-algorithm">Classification algorithm</h2>
+<p>As explained earlier, supervised learning involves training a dataset before you have your predictions. Since our output is categorical (prediction of the species type), then we will use classification algorithm in our analysis.</p>
+<section id="data-spliting" class="level3">
+<h3 class="anchored" data-anchor-id="data-spliting">Data Spliting</h3>
+<p>Classification algorithm as one of the supervised learning, needs two data types; the <strong>training</strong> and <strong>testing</strong> data set. Our <code>penguin.data</code> will be split into these two groups. The training dataset will have a proportion of 70% and the remaining 30% will be the test dataset. In total, our dataset has 333 observations in which 233 samples will be used to train our model while in testing the accuracy of the model 100 samples will used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>split.penguin <span class="ot">=</span> penguin.data <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">initial_split</span>(<span class="at">prop =</span> <span class="fl">0.7</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a>split.penguin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Training/Testing/Total&gt;
+&lt;233/100/333&gt;</code></pre>
+</div>
+</div>
+<p>The training data below with 233 samples will be used for training the model;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>train.set <span class="ot">=</span> split.penguin <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">training</span>()</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a>train.set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 233 × 3
+   species   bill_length_mm bill_depth_mm
+   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Chinstrap           47.6          18.3
+ 2 Chinstrap           51.7          20.3
+ 3 Adelie              41            20  
+ 4 Adelie              45.6          20.3
+ 5 Gentoo              42.7          13.7
+ 6 Adelie              35.1          19.4
+ 7 Adelie              35.5          16.2
+ 8 Gentoo              45.5          13.9
+ 9 Gentoo              46.8          15.4
+10 Adelie              41.1          18.1
+# … with 223 more rows</code></pre>
+</div>
+</div>
+<p>The testing data with 100 observations will be used to test the accuracy of the model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>test.set <span class="ot">=</span> split.penguin <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">testing</span>()</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a>test.set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 3
+   species bill_length_mm bill_depth_mm
+   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie            39.1          18.7
+ 2 Adelie            39.5          17.4
+ 3 Adelie            39.2          19.6
+ 4 Adelie            34.4          18.4
+ 5 Adelie            38.2          18.1
+ 6 Adelie            38.8          17.2
+ 7 Adelie            37.9          18.6
+ 8 Adelie            37.2          18.1
+ 9 Adelie            36.4          17  
+10 Adelie            39.2          21.1
+# … with 90 more rows</code></pre>
+</div>
+</div>
+<section id="data-training" class="level4">
+<h4 class="anchored" data-anchor-id="data-training">Data training</h4>
+<p>Use the <strong><em>train.set</em></strong> data to train the model. Run the <code>rand_forest()</code> of the <strong>parsnip</strong> package <span class="citation" data-cites="parsnip22">(<a href="#ref-parsnip22" role="doc-biblioref">Kuhn and Vaughan 2022</a>)</span>, set engine as <strong>ranger</strong> and the mode as <strong>classification</strong>. Fit the train data set with the response be the <strong>species</strong>. The summary of the training model will be shown with the predictions error of 0.02 equivalent to 2%.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>mod <span class="ot">=</span> <span class="fu">rand_forest</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">fit</span>(species<span class="sc">~</span>., <span class="at">data =</span> train.set)</span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a>mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1), probability = TRUE) 
+
+Type:                             Probability estimation 
+Number of trees:                  500 
+Sample size:                      233 
+Number of independent variables:  2 
+Mtry:                             1 
+Target node size:                 10 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.03767257 </code></pre>
+</div>
+</div>
+</section>
+<section id="predictions" class="level4">
+<h4 class="anchored" data-anchor-id="predictions">Predictions</h4>
+<p>Then, the <strong><em>test.set</em></strong> data will be used in predictions of the type of the species provided we have the bill length and bill depth. The predicted class and the test dataset will be binded together to see if there is a match or mismatch of the predicted versus the actual species type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>rf.pred <span class="ot">=</span> mod <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">predict</span>(test.set) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">bind_cols</span>(test.set)</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>rf.pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 4
+   .pred_class species bill_length_mm bill_depth_mm
+   &lt;fct&gt;       &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie      Adelie            39.1          18.7
+ 2 Adelie      Adelie            39.5          17.4
+ 3 Adelie      Adelie            39.2          19.6
+ 4 Adelie      Adelie            34.4          18.4
+ 5 Adelie      Adelie            38.2          18.1
+ 6 Adelie      Adelie            38.8          17.2
+ 7 Adelie      Adelie            37.9          18.6
+ 8 Adelie      Adelie            37.2          18.1
+ 9 Adelie      Adelie            36.4          17  
+10 Adelie      Adelie            39.2          21.1
+# … with 90 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="accuracy-testing" class="level4">
+<h4 class="anchored" data-anchor-id="accuracy-testing">Accuracy testing</h4>
+<p>We have already predicted for the results, then we need to test for the accuracy of the model. The model is considered accurate when its accuracy value is higher or equal to 80%. The obtained accuracy of our model is 0.98 (98%) and the kap 96%. Our model can then be used to predict the type of species provided you have the bill length and the bill depth of the penguins.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>rf.pred <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">metrics</span>(<span class="at">truth =</span> species,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>          <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.98 
+2 kap      multiclass     0.968</code></pre>
+</div>
+</div>
+<p>Now, we need to see the accuracy for each predicted species versus the actual type. We will use <code>conf_mat()</code> of the <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span>. The result indicate that 43 <em>Adelie</em> were correctly predicted while 1 <em>Chinstrap</em> was incorrectly predicted as <em>Adelie</em>. While 16 <em>Chinstrap</em> were correctly predicted, 1 of this species was wrongly predicted as <em>Gentoo</em>. On the other hand, all 39 <em>Gentoo</em> were correctly predicted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>rf.pred <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> species, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>           <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Truth
+Prediction  Adelie Chinstrap Gentoo
+  Adelie        48         1      0
+  Chinstrap      0        17      1
+  Gentoo         0         0     33</code></pre>
+</div>
+</div>
+<p>Then, we need to calculate the probability of each observation be accurate for every species. We will use <code>predict()</code> function of *<strong>stats</strong> package of R <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>rf.preda <span class="ot">=</span> mod <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">predict</span>(test.set, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>          <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">bind_cols</span>(test.set)</span>
+<span id="cb22-5"><a href="#cb22-5"></a></span>
+<span id="cb22-6"><a href="#cb22-6"></a>rf.preda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 6
+   .pred_Adelie .pred_Chinstrap .pred_Gentoo species bill_length_mm bill_depth…¹
+          &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;fct&gt;            &lt;dbl&gt;        &lt;dbl&gt;
+ 1        0.991        0.00868       0       Adelie            39.1         18.7
+ 2        0.910        0.0831        0.00649 Adelie            39.5         17.4
+ 3        0.973        0.0267        0       Adelie            39.2         19.6
+ 4        1            0             0       Adelie            34.4         18.4
+ 5        0.996        0.00428       0       Adelie            38.2         18.1
+ 6        0.997        0.00183       0.00147 Adelie            38.8         17.2
+ 7        0.999        0.000917      0       Adelie            37.9         18.6
+ 8        0.996        0.00428       0       Adelie            37.2         18.1
+ 9        0.992        0.00198       0.00603 Adelie            36.4         17  
+10        0.995        0.00506       0       Adelie            39.2         21.1
+# … with 90 more rows, and abbreviated variable name ¹​bill_depth_mm</code></pre>
+</div>
+</div>
+</section>
+<section id="roc-curve" class="level4">
+<h4 class="anchored" data-anchor-id="roc-curve">Roc Curve</h4>
+<p>The probability results will then be used to plot the roc curve (<a href="#fig-roc-curve">Figure&nbsp;2</a>). The <code>roc_curve()</code> function of <strong><em>yardstick</em></strong> package <span class="citation" data-cites="yardstick22">(<a href="#ref-yardstick22" role="doc-biblioref">Kuhn, Vaughan, and Hvitfeldt 2022</a>)</span> will be used supplied with species, .pred_Adelie, .pred_Chinstrap, and .pred_Gentoo. The <code>autoplot()</code> function of the <strong><em>workflowsets</em></strong> package <span class="citation" data-cites="workflowsets22">(<a href="#ref-workflowsets22" role="doc-biblioref">Kuhn and Couch 2022</a>)</span> will then be applied to create the curve. The curve shows that <em>Adelie</em> species fitted better to the model than other the <em>Gentoo</em> and <em>Chinstrap</em> species (<a href="#fig-roc-curve">Figure&nbsp;2</a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>rf.preda <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">roc_curve</span>(species, </span>
+<span id="cb24-3"><a href="#cb24-3"></a>            .pred_Adelie, </span>
+<span id="cb24-4"><a href="#cb24-4"></a>            .pred_Chinstrap, </span>
+<span id="cb24-5"><a href="#cb24-5"></a>            .pred_Gentoo) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-6"><a href="#cb24-6"></a>  <span class="fu">autoplot</span>()<span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>  ggpubr<span class="sc">::</span><span class="fu">theme_pubclean</span>()<span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="fu">theme</span>(<span class="at">strip.background =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-roc-curve" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-roc-curve-1.png" class="img-fluid figure-img" width="528"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: The ROC curve of <em>Adelie</em>, <em>Chinstrap</em> and <em>Gentoo</em> species</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="model-validation-for-the-future-data" class="level4">
+<h4 class="anchored" data-anchor-id="model-validation-for-the-future-data">Model validation for the future data</h4>
+<p>In order to validate whether the model works to other newly collected data, we will validate it using the created data consists of bill length and depth. The data will be applied to the model and test if the prediction of the type of species will be done. The new created data will be named as <strong><em>new.penguin</em></strong> containing three observations;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>new.penguin <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">bill_length_mm =</span> <span class="fu">c</span>(<span class="dv">35</span>,<span class="fl">47.5</span>, <span class="dv">70</span>),</span>
+<span id="cb25-2"><a href="#cb25-2"></a>                     <span class="at">bill_depth_mm =</span> <span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">17</span>, <span class="dv">18</span>))</span>
+<span id="cb25-3"><a href="#cb25-3"></a></span>
+<span id="cb25-4"><a href="#cb25-4"></a>new.penguin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  bill_length_mm bill_depth_mm
+           &lt;dbl&gt;         &lt;dbl&gt;
+1           35              13
+2           47.5            17
+3           70              18</code></pre>
+</div>
+</div>
+<p>Then, the model will be applied and see if it will predict the type of species. We will use <code>predict()</code> function.</p>
+<p>Hoolah!! the model give us the predicted species as <em>Adelie</em> and <em>Chinstrap</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>mod <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">predict</span>(new.penguin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 1
+  .pred_class
+  &lt;fct&gt;      
+1 Gentoo     
+2 Chinstrap  
+3 Chinstrap  </code></pre>
+</div>
+</div>
+<p>We will also create another data named as <strong><em>aa</em></strong> with 10 observations using <code>rnorm()</code> function of <strong>stats</strong> package <span class="citation" data-cites="r">(<a href="#ref-r" role="doc-biblioref">R Core Team 2022</a>)</span>. We will also predict the type of species for these data using our model. Again the model works and give us predictions!!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>aa <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">bill_depth_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb29-2"><a href="#cb29-2"></a>                                  <span class="at">mean =</span> <span class="dv">15</span>, </span>
+<span id="cb29-3"><a href="#cb29-3"></a>                                  <span class="at">sd =</span> <span class="dv">3</span>),</span>
+<span id="cb29-4"><a href="#cb29-4"></a>            <span class="at">bill_length_mm =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>                                   <span class="at">mean =</span> <span class="dv">50</span>, </span>
+<span id="cb29-6"><a href="#cb29-6"></a>                                   <span class="at">sd =</span> <span class="dv">10</span>))</span>
+<span id="cb29-7"><a href="#cb29-7"></a></span>
+<span id="cb29-8"><a href="#cb29-8"></a>mod <span class="sc">%&gt;%</span> </span>
+<span id="cb29-9"><a href="#cb29-9"></a>  <span class="fu">predict</span>(aa) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10"></a>  <span class="fu">bind_cols</span>(aa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   .pred_class bill_depth_mm bill_length_mm
+   &lt;fct&gt;               &lt;dbl&gt;          &lt;dbl&gt;
+ 1 Chinstrap            19.0           61.2
+ 2 Gentoo               14.9           52.9
+ 3 Gentoo               14.5           44.7
+ 4 Gentoo               15.7           55.8
+ 5 Gentoo               14.0           53.0
+ 6 Chinstrap            21.3           55.8
+ 7 Gentoo               15.9           43.0
+ 8 Gentoo               12.3           47.5
+ 9 Gentoo               12.9           53.9
+10 Gentoo               12.7           55.6</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>All in all, the success of machine learning and artificial intelligence depend on the <strong>quality of the data</strong>, the <strong>complexity of the problem</strong>, and the <strong>choice of the appropriate algorithms</strong> and techniques <span class="citation" data-cites="han11 witten05">(<a href="#ref-han11" role="doc-biblioref">Jiawei Han and Pei 2011</a>; <a href="#ref-witten05" role="doc-biblioref">Witten et al. 2005</a>)</span>.</p>
+<p>The quality of the data is one of the most important factors for the success of machine learning. The data should be accurate, complete, and representative of the problem domain <span class="citation" data-cites="han11 witten05">(<a href="#ref-han11" role="doc-biblioref">Jiawei Han and Pei 2011</a>; <a href="#ref-witten05" role="doc-biblioref">Witten et al. 2005</a>)</span>. In addition, the data should be properly labeled and preprocessed to ensure that the machine learning algorithms can effectively learn from it.</p>
+<p>The complexity of the problem is also a key factor in determining the success of machine learning <span class="citation" data-cites="gomez14">(<a href="#ref-gomez14" role="doc-biblioref">Gomez-Cabrero et al. 2014</a>)</span>. Some problems are inherently more complex than others, and require more sophisticated algorithms and techniques to solve. For example, image recognition and natural language processing are typically more complex than simple regression problems.</p>
+<p>Finally, the choice of the appropriate algorithms and techniques is critical for the success of machine learning <span class="citation" data-cites="sarker21 gomez14">(<a href="#ref-sarker21" role="doc-biblioref">Sarker 2021</a>; <a href="#ref-gomez14" role="doc-biblioref">Gomez-Cabrero et al. 2014</a>)</span>. Different algorithms and techniques are suited for different types of problems, and the choice of the appropriate one will depend on the specific problem and the available data. Additionally, the parameters and hyperparameters of the algorithms need to be properly tuned to ensure that the models are optimized for the problem at hand.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t miss out our next tutorial on Machine Learning (ML) using regression Algorithm!!!</p>
+</div>
+</div>
+</section>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-gomez14" class="csl-entry" role="doc-biblioentry">
+Gomez-Cabrero, David, Imad Abugessaisa, Dieter Maier, Andrew Teschendorff, Matthias Merkenschlager, Andreas Gisel, Esteban Ballestar, Erik Bongcam-Rudloff, Ana Conesa, and Jesper Tegnér. 2014. <span>“Data Integration in the Era of Omics: Current and Future Challenges.”</span> <em>BMC Systems Biology</em> 8 (2): 1–10.
+</div>
+<div id="ref-penguin20" class="csl-entry" role="doc-biblioentry">
+Horst, Allison Marie, Alison Presmanes Hill, and Kristen B Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://doi.org/10.5281/zenodo.3960218">https://doi.org/10.5281/zenodo.3960218</a>.
+</div>
+<div id="ref-han11" class="csl-entry" role="doc-biblioentry">
+Jiawei Han, MK, and Jian Pei. 2011. <span>“Data Mining: Concepts and Techniques: Concepts and Techniques.”</span> Elsevier, Amsterdam.
+</div>
+<div id="ref-workflowsets22" class="csl-entry" role="doc-biblioentry">
+Kuhn, Max, and Simon Couch. 2022. <em>Workflowsets: Create a Collection of ’Tidymodels’ Workflows</em>. <a href="https://CRAN.R-project.org/package=workflowsets">https://CRAN.R-project.org/package=workflowsets</a>.
+</div>
+<div id="ref-parsnip22" class="csl-entry" role="doc-biblioentry">
+Kuhn, Max, and Davis Vaughan. 2022. <em>Parsnip: A Common API to Modeling and Analysis Functions</em>. <a href="https://CRAN.R-project.org/package=parsnip">https://CRAN.R-project.org/package=parsnip</a>.
+</div>
+<div id="ref-yardstick22" class="csl-entry" role="doc-biblioentry">
+Kuhn, Max, Davis Vaughan, and Emil Hvitfeldt. 2022. <em>Yardstick: Tidy Characterizations of Model Performance</em>. <a href="https://CRAN.R-project.org/package=yardstick">https://CRAN.R-project.org/package=yardstick</a>.
+</div>
+<div id="ref-mitchell07" class="csl-entry" role="doc-biblioentry">
+Mitchell, Tom Michael et al. 2007. <em>Machine Learning</em>. Vol. 1. McGraw-hill New York.
+</div>
+<div id="ref-r" class="csl-entry" role="doc-biblioentry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-sarker21" class="csl-entry" role="doc-biblioentry">
+Sarker, IH. 2021. <span>“Machine Learning: Algorithms, Real-World Applications and Research Directions. SN Comput Sci 2: 160.”</span>
+</div>
+<div id="ref-dplyr" class="csl-entry" role="doc-biblioentry">
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2022. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-witten05" class="csl-entry" role="doc-biblioentry">
+Witten, Ian H, Eibe Frank, Mark A Hall, Christopher J Pal, and MINING DATA. 2005. <span>“Practical Machine Learning Tools and Techniques.”</span> In <em>Data Mining</em>. Vol. 2. 4.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+  </div>
+</footer>
+
+
+
+</body></html>
