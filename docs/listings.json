@@ -2,6 +2,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/global-temperature-record/index.html",
       "/posts/machine-learning-regression/index.html",
       "/posts/machine-learning-classification/index.html",
       "/posts/github-deploy-publish/index.html",
@@ -14,6 +15,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/global-temperature-record/index.html",
       "/posts/machine-learning-regression/index.html",
       "/posts/machine-learning-classification/index.html",
       "/posts/github-deploy-publish/index.html",

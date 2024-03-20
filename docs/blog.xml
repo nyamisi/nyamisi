@@ -10,7 +10,187 @@
 <atom:link href="https://nyamisi.github.io/nyamisi/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Coding for all for better today and tommorow</description>
 <generator>quarto-1.3.353</generator>
-<lastBuildDate>Sun, 12 Mar 2023 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 09 Jul 2023 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Surpass Global Ocean Temperature Record: Implications for Ocean Productivity in Tanzania</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Global warming is a serious issue that has been affecting the planet for several decades. It is a phenomenon that has been caused by a variety of factors, both natural and man-made. One of the primary causes of global warming is the increase in greenhouse gases in the atmosphere <span class="citation" data-cites="pinkerton21 sakalli17">(Pinkerton et al., 2021; Sakalli et al., 2017)</span>. These gases, such as carbon dioxide, methane, and nitrous oxide, trap heat from the sun and prevent it from escaping into space <span class="citation" data-cites="sakalli17">(Sakalli et al., 2017)</span>. This leads to a gradual increase in the Earth’s temperature, which is known as global warming. The main source of these gases is human activities, such as burning fossil fuels, deforestation, and industrial processes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/burning-fossil-fuels.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Burning of the fossil fuels</figcaption>
+</figure>
+</div>
+<p>Over the past few days, multiple media outlets have been reporting on the global warming conditions experienced from March to June 2023. These reports indicate that June 2023 is projected to be even warmer than May 2023. According to the <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series/globe/ocean/all/5/1850-2023">NOAA</a> website, May 2023 has been recorded as the hottest May month since temperature records began in 1850. In this blog post, we will delve into the historical temperature trends from 1850 to 2023 for the month of May, followed by an exploration of the impact of rising temperatures on ocean productivity in the vicinity of Tanzania.</p>
+<p>Before we proceed, we will load some packages, whose functions are going to be used throughout this post. These packages are highlighted in the chunk below;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">require</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">require</span>(ggstatsplot)</span></code></pre></div>
+</div>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>For this analysis, we obtained monthly global sea surface anomaly data from January 1850 to May 2023 from the <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series/globe/ocean/all/5/1850-2023">NOAA</a> website. Additionally, we collected MODIS daily sea surface data and primary productivity data from the southern part of Tanzania, specifically the Mtwara region, within the longitude range of 40.5°E to 40.7°E and latitude range of 10.4°S to 9.8°S. The data span from January 2015 to June 10, 2023. We loaded both the global and Mtwara datasets into our session using the <code>read_csv()</code> function from the <strong>readr</strong> package <span class="citation" data-cites="readr">(Wickham et al., 2023)</span>. Our analysis focused solely on the month of May for the global data and June for Mtwara dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1">global.data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"global_temp.csv"</span>) </span>
+<span id="cb2-2"></span>
+<span id="cb2-3"></span>
+<span id="cb2-4">mtwara.sst.day <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mtwara_sst_jun.csv"</span>) </span>
+<span id="cb2-5"></span>
+<span id="cb2-6"></span>
+<span id="cb2-7">mtwara.pp.day <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mtwara_pp.csv"</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="global-sea-surface-temperature-sst-trend" class="level2">
+<h2 class="anchored" data-anchor-id="global-sea-surface-temperature-sst-trend">Global Sea Surface Temperature (SST) Trend</h2>
+<p>The analysis reveals a decreasing trend in sea surface temperature (SST) anomaly from 1850 to 1910, with values consistently below the global average temperature indicated by a red dashed line in Figure&nbsp;1. Starting from the year 1910, the global temperature anomaly for May began to rise, although still below the average global temperature. However, from the year 1975 onwards, the average global temperature anomaly for May surpassed the global mean temperature, exceeding the mean value (Figure&nbsp;1). Despite some fluctuations over the years, the May temperature continued to rise, reaching its highest recorded values in May 2023 compared to previous years as shown in Figure Figure&nbsp;1. This significant increase in May 2023 temperature has sparked widespread discussions worldwide regarding its impact on global biodiversity and ecosystems.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-global-temp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index_files/figure-html/fig-global-temp-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: The trend of global ocean temperature for the month of May from 1850 to 2023</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sst-in-tanzania-and-its-impact-in-primary-production" class="level2">
+<h2 class="anchored" data-anchor-id="sst-in-tanzania-and-its-impact-in-primary-production">SST in Tanzania and its impact in Primary Production</h2>
+<p>Due to this alarming rise in temperature values recorded for May 2023 around the world and its potential impact on global biodiversity and ecosystems, it is imperative to delve deeper into the issue and understand its implications. In this blog post, we will specifically focus on the impact of this rising temperature on primary production in the ocean which could then affects fishery population.</p>
+<p>Primary production refers to the process by which plants and other photosynthetic organisms convert sunlight into energy, which is then used to fuel the growth of other organisms in the ecosystem <span class="citation" data-cites="kim2021">(Kim and Kim, 2021)</span>. In aquatic ecosystems, primary production is largely driven by phytoplankton, which are tiny, single-celled organisms that float near the surface of the water.</p>
+<p>Our analysis will focus on the SST and primary productivity data from the month of June from 2015 to June 20, 2023.</p>
+</section>
+<section id="variation-in-sst-at-mtwara" class="level2">
+<h2 class="anchored" data-anchor-id="variation-in-sst-at-mtwara">Variation in SST at Mtwara</h2>
+<p>The temperature values in Mtwara between 2015 and 2022 were analyzed, and the results showed that the majority of the values fell within the range of 27 to 28 degrees Celsius, as illustrated in Figure&nbsp;2. However, in 2023, the sea surface temperature (SST) recorded higher values exceeding 28 degrees Celsius. A comparison of the temperatures between 2022 and 2023 revealed that 2022 had a lower values below 28 degrees Celsius, while that of 2023 had values greater than 28.9 degrees Celsius.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-mtwara-temp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index_files/figure-html/fig-mtwara-temp-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: The histogram showing variation of temperature at Mtwara for the month of June</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We decided to divide the years into two periods: 2015-2022 and 2023. Through further analysis, we found that the average temperature during the eight-year period from 2015 to 2022 was significantly lower compared to that of the year 2023, as shown in Figure&nbsp;3. Interestingly, the maximum value for the eight-year period (2015-2022) (27.15oC) was lower than the median value of the year 2023 (27.89oC), as illustrated in Figure&nbsp;3. These elevated sea surface temperature (SST) values observed between May and June 2023 have sparked widespread concerns globally regarding their impacts on ecosystems.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-temp-box" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index_files/figure-html/fig-temp-box-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: The boxplot showing variation in temperature at Mtwara for the month of June between the average of eight years before 2023 with that of 2023.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="variation-in-primary-production-at-mtwara-due-to-elevated-temperature" class="level2">
+<h2 class="anchored" data-anchor-id="variation-in-primary-production-at-mtwara-due-to-elevated-temperature">Variation in Primary Production at Mtwara due to elevated Temperature</h2>
+<p>Now, let’s look on the variation of levels of primary production at Mtwara with this rising in the ocean temperature. The results revealed that, between the year 2015 and 2022, the amount of primary production at Mtwara for the month of June ranged between 225 and 500 g C/m2/year with many values around 325 g C/m2/year (Figure&nbsp;4). Surprisingly, in the year 2023, the amount of primary production ranged between less than 100 and 400 g C/m2/year with many values recorded below 225 g C/m2/year (Figure&nbsp;4). Further, the result revealed that the minimum value for the eight years period, was the same as the median of the year 2023 (Figure&nbsp;4).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-mtwara-pp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index_files/figure-html/fig-mtwara-pp-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: The histogram showing variation in the amount of primary production at Mtwara for the month of June</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When further analysis was done by grouping the data into two groups (average 2015-2022 and 2023), the amount of primary production showed to be significant lower in the year 2023 compared to the average of eight years before Figure&nbsp;5. While the median value in primary production for the month of June before the year 2023 was 330.75, that for the June 2023 was recorded as 239.29 g C/m2/year Figure&nbsp;5.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pp-box" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index_files/figure-html/fig-pp-box-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: The boxplot showing variation in the amount of primary production at Mtwara for the month of June between the average of eight years before 2023 with that of 2023.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The study results indicate that the higher temperature recorded in June 2023 is closely associated with a decline in the amount of primary production during the same month. This decline in primary production can have implications for the fish population and other aquatic organisms. Fish and other aquatic animals rely on phytoplankton, which are primary producers, as a primary food source. Therefore, the quantity of primary production in an ecosystem plays a crucial role in determining the overall fish catch.</p>
+<p>Previous studies <span class="citation" data-cites="kim2021 marshak21 calderwood19">(Calderwood et al., 2019; Kim and Kim, 2021; Marshak and Link, 2021)</span> have demonstrated the correlation between primary production and fish populations. Areas with high levels of primary production tend to support larger and more abundant fish populations. Conversely, in regions where primary production is low, fish populations may be smaller and less productive <span class="citation" data-cites="blanchard12">(Blanchard et al., 2012)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are many other factors that can influence fish catch, including fishing pressure, habitat degradation, and climate change. Therefore, a holistic approach is needed to ensure sustainable fisheries management to our oceans.</p>
+</div>
+</div>
+</section>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-blanchard12" class="csl-entry">
+Blanchard, J.L., Jennings, S., Holmes, R., Harle, J., Merino, G., Allen, J.I., Holt, J., Dulvy, N.K., Barange, M., 2012. Potential consequences of climate change for primary production and fish production in large marine ecosystems. Philosophical Transactions of the Royal Society B: Biological Sciences 367, 2979–2989.
+</div>
+<div id="ref-calderwood19" class="csl-entry">
+Calderwood, J., Collie, J., Croll, J., Greenstreet, S.P., Griffiths, C., Kenchington, E., Kooten, T. van, Lynam, C.P., Moriarty, M., Ragnarsson, S.Á., others, 2019. Working group on the ecosystem effects of fishing activities (WGECO).
+</div>
+<div id="ref-kim2021" class="csl-entry">
+Kim, S.-U., Kim, K.-Y., 2021. Impact of climate change on the primary production and related biogeochemical cycles in the coastal and sea ice zone of the southern ocean. Science of the Total Environment 751, 141678.
+</div>
+<div id="ref-marshak21" class="csl-entry">
+Marshak, A.R., Link, J.S., 2021. Primary production ultimately limits fisheries economic performance. Scientific Reports 11, 12154.
+</div>
+<div id="ref-pinkerton21" class="csl-entry">
+Pinkerton, M.H., Boyd, P.W., Deppeler, S., Hayward, A., Höfer, J., Moreau, S., 2021. Evidence for the impact of climate change on primary producers in the southern ocean. Frontiers in Ecology and Evolution 9, 592027.
+</div>
+<div id="ref-sakalli17" class="csl-entry">
+Sakalli, A., Cescatti, A., Dosio, A., Gücel, M.U., 2017. Impacts of 2 c global warming on primary production and soil carbon storage capacity at pan-european level. Climate Services 7, 64–77.
+</div>
+<div id="ref-readr" class="csl-entry">
+Wickham, H., Hester, J., Bryan, J., 2023. <a href="https://CRAN.R-project.org/package=readr">Readr: Read rectangular text data</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>visualization</category>
+  <category>news</category>
+  <guid>https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index.html</guid>
+  <pubDate>Sun, 09 Jul 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/global_trend.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Machine Learning (ML) using Regression Algorithm in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
