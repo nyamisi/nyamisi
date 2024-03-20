@@ -75,7 +75,7 @@ push your work using `git push`
 
 Navigate to your repository on GitHub and verify that the changes have been deployed successfully.
 
-If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the client as a web page
+If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the public as a web page
 
 
 

@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nyamisi Peter">
+<meta name="dcterms.date" content="2024-03-20">
 
-<title>Nyamisi Peter -</title>
+<title>Nyamisi Peter - How to Remove a Large Staged File from Git</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,28 +25,26 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/cookie-consent/cookie-consent.js"></script>
-<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -64,35 +64,6 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories','listing-image','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
 <script type="text/javascript" charset="UTF-8">
 document.addEventListener('DOMContentLoaded', function () {
@@ -110,12 +81,11 @@ cookieconsent.run({
 </script> 
   
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="style.css">
-<link rel="alternate" type="application/rss+xml" title="Nyamisi Peter" href="blog.xml"><meta name="twitter:title" content="Nyamisi Peter -">
-<meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/michi.jpg">
+<meta name="twitter:title" content="Nyamisi Peter - How to Remove a Large Staged File from Git">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/michi.jpg">
 <meta name="twitter:creator" content="@nyamisi">
 <meta name="twitter:card" content="summary_large_image">
 </head>
@@ -127,7 +97,7 @@ cookieconsent.run({
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Nyamisi Peter</span>
     </a>
   </div>
@@ -138,7 +108,7 @@ cookieconsent.run({
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item compact">
@@ -147,7 +117,7 @@ cookieconsent.run({
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./blog.xml" rel="" target=""><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../../blog.xml" rel="" target=""><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -179,7 +149,7 @@ cookieconsent.run({
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./archive.html" rel="" target="">
+    <a class="nav-link" href="../../archive.html" rel="" target="">
  <span class="menu-text">Archive</span></a>
   </li>  
 </ul>
@@ -191,402 +161,117 @@ cookieconsent.run({
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div><div class="category" data-category="ML &amp; AI">ML &amp; AI <span class="quarto-category-count">(2)</span></div><div class="category" data-category="affairs">affairs <span class="quarto-category-count">(2)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(7)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div><div class="category" data-category="visualization">visualization <span class="quarto-category-count">(3)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#steps-in-removing-a-file-from-git" id="toc-steps-in-removing-a-file-from-git" class="nav-link" data-scroll-target="#steps-in-removing-a-file-from-git">Steps in removing a file from Git</a></li>
+  <li><a href="#creating-your-site-as-a-web-page" id="toc-creating-your-site-as-a-web-page" class="nav-link" data-scroll-target="#creating-your-site-as-a-web-page">Creating your site as a Web page</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">How to Remove a Large Staged File from Git</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">code</div>
+  </div>
+  </div>
 
 
 
-<!-- :::: {.columns} -->
-<!-- ::: {.column width="40%"} -->
-<!-- # Series -->
-<!-- #### [TextAnalytics-series](https://nyamisi.github.io/nyamisi/posts/worldcloud/) -->
-<!-- This series contains a great deal of tips, tricks and packages that you can use to level up your text analysis and categorical data visualization -->
-<!-- ::: -->
-<!-- ::: {.column width="60%"} -->
-<!-- # Subscribe -->
-<!-- <iframe id="nyamisi-form" src="https://github.com/nyamisi/" data-test-id="nyamisi-embed" frameborder="0" scrolling="no" style="margin: 0; border-radius: 0px !important; background-color: transparent; height: 75px; width: 90%;"></iframe> -->
-<!-- ::: -->
-<!-- :::: -->
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nyamisi Peter </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 20, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>When working with Git, it is common to accidentally stage large files that should not be included in the repository. These large files can bloat the repository and make it difficult to work with or sometimes the push fails. When the push fails, it will display an error message that shows the name of that large file in your repository. When this happens, there are steps you can take to remove these large staged files from Git.</p>
+</section>
+<section id="steps-in-removing-a-file-from-git" class="level1">
+<h1>Steps in removing a file from Git</h1>
+<ol type="1">
+<li><p>Identify the Large Staged File: Before removing the large staged file, you need to identify which file is causing the issue, or read the error message and identify the file from your repository.</p></li>
+<li><p>Open the Git bash and move to your working directory using <code>cd</code> command. <img src="git_change_directory.png" class="img-fluid" alt="Changing the working directory in Git"></p></li>
+<li><p>Unstage the File: Once you have identified the large staged file and moved to your working directory, you can unstage it using the <code>git reset &lt;file&gt;</code> command. In this case, I will remove <em>mtwara_sst_june.csv</em> file from the repository. <img src="git_reset.png" class="img-fluid" alt="Unstaging a file from Git"> This will remove the file from the staging area, but it will still be present in your working directory in the <strong>.git</strong> folder that was generated during commit.</p></li>
+<li><p>Remove the File from Git History: To completely remove the large staged file from Git, you will need to delete the <strong>.git</strong> folder from your working directory. <img src="delete_git_folder.png" class="img-fluid" alt="Deleting Git history folder from the working directory"></p></li>
+<li><p>Re-push Changes to your Repository: After removing the large staged file from Git, you will need to make changes to your repository. Since it is not your first commit, then you will only run three steps to make those changes to your GitHub repository; add, commit and push.</p></li>
+</ol>
+<ul>
+<li>Add all your files in the working directory using <code>git add .</code></li>
+</ul>
+<p><img src="git_add.png" class="img-fluid"></p>
+<ul>
+<li>Commit changes to your repository using <code>git commit -m “Add commit message”</code></li>
+</ul>
+<p><img src="git_commit.png" class="img-fluid"></p>
+<ul>
+<li>Push your work using <code>git push</code></li>
+</ul>
+<p><img src="git_push.png" class="img-fluid"></p>
+<ul>
+<li><p>If it still give the same error message that there is large file, the only option you have is to delete that repository from GitHub and you may re-create a new repository using the same name but by changing the working directory.</p></li>
+<li><p>Copy all your files except the <code>.git</code> folder from the older folder to the new folder.</p></li>
+<li><p>Initiate Git in your local development environment by opening the GitBash and follow the <a href="https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/">deployment steps to GitHub</a>.</p></li>
+</ul>
+<p>After deployment, navigate to your repository on GitHub and verify that the changes have been deployed successfully.</p>
+<p>If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the public as a web page</p>
+</section>
+<section id="creating-your-site-as-a-web-page" class="level1">
+<h1>Creating your site as a Web page</h1>
+<ul>
+<li><p>Go to your GitHub account and navigate to your repository which you want to create a web page.</p></li>
+<li><p>Go to settings in your repository and click it</p></li>
+</ul>
+<p><img src="github_settings.png" class="img-fluid"></p>
+<ul>
+<li>Under setting, select pages. This will open a page settings window</li>
+</ul>
+<p><img src="github_pages.png" class="img-fluid"></p>
+<ul>
+<li>Under dropdown arrow in the branch, select main</li>
+</ul>
+<p><img src="select_main.png" class="img-fluid"></p>
+<ul>
+<li>Also in the branch select <code>/docs</code> as your site folder</li>
+</ul>
+<p>Since your publishing source is the <code>/docs</code> folder on the main branch, your entry file must be located in the <code>/docs</code> folder on a branch called main. In this folder under your working directory (<code>/docs folder</code>), it must contain the entry file for your site. GitHub Pages will look for an <code>index.html</code>, <code>index.md</code>, or <code>README.md</code> file as the entry file for your site.</p>
+<ul>
+<li><p>Then, click save</p></li>
+<li><p>The link for your site will be seen under GitHub Pages of your repository. Then, you may visit your site by clicking <code>Visit site</code></p></li>
+</ul>
+<p><img src="visit_site.png" class="img-fluid"></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="code" data-listing-date-sort="1710882000000" data-listing-file-modified-sort="1710953719802" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/remove-largefile-staged-git/index.html"> <img src="./posts/remove-largefile-staged-git/git_logo.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/remove-largefile-staged-git/index.html">
-<h3 class="no-anchor listing-title">
-How to Remove a Large Staged File from Git
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/remove-largefile-staged-git/index.html">
-<div class="listing-description">
-When working with Git, it is common to accidentally stage large files that should not be included in the repository. These large files can bloat the repository and make it…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/remove-largefile-staged-git/index.html">
-<div class="listing-date">
-Mar 20, 2024
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-3 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="visualization,news" data-listing-date-sort="1688936400000" data-listing-file-modified-sort="1710928389638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
-<div class="thumbnail">
-<p><a href="./posts/global-temperature-record/index.html"> <img src="./posts/global-temperature-record/global_trend.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/global-temperature-record/index.html">
-<h3 class="no-anchor listing-title">
-The Surpass Global Ocean Temperature Record: Implications for Ocean Productivity in Tanzania
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
-visualization
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/global-temperature-record/index.html">
-<div class="listing-description">
-Global warming is a serious issue that has been affecting the planet for several decades. It is a…<span class="citation" data-cites="pinkerton21 sakalli17"></span><span class="citation" data-cites="sakalli17"></span>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/global-temperature-record/index.html">
-<div class="listing-date">
-Jul 10, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-11 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="code,ML &amp; AI" data-listing-date-sort="1678654800000" data-listing-file-modified-sort="1680105348414" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
-<div class="thumbnail">
-<p><a href="./posts/machine-learning-regression/index.html"> <img src="./posts/machine-learning-regression/randomForestscreenShort.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/machine-learning-regression/index.html">
-<h3 class="no-anchor listing-title">
-Machine Learning (ML) using Regression Algorithm in R
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ML &amp; AI'); return false;">
-ML &amp; AI
-</div>
-</div>
-<a href="./posts/machine-learning-regression/index.html">
-<div class="listing-description">
-In the previous post we saw how classification algorithm may be applied…<strong></strong><span class="citation" data-cites="penguin20"></span>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/machine-learning-regression/index.html">
-<div class="listing-date">
-Mar 13, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-11 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="code,ML &amp; AI" data-listing-date-sort="1678222800000" data-listing-file-modified-sort="1678431873663" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
-<div class="thumbnail">
-<p><a href="./posts/machine-learning-classification/index.html"> <img src="./posts/machine-learning-classification/ML-image.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/machine-learning-classification/index.html">
-<h3 class="no-anchor listing-title">
-Machine Learning (ML) using classification Algorithm in R
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('ML &amp; AI'); return false;">
-ML &amp; AI
-</div>
-</div>
-<a href="./posts/machine-learning-classification/index.html">
-<div class="listing-description">
-Technology is becoming more important in our daily lives in every second. In order to keep up with the pace of these technological changes, scientists are more heavily…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/machine-learning-classification/index.html">
-<div class="listing-date">
-Mar 8, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-11 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="code" data-listing-date-sort="1678136400000" data-listing-file-modified-sort="1710948187237" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/github-deploy-publish/index.html"> <img src="./posts/github-deploy-publish/deployment-process.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/github-deploy-publish/index.html">
-<h3 class="no-anchor listing-title">
-Deploying and publishing to GitHub
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/github-deploy-publish/index.html">
-<div class="listing-description">
-GitHub is a web-based platform that provides version control and collaborative software…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/github-deploy-publish/index.html">
-<div class="listing-date">
-Mar 7, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="visualization,code" data-listing-date-sort="1676408400000" data-listing-file-modified-sort="1680335792854" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/alluvial/index.html"> <img src="./posts/alluvial/alluvial.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/alluvial/index.html">
-<h3 class="no-anchor listing-title">
-Text analytics and alluvial plots in R
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
-visualization
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/alluvial/index.html">
-<div class="listing-description">
-In the previous post, we covered how to present textual information in wordcloud. In this post, we are going to extend what we have learned previous with a new visualization…<strong></strong><span class="citation" data-cites="ggalluvial"></span><span class="citation" data-cites="r"></span>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/alluvial/index.html">
-<div class="listing-date">
-Feb 15, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-3 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="visualization,code" data-listing-date-sort="1676408400000" data-listing-file-modified-sort="1710930105966" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/worldcloud/index.html"> <img src="./posts/worldcloud/wordcloud.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/worldcloud/index.html">
-<h3 class="no-anchor listing-title">
-Text analytics and word cloud in R and ggplot2
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
-visualization
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/worldcloud/index.html">
-<div class="listing-description">
-<em>wordcloud</em> is an image composed of words used in a…<span class="citation" data-cites="r"></span><span class="citation" data-cites="wordcloud"></span><span class="citation" data-cites="wordcloud2"></span>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/worldcloud/index.html">
-<div class="listing-date">
-Feb 15, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="affairs" data-listing-date-sort="1674162000000" data-listing-file-modified-sort="1680262791981" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/the-family-affairs/index.html"> <img src="./posts/the-family-affairs/michiKids.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/the-family-affairs/index.html">
-<h3 class="no-anchor listing-title">
-The Family Affairs: A Look into the Importance of Family
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('affairs'); return false;">
-affairs
-</div>
-</div>
-<a href="./posts/the-family-affairs/index.html">
-<div class="listing-description">
-Family is the most important institution in our lives. It is where we learn our first lessons about love, trust, and respect. It is where we find comfort and support when we…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/the-family-affairs/index.html">
-<div class="listing-date">
-Jan 20, 2023
-</div>
-<div class="listing-author">
-Nyamisi Peter
-</div>
-<div class="listing-reading-time">
-4 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="affairs,news,code" data-listing-date-sort="1660424400000" data-listing-file-modified-sort="1679572248629" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/summertime/index.html"> <img src="./posts/summertime/family.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/summertime/index.html">
-<h3 class="no-anchor listing-title">
-The Memorable Summer Time
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('affairs'); return false;">
-affairs
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/summertime/index.html">
-<div class="listing-description">
-The summer time holiday begin soon after first term, which usually ends at late May……..
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/summertime/index.html">
-<div class="listing-date">
-Aug 14, 2022
-</div>
-<div class="listing-author">
-Grace Semba
-</div>
-<div class="listing-reading-time">
-4 min
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

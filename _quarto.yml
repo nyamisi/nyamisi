@@ -33,9 +33,11 @@ website:
               href: https://semba.netlify.app/
             - text: Nyamisi ShinyApps
               href: https://nyamisi.shinyapps.io/agricultureApp/
+            - text: Wior WebApp
+              href: https://nyamisi.shinyapps.io/NyamisiApplication/
         - text: Archive
           href: archive.qmd
-  google-analytics: "14521548"
+  # google-analytics: "14521548"
   cookie-consent: 
       type: express
       style: headline

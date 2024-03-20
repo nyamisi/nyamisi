@@ -10,7 +10,82 @@
 <atom:link href="https://nyamisi.github.io/nyamisi/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Coding for all for better today and tommorow</description>
 <generator>quarto-1.3.353</generator>
-<lastBuildDate>Sun, 09 Jul 2023 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 19 Mar 2024 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>How to Remove a Large Staged File from Git</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>When working with Git, it is common to accidentally stage large files that should not be included in the repository. These large files can bloat the repository and make it difficult to work with or sometimes the push fails. When the push fails, it will display an error message that shows the name of that large file in your repository. When this happens, there are steps you can take to remove these large staged files from Git.</p>
+</section>
+<section id="steps-in-removing-a-file-from-git" class="level1">
+<h1>Steps in removing a file from Git</h1>
+<ol type="1">
+<li><p>Identify the Large Staged File: Before removing the large staged file, you need to identify which file is causing the issue, or read the error message and identify the file from your repository.</p></li>
+<li><p>Open the Git bash and move to your working directory using <code>cd</code> command. <img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_change_directory.png" class="img-fluid" alt="Changing the working directory in Git"></p></li>
+<li><p>Unstage the File: Once you have identified the large staged file and moved to your working directory, you can unstage it using the <code>git reset &lt;file&gt;</code> command. In this case, I will remove <em>mtwara_sst_june.csv</em> file from the repository. <img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_reset.png" class="img-fluid" alt="Unstaging a file from Git"> This will remove the file from the staging area, but it will still be present in your working directory in the <strong>.git</strong> folder that was generated during commit.</p></li>
+<li><p>Remove the File from Git History: To completely remove the large staged file from Git, you will need to delete the <strong>.git</strong> folder from your working directory. <img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/delete_git_folder.png" class="img-fluid" alt="Deleting Git history folder from the working directory"></p></li>
+<li><p>Re-push Changes to your Repository: After removing the large staged file from Git, you will need to make changes to your repository. Since it is not your first commit, then you will only run three steps to make those changes to your GitHub repository; add, commit and push.</p></li>
+</ol>
+<ul>
+<li>Add all your files in the working directory using <code>git add .</code></li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_add.png" class="img-fluid"></p>
+<ul>
+<li>Commit changes to your repository using <code>git commit -m “Add commit message”</code></li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_commit.png" class="img-fluid"></p>
+<ul>
+<li>Push your work using <code>git push</code></li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_push.png" class="img-fluid"></p>
+<ul>
+<li><p>If it still give the same error message that there is large file, the only option you have is to delete that repository from GitHub and you may re-create a new repository using the same name but by changing the working directory.</p></li>
+<li><p>Copy all your files except the <code>.git</code> folder from the older folder to the new folder.</p></li>
+<li><p>Initiate Git in your local development environment by opening the GitBash and follow the <a href="https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/">deployment steps to GitHub</a>.</p></li>
+</ul>
+<p>After deployment, navigate to your repository on GitHub and verify that the changes have been deployed successfully.</p>
+<p>If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the public as a web page</p>
+</section>
+<section id="creating-your-site-as-a-web-page" class="level1">
+<h1>Creating your site as a Web page</h1>
+<ul>
+<li><p>Go to your GitHub account and navigate to your repository which you want to create a web page.</p></li>
+<li><p>Go to settings in your repository and click it</p></li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/github_settings.png" class="img-fluid"></p>
+<ul>
+<li>Under setting, select pages. This will open a page settings window</li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/github_pages.png" class="img-fluid"></p>
+<ul>
+<li>Under dropdown arrow in the branch, select main</li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/select_main.png" class="img-fluid"></p>
+<ul>
+<li>Also in the branch select <code>/docs</code> as your site folder</li>
+</ul>
+<p>Since your publishing source is the <code>/docs</code> folder on the main branch, your entry file must be located in the <code>/docs</code> folder on a branch called main. In this folder under your working directory (<code>/docs folder</code>), it must contain the entry file for your site. GitHub Pages will look for an <code>index.html</code>, <code>index.md</code>, or <code>README.md</code> file as the entry file for your site.</p>
+<ul>
+<li><p>Then, click save</p></li>
+<li><p>The link for your site will be seen under GitHub Pages of your repository. Then, you may visit your site by clicking <code>Visit site</code></p></li>
+</ul>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/visit_site.png" class="img-fluid"></p>
+
+
+</section>
+
+ ]]></description>
+  <category>code</category>
+  <guid>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/index.html</guid>
+  <pubDate>Tue, 19 Mar 2024 21:00:00 GMT</pubDate>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_logo.png" medium="image" type="image/png" height="60" width="144"/>
+</item>
 <item>
   <title>The Surpass Global Ocean Temperature Record: Implications for Ocean Productivity in Tanzania</title>
   <dc:creator>Nyamisi Peter</dc:creator>
@@ -2227,7 +2302,7 @@ Witten, I.H., Frank, E., Hall, M.A., Pal, C.J., DATA, M., 2005. Practical machin
 <p>Commit changes to your repository using <code>git commit -m</code> “Add commit message”</p>
 <p>push your work using <code>git push</code></p>
 <p>Navigate to your repository on GitHub and verify that the changes have been deployed successfully.</p>
-<p>If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the client as a web page</p>
+<p>If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the public as a web page</p>
 
 
 </section>
@@ -2630,8 +2705,8 @@ $ year   &lt;dbl&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023,
 </div>
 </div>
 <p>The printed output of the interval structure indicates tha the file has five variables—name, gender, field, title and year. With exception of the year, which is numeric, the other variables are character.</p>
-<section id="tidy-pproject-titles" class="level2">
-<h2 class="anchored" data-anchor-id="tidy-pproject-titles">tidy pproject titles</h2>
+<section id="tidy-project-titles" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-project-titles">tidy project titles</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1">student.text <span class="ot" style="color: #003B4F;
 background-color: null;

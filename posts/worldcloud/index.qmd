@@ -49,7 +49,7 @@ student %>%
 ```
 The printed output of the interval structure indicates tha the file has five variables---name, gender, field, title and year. With exception of the year, which is numeric, the other variables are character. 
 
-## tidy pproject titles
+## tidy project titles
 
 ```{r}
 student.text = student$Title 
