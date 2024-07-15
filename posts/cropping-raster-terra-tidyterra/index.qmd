@@ -48,6 +48,7 @@ sst |>
   terra::plot()
 ```
 
+# Defining the extent
 
 Suppose our analysis is focus only to a portion of Tanzania coastal area and not the whole area. So we need to crop that area on interest and leave the others. The focus of this post is around the Pemba Channel within longitude 38.9 and 40 East, and latitude -5.7, -4.6 South of the Equator. The first step is to specify the extent of our area using the `ext()` function of **terra** package [@terra24]:
 
@@ -56,8 +57,9 @@ site.extent = ext( 38.9, 40, -5.7, -4.6)
 
 ```
 
+# Cropping
 
-Then, we will crop our extent area from the sst data using the `crop()` function of **terra** package [@terra24].
+Then, we will crop our extent area from sst data using the `crop()` function of **terra** package [@terra24].
 
 ```{r}
 site.crop = sst |> 
@@ -65,7 +67,9 @@ site.crop = sst |>
 
 ```
 
-Lastly we can plot our cropped data and visualize them;
+# Plotting the cropped area
+
+Lastly we will plot our cropped area and visualize them;
 
 ```{r}
 site.crop |> 
@@ -94,7 +98,7 @@ leaflet::leaflet() |>
 ```
 
 
-Thanks for following and do not miss the next post!!
+Thank you for following and do not miss the next post!!
 
 
 
