@@ -2,6 +2,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/cropping-raster-terra-tidyterra/index.html",
       "/posts/remove-largefile-staged-git/index.html",
       "/posts/global-temperature-record/index.html",
       "/posts/machine-learning-regression/index.html",
@@ -16,6 +17,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/cropping-raster-terra-tidyterra/index.html",
       "/posts/remove-largefile-staged-git/index.html",
       "/posts/global-temperature-record/index.html",
       "/posts/machine-learning-regression/index.html",
