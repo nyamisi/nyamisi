@@ -1,8 +1,8 @@
 ---
 title: "Cropping raster image using terra and tidyterra packages in R"
 author: "Nyamisi Peter"
-date: "2024-07-15"
-categories: [visualization, code]
+date: "2024-04-15"
+categories: [terra, visualization, code]
 image: "pemba_image.jpg"
 bibliography: "../blog.bib"
 ---
@@ -33,16 +33,16 @@ require(leaflet)
 We will use satellite chlorophyll-*a* data measured by the MODIS sensor in Network Common Data Form (NetCDF) with file extension *.nc* for Tanzania coastal waters. The data will be loaded using `rast()` function of **terra** package [@terra24].
 
 ```{r}
-sst = rast("M2012214-2012244.vw.all_products.MYO.median.01aug12-31aug12.1368530332.data.nc")
+chl = rast("M2012214-2012244.vw.all_products.MYO.median.01aug12-31aug12.1368530332.data.nc")
 
-sst
+chl
 ```
 
-Our sst data is in SpatRaster with 2224 number of rows, 1112 number of columns and 3 number of layers. Layers include l2_flags, chl_oc3 and land_mask. The spatial resolution of our data is 0.004496807 pixels which is equivalent to `r 0.004496807*110` km approximately 0.5 km. We will select (using `select()` of **tidyterra** package) and plot (using `plot()` of **terra** package) the second layer (chl_oc3) which contain chlorophyll-*a* values.
+Our chl data is in SpatRaster with 2224 number of rows, 1112 number of columns and 3 number of layers. Layers include l2_flags, chl_oc3 and land_mask. The spatial resolution of our data is 0.004496807 pixels which is equivalent to `r 0.004496807*110` km approximately 0.5 km. We will select (using `select()` of **tidyterra** package) and plot (using `plot()` of **terra** package) the second layer (chl_oc3) which contain chlorophyll-*a* values.
 
 
 ```{r}
-sst |> 
+chl |> 
   select(chl_oc3) |> 
   filter(chl_oc3 < 1) |>
   terra::plot()
@@ -59,10 +59,10 @@ site.extent = ext( 38.9, 40, -5.7, -4.6)
 
 # Cropping
 
-Then, we will crop our extent area from sst data using the `crop()` function of **terra** package [@terra24].
+Then, we will crop our extent area from chl data using the `crop()` function of **terra** package [@terra24].
 
 ```{r}
-site.crop = sst |> 
+site.crop = chl |> 
   crop(site.extent)
 
 ```
@@ -76,6 +76,8 @@ site.crop |>
   select(chl_oc3) |> 
   filter(chl_oc3 < 1) |> 
   terra::plot()
+
+# site.crop |> writeCDF("pemba_crop.nc", overwrite = T)
 ```
 
 
