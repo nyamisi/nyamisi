@@ -53,30 +53,6 @@ After deployment, navigate to your repository on GitHub and verify that the chan
 
 If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the public as a web page
 
-# Creating your site as a Web page
 
-+ Go to your GitHub account and navigate to your repository which you want to create a web page.
-
-+ Go to settings in your repository and click it
-
-![](github_settings.png)
-
-+ Under setting, select pages. This will open a page settings window
-
-![](github_pages.png)
-
-+ Under dropdown arrow in the branch, select main
-
-![](select_main.png)
-
-+ Also in the branch select `/docs` as your site  folder
-
-Since your publishing source is the `/docs` folder on the main branch, your entry file must be located in the `/docs` folder on a branch called main. In this folder under your working directory (`/docs folder`), it must contain the entry file for your site. GitHub Pages will look for an `index.html`, `index.md`, or `README.md` file as the entry file for your site.
-
-+ Then, click save
-
-+ The link for your site will  be seen under GitHub Pages of your repository. Then, you may visit your site by clicking `Visit site`
-
-![](visit_site.png)
 
 

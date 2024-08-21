@@ -10,7 +10,44 @@
 <atom:link href="https://nyamisi.github.io/nyamisi/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Coding for all for better today and tommorow</description>
 <generator>quarto-1.3.353</generator>
-<lastBuildDate>Thu, 09 May 2024 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 15 Jun 2024 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>How to create GitHub site as a web page</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Creating a GitHub site as a web page is an excellent way to host your personal website, project site, or documentation directly from your GitHub repository. This method allows you to share your work with others easily, using a reliable and well-maintained infrastructure in GitHub. Whether you are a developer sharing codes, a designer displaying a portfolio, or simply need a platform to publish documentation, GitHub Pages offers a simple and effective solution. By following a few easy steps, you can set up a professional-looking website that is hosted for free, without worrying about server management or back-end coding. This approach not only enhances your online presence but also makes it easy to keep your site updated and aligned with your projects. Whether you are a new to this or have experience, creating a GitHub site is a useful way to showcase your work and enhance your professional profile. Before beginning these steps, ensure that you have a GitHub account and an existing repository. If you do not have a GitHub account yet, you can create one at the <a href="https://github.com/">GitHub website</a>. For guidance on creating and deploying a GitHub repository, refer to this <a href="https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/">tutorial on creating and deploying a GitHub repository</a>.</p>
+</section>
+<section id="navigate-to-github-repository" class="level1">
+<h1>Navigate to GitHub repository</h1>
+<p>Log in to your GitHub account and navigate to the specific repository that you wish to turn into a web page. This repository should contain the files you want to showcase on your site, such as <code>index.html</code>, <code>index.md</code>, <code>README.md</code>, or any other web assets. If you do not have a repository prepared, you can create a new one by clicking on the <strong>New Repository</strong> button. Once you are in the repository, you will be ready to start the process of configuring it for GitHub Pages, which will allow you to easily host and share your web content online. Take a moment to review your repository to ensure that all necessary files are in place before proceeding to the next steps.</p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/github-repository.png" class="img-fluid"></p>
+<p>In your repository, navigate to the <strong>Settings</strong> tab by clicking on it. This will take you to a page where you can configure various options for your repository, including those needed to set up GitHub Pages. The <strong>Settings</strong> tab is typically located near the top right of the repository page, alongside other options like <strong>Code</strong>, <strong>Issues</strong>, <strong>Pull requests</strong>, <strong>Actions</strong> and other tabs.</p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/github_settings.png" class="img-fluid"></p>
+<p>Under the <strong>Settings</strong> tab, scroll down and select <strong>Pages</strong> from the sidebar menu. This action will open the <strong>GitHub Pages</strong> settings window, where you can configure the options for publishing your website. In this section, you will be able to choose the source for your site, such as the branch and folder where your website files are stored, and customize other settings related to your GitHub Pages site. T</p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/github_pages.png" class="img-fluid"></p>
+<p>In the <strong>GitHub Pages</strong> settings, locate the dropdown menu under the <strong>Branch</strong> section. Click on the drop-down arrow, and select <strong>main</strong> as the branch from which your site will be built. This tells GitHub Pages to use the content from the <code>main</code> branch of your repository to generate and host your website.</p>
+<p>In the same <strong>Branch</strong> drop-down menu, after selecting <strong>main</strong> as the branch, look for the option to specify a folder within the branch. Select the <code>/docs</code> folder as the directory from which your site will be built. This means that GitHub Pages will use the files located in the <code>/docs</code> folder of your <code>main</code> branch to create your website. If your web content is stored in this folder, GitHub will look for an <code>index.html</code>, <code>index.md</code>, or <code>README.md</code> file as the entry file for your site.</p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/select_main.png" class="img-fluid"></p>
+<p>After selecting the <strong>main</strong> branch and the <code>/docs</code> folder as a source for your site , click the <strong>Save</strong> button to apply these settings. This will initiate the process of setting up your GitHub Pages site. Once the settings are saved, you will see a confirmation message, and the link to your live site will appear under the <strong>GitHub Pages</strong> section of your repository settings. You can visit your newly created website by clicking on the <code>Visit site</code> link. This link will take you directly to your published site, which is now accessible to anyone on the web.</p>
+<p><img src="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/visit_site.png" class="img-fluid"></p>
+<p>Congratulations on setting up your GitHub Pages site!</p>
+<p>With your repository now configured to serve as a live web page, you have a professional platform to show your projects, personal website, or documentation of your work.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>code</category>
+  <guid>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/index.html</guid>
+  <pubDate>Sat, 15 Jun 2024 21:00:00 GMT</pubDate>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/visit_site.png" medium="image" type="image/png" height="56" width="144"/>
+</item>
 <item>
   <title>Extracting values from raster image using terra package in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
@@ -858,31 +895,6 @@ Hijmans, R.J., 2024. <a href="https://CRAN.R-project.org/package=terra">Terra: S
 </ul>
 <p>After deployment, navigate to your repository on GitHub and verify that the changes have been deployed successfully.</p>
 <p>If the changes made to your GitHub repository are successful, you may wish to publish your repository and make it accessible to the public as a web page</p>
-</section>
-<section id="creating-your-site-as-a-web-page" class="level1">
-<h1>Creating your site as a Web page</h1>
-<ul>
-<li><p>Go to your GitHub account and navigate to your repository which you want to create a web page.</p></li>
-<li><p>Go to settings in your repository and click it</p></li>
-</ul>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/github_settings.png" class="img-fluid"></p>
-<ul>
-<li>Under setting, select pages. This will open a page settings window</li>
-</ul>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/github_pages.png" class="img-fluid"></p>
-<ul>
-<li>Under dropdown arrow in the branch, select main</li>
-</ul>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/select_main.png" class="img-fluid"></p>
-<ul>
-<li>Also in the branch select <code>/docs</code> as your site folder</li>
-</ul>
-<p>Since your publishing source is the <code>/docs</code> folder on the main branch, your entry file must be located in the <code>/docs</code> folder on a branch called main. In this folder under your working directory (<code>/docs folder</code>), it must contain the entry file for your site. GitHub Pages will look for an <code>index.html</code>, <code>index.md</code>, or <code>README.md</code> file as the entry file for your site.</p>
-<ul>
-<li><p>Then, click save</p></li>
-<li><p>The link for your site will be seen under GitHub Pages of your repository. Then, you may visit your site by clicking <code>Visit site</code></p></li>
-</ul>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/visit_site.png" class="img-fluid"></p>
 
 
 </section>

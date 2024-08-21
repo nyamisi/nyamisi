@@ -2,6 +2,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/github-site-as-web-page/index.html",
       "/posts/extract-values-raster-terra/index.html",
       "/posts/cropping-raster-terra-tidyterra/index.html",
       "/posts/remove-largefile-staged-git/index.html",
@@ -18,6 +19,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/github-site-as-web-page/index.html",
       "/posts/extract-values-raster-terra/index.html",
       "/posts/cropping-raster-terra-tidyterra/index.html",
       "/posts/remove-largefile-staged-git/index.html",

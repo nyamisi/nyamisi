@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nyamisi.github.io/nyamisi/archive.html</loc>
-    <lastmod>2024-08-16T09:42:26.182Z</lastmod>
+    <lastmod>2024-08-21T14:29:07.872Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/blog.html</loc>
-    <lastmod>2024-08-16T09:42:33.722Z</lastmod>
+    <lastmod>2024-08-21T14:29:32.823Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/index.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/index.html</loc>
-    <lastmod>2024-08-16T09:43:51.050Z</lastmod>
+    <lastmod>2024-08-21T14:29:06.716Z</lastmod>
   </url>
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/cropping-raster-terra-tidyterra/index.html</loc>
@@ -55,5 +55,9 @@
   <url>
     <loc>https://nyamisi.github.io/nyamisi/posts/extract-values-raster-terra/index.html</loc>
     <lastmod>2024-08-16T09:42:31.008Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/index.html</loc>
+    <lastmod>2024-08-21T14:26:33.601Z</lastmod>
   </url>
 </urlset>
