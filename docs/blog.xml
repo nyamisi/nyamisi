@@ -9,12 +9,143 @@
 <link>https://nyamisi.github.io/nyamisi/blog.html</link>
 <atom:link href="https://nyamisi.github.io/nyamisi/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Coding for all for better today and tommorow</description>
-<generator>quarto-1.3.353</generator>
-<lastBuildDate>Sat, 15 Jun 2024 21:00:00 GMT</lastBuildDate>
+<generator>quarto-1.7.32</generator>
+<lastBuildDate>Thu, 09 Oct 2025 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>High-Nutrient, Low-Iron levels in the Northern and Eastern coast of the Pemba Island: Implication for low phytoplankton biomass</title>
+  <dc:creator>Nyamisi Peter</dc:creator>
+  <link>https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Some areas in the ocean may experience high levels of nutrients but have low phytoplankton biomass. These areas are referred to as High-Nutrient, Low-Chlorophyll (HNLC) area. The HNLC area is a region of the ocean where major nutrients needed for photosynthesis specifically nitrate, phosphate, and silicic acid are abundant in the surface waters, yet the concentration of chlorophyll-<em>a</em> (Chl-<em>a</em>) and phytoplankton in general is surprisingly low <span class="citation" data-cites="martin1990">(Martin, 1990)</span>.</p>
+<p>Phytoplankton are the base of the marine food web and produce a huge portion of the oxygen on the Earth during photosynthesis process <span class="citation" data-cites="falkowski1998">(Falkowski et al., 1998)</span>. We can measure their presence by assessing the concentration of Chl-<em>a</em>, the green pigment used in photosynthesis. Normally, where the concentration of nutrient is high, we expect to see a high Chl-<em>a</em> concentration which is an indication of higher phytoplankton productivity. In HNLC regions, the situation is quite different.</p>
+<p>In this article, we will assess the existence of such situation in the Northern and Eastern coast of the Pemba Island, off the coast of Tanzania Figure&nbsp;1.</p>
+<p>First we will load the packages that will be used in this article. These are <code>tidyverse</code> <span class="citation" data-cites="tidyverse19">(Wickham et al., 2019)</span>, <code>sf</code> <span class="citation" data-cites="sf18">(Pebesma, 2018)</span> and <code>patchwork</code> <span class="citation" data-cites="patchwork24">(Pedersen, 2024)</span>. We will also use <code>metR</code> <span class="citation" data-cites="metR21">(Campitelli, 2021)</span> for creating the contour plots and <code>oce</code> <span class="citation" data-cites="oce24">(Kelley and Richards, 2024)</span> for the color palette.</p>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<p>We will use Pemba dataset of December 2024, extracted using <strong>geodata</strong> package <span class="citation" data-cites="geodata24">(Hijmans et al., 2024)</span>. The dataset consists of six variables: Longitude, Latitude, Chlorophyll, Nitrate, Phosphate and Iron.</p>
+<div id="fig-map" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/map-01.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The map showing the Pemba Island and the area of study indicated by the black dashed lines
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="concentration-of-nitrate-and-phosphate" class="level1">
+<h1>Concentration of Nitrate and Phosphate</h1>
+<p>Both nitrate and phosphate concentration shows nearly similar pattern that, the Northern and Eastern side of the Pemba Island have higher nutrient concentration than at the Channel Figure&nbsp;2. The availability of these higher nutrient levels might be an indication of productive water around the area.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-nitrate-phos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nitrate-phos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/index_files/figure-html/fig-nitrate-phos-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nitrate-phos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The concentration of nitrate and phosphate along the Pemba Island
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="chlorophyll-a-concentration" class="level1">
+<h1>Chlorophyll-a concentration</h1>
+<p>The concentration of chlorophyll-a in an area was also assessed. However, the result was different from the expected. Although the channel showed lower nutrient concentration than other areas around the Island, the levels of chlorophyll-a was higher in the channel and especially in the Tanga coast than at the Northern and Eastern side of the Island which had higher levels of nutrients Figure&nbsp;3. Nitrate, phosphate, Chlorophyll-a, light and carbondioxide are the necessary requirements for photosynthesis by phytoplankton. Surprisingly, all of these requirements are available for photosynthesis and still the levels of chl-a is low. What could be the major reason for this discrepancy in the Northern and Eastern Pemba area?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chl" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/index_files/figure-html/fig-chl-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The concentration of chlorophyll-a along the Pemba Island
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="iron-levels" class="level1">
+<h1>Iron levels</h1>
+<p>Further investigations was done by assessing the level of Iron in an area. The results indicated lower Iron levels in the Northern and Eastern side of the Island than in the channel Figure&nbsp;4. The Northern and Eastern areas side of the Island which had higher nitrate and phosphate levels with low chl-a concentration observed to have low Iron levels than areas around the channel.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-iron" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/index_files/figure-html/fig-iron-1.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The concentration of Iron along the Pemba Island
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Studies shows that, Iron is the critical micronutrient in phytoplankton. Iron is essential for many metabolic processes in phytoplankton, including photosynthesis and nitrogen fixation <span class="citation" data-cites="falkowski1998">(Falkowski et al., 1998)</span>. While it is only needed in tiny amounts, its scarcity can act as a bottleneck, preventing phytoplankton from using the plentiful major nutrients to grow and multiply <span class="citation" data-cites="boyd2010 jickells2005">(Boyd and Ellwood, 2010; Jickells et al., 2005)</span>. In the Northern and Eastern side of the Pemba, lower chl-a concentration might be due to lower levels of iron as this is the most critical limiting nutrient in the ocean. This make the northern and eastern side of the Pemba as HNLC area.</p>
+<section id="consultated-references" class="level2">
+
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Consultated references</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-boyd2010" class="csl-entry">
+Boyd, P.W., Ellwood, M.J., 2010. The biogeochemical cycle of iron in the ocean. Nature Geoscience 3, 675–682.
+</div>
+<div id="ref-metR21" class="csl-entry">
+Campitelli, E., 2021. metR: Tools for easier analysis of meteorological fields. <a href="https://doi.org/10.5281/zenodo.2593516">https://doi.org/10.5281/zenodo.2593516</a>
+</div>
+<div id="ref-falkowski1998" class="csl-entry">
+Falkowski, P.G., Barber, R.T., Smetacek, V., 1998. Biogeochemical controls and feedbacks on ocean primary production. Science 281, 200–206.
+</div>
+<div id="ref-geodata24" class="csl-entry">
+Hijmans, R.J., Barbosa, M., Ghosh, A., Mandel, A., 2024. Geodata: Download geographic data. <a href="https://doi.org/10.32614/CRAN.package.geodata">https://doi.org/10.32614/CRAN.package.geodata</a>
+</div>
+<div id="ref-jickells2005" class="csl-entry">
+Jickells, T.D., An, Z., Andersen, K.K., Baker, A.R., Bergametti, G., Brooks, N., Cao, J., Boyd, P.W., Duce, R.A., Hunter, K.A., others, 2005. Global iron connections between desert dust, ocean biogeochemistry, and climate. Science 308, 67–71.
+</div>
+<div id="ref-oce24" class="csl-entry">
+Kelley, D., Richards, C., 2024. Oce: Analysis of oceanographic data. <a href="https://doi.org/10.32614/CRAN.package.oce">https://doi.org/10.32614/CRAN.package.oce</a>
+</div>
+<div id="ref-martin1990" class="csl-entry">
+Martin, J.H., 1990. Glacial-interglacial CO2 change: The iron hypothesis. Paleoceanography 5, 1–13.
+</div>
+<div id="ref-sf18" class="csl-entry">
+Pebesma, E., 2018. <span class="nocase">Simple Features for R: Standardized Support for Spatial Vector Data</span>. <span>The R Journal</span> 10, 439–446. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>
+</div>
+<div id="ref-patchwork24" class="csl-entry">
+Pedersen, T.L., 2024. Patchwork: The composer of plots. <a href="https://doi.org/10.32614/CRAN.package.patchwork">https://doi.org/10.32614/CRAN.package.patchwork</a>
+</div>
+<div id="ref-tidyverse19" class="csl-entry">
+Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L.D., François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M., Pedersen, T.L., Miller, E., Bache, S.M., Müller, K., Ooms, J., Robinson, D., Seidel, D.P., Spinu, V., Takahashi, K., Vaughan, D., Wilke, C., Woo, K., Yutani, H., 2019. Welcome to the <span class="nocase">tidyverse</span>. Journal of Open Source Software 4, 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>
+</div>
+</div></section></div> ]]></description>
+  <category>visualization</category>
+  <category>code</category>
+  <guid>https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/</guid>
+  <pubDate>Thu, 09 Oct 2025 21:00:00 GMT</pubDate>
+  <media:content url="https://nyamisi.github.io/nyamisi/posts/high-nutrient-low-chl-region/nutrient_chl_iron-01.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>How to create GitHub site as a web page</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/</link>
   <description><![CDATA[ 
 
 
@@ -44,14 +175,14 @@
 
  ]]></description>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/</guid>
   <pubDate>Sat, 15 Jun 2024 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/github-site-as-web-page/visit_site.png" medium="image" type="image/png" height="56" width="144"/>
 </item>
 <item>
   <title>Extracting values from raster image using terra package in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/extract-values-raster-terra/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/extract-values-raster-terra/</link>
   <description><![CDATA[ 
 
 
@@ -550,14 +681,14 @@ Hijmans, R.J., 2024. <a href="https://CRAN.R-project.org/package=terra">Terra: S
   <category>terra</category>
   <category>visualization</category>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/extract-values-raster-terra/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/extract-values-raster-terra/</guid>
   <pubDate>Thu, 09 May 2024 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/extract-values-raster-terra/fig-point.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Cropping raster image using terra and tidyterra packages in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/cropping-raster-terra-tidyterra/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/cropping-raster-terra-tidyterra/</link>
   <description><![CDATA[ 
 
 
@@ -851,14 +982,14 @@ Hijmans, R.J., 2024. <a href="https://CRAN.R-project.org/package=terra">Terra: S
   <category>terra</category>
   <category>visualization</category>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/cropping-raster-terra-tidyterra/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/cropping-raster-terra-tidyterra/</guid>
   <pubDate>Sun, 14 Apr 2024 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/cropping-raster-terra-tidyterra/pemba_image.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>How to Remove a Large Staged File from Git</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/</link>
   <description><![CDATA[ 
 
 
@@ -901,14 +1032,14 @@ Hijmans, R.J., 2024. <a href="https://CRAN.R-project.org/package=terra">Terra: S
 
  ]]></description>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/</guid>
   <pubDate>Tue, 19 Mar 2024 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/remove-largefile-staged-git/git_logo.png" medium="image" type="image/png" height="60" width="144"/>
 </item>
 <item>
   <title>The Surpass Global Ocean Temperature Record: Implications for Ocean Productivity in Tanzania</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/global-temperature-record/</link>
   <description><![CDATA[ 
 
 
@@ -1081,14 +1212,14 @@ Wickham, H., Hester, J., Bryan, J., 2023. <a href="https://CRAN.R-project.org/pa
 </div></section></div> ]]></description>
   <category>visualization</category>
   <category>news</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/global-temperature-record/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/global-temperature-record/</guid>
   <pubDate>Sun, 09 Jul 2023 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/global-temperature-record/global_trend.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Machine Learning (ML) using Regression Algorithm in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/machine-learning-regression/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/machine-learning-regression/</link>
   <description><![CDATA[ 
 
 
@@ -2390,14 +2521,14 @@ Witten, I.H., Frank, E., Hall, M.A., Pal, C.J., DATA, M., 2005. Practical machin
 </div></section></div> ]]></description>
   <category>code</category>
   <category>ML &amp; AI</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/machine-learning-regression/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/machine-learning-regression/</guid>
   <pubDate>Sun, 12 Mar 2023 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/machine-learning-regression/randomForestscreenShort.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Machine Learning (ML) using classification Algorithm in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/</link>
   <description><![CDATA[ 
 
 
@@ -3056,14 +3187,14 @@ Witten, I.H., Frank, E., Hall, M.A., Pal, C.J., DATA, M., 2005. Practical machin
 </div></section></div> ]]></description>
   <category>code</category>
   <category>ML &amp; AI</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/</guid>
   <pubDate>Tue, 07 Mar 2023 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/machine-learning-classification/ML-image.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Deploying and publishing to GitHub</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/</link>
   <description><![CDATA[ 
 
 
@@ -3129,14 +3260,14 @@ Witten, I.H., Frank, E., Hall, M.A., Pal, C.J., DATA, M., 2005. Practical machin
 
  ]]></description>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/</guid>
   <pubDate>Mon, 06 Mar 2023 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/github-deploy-publish/deployment-process.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Text analytics and alluvial plots in R</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/alluvial/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/alluvial/</link>
   <description><![CDATA[ 
 
 
@@ -3430,14 +3561,14 @@ Wickham, H., François, R., Henry, L., Müller, K., 2022. <a href="https://CRAN.
 </div></section></div> ]]></description>
   <category>visualization</category>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/alluvial/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/alluvial/</guid>
   <pubDate>Tue, 14 Feb 2023 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/alluvial/alluvial.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Text analytics and word cloud in R and ggplot2</title>
   <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/worldcloud/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/worldcloud/</link>
   <description><![CDATA[ 
 
 
@@ -3815,72 +3946,14 @@ Wickham, H., François, R., Henry, L., Müller, K., 2022. <a href="https://CRAN.
 </div></section></div> ]]></description>
   <category>visualization</category>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/worldcloud/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/worldcloud/</guid>
   <pubDate>Tue, 14 Feb 2023 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/worldcloud/wordcloud.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
-  <title>The Family Affairs: A Look into the Importance of Family</title>
-  <dc:creator>Nyamisi Peter</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/the-family-affairs/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<p>Family is the most important institution in our lives. It is where we learn our first lessons about love, trust, and respect. It is where we find comfort and support when we need it the most. Family is the foundation of our society, and it is important to nurture and cherish it. As we navigate through life, family affairs are bound to arise. Whether it’s a joyous occasion like a wedding or the arrival of a new baby, or a more difficult situation like a family member falling ill, these events can bring us closer together or create tension and stress.</p>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/michiKids.jpg" class="img-fluid"></p>
-<p>In today’s fast-paced world, we often forget the importance of family. We get caught up in our work, our social lives, and our own personal goals. We forget that our family is always there for us, no matter what. We take them for granted and fail to appreciate the role they play in our lives. But family is more than just a group of people who share the same bloodline. It is a bond that goes beyond genetics. It is a bond that is built on love, trust, and mutual respect. It is a bond that lasts a lifetime.</p>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/bibiUkerewe.jpg" class="img-fluid"></p>
-<p>One of the most important aspects of family is communication. Good communication is the key to any successful relationship, and it is especially important in a family setting. We need to talk to each other, listen to each other, and respect each other’s opinions. We need to be open and honest with each other, even when it’s difficult. Maintaining healthy relationships with family members can be challenging, especially if there are underlying issues such as unresolved conflicts or differing values. One way to improve relationships is to communicate openly and honestly with each other. This means actively listening to each other’s concerns and perspectives, and working together to find common ground. It’s also important to set boundaries and respect each other’s boundaries.</p>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/dauSunset.jpg" class="img-fluid"></p>
-<p>Another important aspect of family is spending time together. In today’s busy world, it can be difficult to find time to spend with our loved ones. But it’s important to make the effort. Whether it’s a family dinner, a game night, or a vacation, spending time together strengthens our bond and reminds us of the importance of family.</p>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/swimming.jpg" class="img-fluid"></p>
-<p>Family also provides us with a sense of belonging. It gives us a place to call home, a place where we are accepted for who we are. It gives us a support system when we need it the most. It provides us with a sense of security and stability.</p>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/daniNyaka.jpg" class="img-fluid"></p>
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<p>But family is not always easy. There are times when we disagree, when we argue, and when we hurt each other. But it’s important to remember that family is worth fighting for. It’s important to work through our differences and to forgive each other when we make mistakes.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/ethanCry.jpg" class="img-fluid"></p>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/ethanRafiki.jpg" class="img-fluid"></p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p>It’s important to remember the importance of forgiveness. We all make mistakes, and holding grudges can create long-term damage to relationships. Learning to forgive and move forward can help strengthen family bonds and create a more positive atmosphere.</p>
-</div>
-</div>
-<p>Family is the most important institution in our lives. It provides us with love, support, and a sense of belonging. It is a bond that lasts a lifetime, and it is worth nurturing and cherishing. So take the time to communicate with your loved ones, spend time with them, and appreciate the role they play in your life. Remember that family is always there for you, no matter what. Family affairs can be complex and emotional, but they don’t have to be overwhelming. By seeking the advice of professionals, communicating openly with family members, and setting boundaries, you can navigate through these issues in a professional and effective manner.</p>
-<p><img src="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/ethanChibonge.jpg" class="img-fluid"></p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Remember that maintaining healthy relationships with family members is key to a happy and fulfilling life. One thing that is important to remember is that every family is unique. What works for one family may not work for another. That being said, there are some general tips that can help make family affairs go more smoothly.</p>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>affairs</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/the-family-affairs/index.html</guid>
-  <pubDate>Thu, 19 Jan 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://nyamisi.github.io/nyamisi/posts/the-family-affairs/michiKids.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
   <title>The Memorable Summer Time</title>
   <dc:creator>Grace Semba</dc:creator>
-  <link>https://nyamisi.github.io/nyamisi/posts/summertime/index.html</link>
+  <link>https://nyamisi.github.io/nyamisi/posts/summertime/</link>
   <description><![CDATA[ 
 
 
@@ -3946,7 +4019,7 @@ Important
   <category>affairs</category>
   <category>news</category>
   <category>code</category>
-  <guid>https://nyamisi.github.io/nyamisi/posts/summertime/index.html</guid>
+  <guid>https://nyamisi.github.io/nyamisi/posts/summertime/</guid>
   <pubDate>Sat, 13 Aug 2022 21:00:00 GMT</pubDate>
   <media:content url="https://nyamisi.github.io/nyamisi/posts/summertime/family.jpg" medium="image" type="image/jpeg"/>
 </item>

@@ -2,6 +2,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/high-nutrient-low-chl-region/index.html",
       "/posts/github-site-as-web-page/index.html",
       "/posts/extract-values-raster-terra/index.html",
       "/posts/cropping-raster-terra-tidyterra/index.html",
@@ -12,13 +13,13 @@
       "/posts/github-deploy-publish/index.html",
       "/posts/alluvial/index.html",
       "/posts/worldcloud/index.html",
-      "/posts/the-family-affairs/index.html",
       "/posts/summertime/index.html"
     ]
   },
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/high-nutrient-low-chl-region/index.html",
       "/posts/github-site-as-web-page/index.html",
       "/posts/extract-values-raster-terra/index.html",
       "/posts/cropping-raster-terra-tidyterra/index.html",
@@ -29,7 +30,6 @@
       "/posts/github-deploy-publish/index.html",
       "/posts/alluvial/index.html",
       "/posts/worldcloud/index.html",
-      "/posts/the-family-affairs/index.html",
       "/posts/summertime/index.html"
     ]
   }
